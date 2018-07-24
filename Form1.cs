@@ -18,19 +18,34 @@ namespace StockMarketAnalysis
         {
             InitializeComponent();
         }
+
+        private int zoomSpeed = 10;
+        private int zoomMultiple = 0;
+
         protected override void OnMouseWheel(MouseEventArgs mouseEvent)
         {
+
             //zooming in
             if (mouseEvent.Delta > 0)
             {
-                chart1.ChartAreas[0].AxisX.ScaleView.Zoom(1, 1);
+                if (zoomMultiple < 100)
+                {
+                    zoomMultiple++;
+                }
             }
 
             //zooming out
             if (mouseEvent.Delta < 0)
             {
-
+                if (zoomMultiple > 0)
+                {
+                    zoomMultiple--;
+                }
             }
+
+            chart1.ChartAreas[0].AxisX.ScaleView.Zoom(
+                    chart1.ChartAreas[0].AxisX.Minimum + zoomMultiple * zoomSpeed,
+                    chart1.ChartAreas[0].AxisX.Maximum - zoomMultiple * zoomSpeed);
         }
 
 
@@ -42,16 +57,29 @@ namespace StockMarketAnalysis
             string strCmdText;
             strCmdText = "/C alpha-vantage-cli -s " + symbol + " -k TPMQDECWM5ATUR1L -o " + rawDataPath + symbol;
 
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = strCmdText;
-            process.StartInfo = startInfo;
-            process.Start();
+            //if the data hasn't already been downloaded, then do the alpha vantage download:
+            if (!File.Exists(rawDataPath+symbol))
+            {
+                //to execute alpah vantage cli commands in the background
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                startInfo.FileName = "cmd.exe";
+                startInfo.Arguments = strCmdText;
+                process.StartInfo = startInfo;
+                process.Start();
 
-            while (!process.HasExited)
-            { }
+                //wait for output file to download
+                while (!process.HasExited)
+                { }
+            }
+
+            //at this point the file should be made, if not, then it was an invalid symbol
+            if (!File.Exists(rawDataPath + symbol))
+            {
+                MessageBox.Show("Couldn't find " + symbol);
+                return;
+            }
 
             //reading the output file:
             using (var reader = new StreamReader(rawDataPath + symbol))
@@ -88,11 +116,6 @@ namespace StockMarketAnalysis
                     chart1.Series["Series1"].Points.Add(candleStick);
                 }
             }
-
-        }
-
-        private void chart1_Click(object sender, EventArgs e)
-        {
 
         }
     }
