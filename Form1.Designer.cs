@@ -73,6 +73,7 @@
             this.chart1.Size = new System.Drawing.Size(585, 300);
             this.chart1.TabIndex = 2;
             this.chart1.Text = "chart1";
+            this.chart1.Click += new System.EventHandler(this.chart1_Click);
             // 
             // Form1
             // 

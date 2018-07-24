@@ -38,10 +38,20 @@ namespace StockMarketAnalysis
         {
             //getting the data from online:
             string symbol = textBox1.Text;
-            string rawDataPath = "C:/Users/witzk/source/repos/StockMarketAnalysis/StockMarketAnalysis/RawData/";
+            string rawDataPath = "../../RawData/";
             string strCmdText;
             strCmdText = "/C alpha-vantage-cli -s " + symbol + " -k TPMQDECWM5ATUR1L -o " + rawDataPath + symbol;
-            System.Diagnostics.Process.Start("CMD.exe", strCmdText);
+
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = strCmdText;
+            process.StartInfo = startInfo;
+            process.Start();
+
+            while (!process.HasExited)
+            { }
 
             //reading the output file:
             using (var reader = new StreamReader(rawDataPath + symbol))
@@ -77,8 +87,13 @@ namespace StockMarketAnalysis
                     DataPoint candleStick = new DataPoint(x.ToOADate(), data);
                     chart1.Series["Series1"].Points.Add(candleStick);
                 }
-            }            
+            }
+
         }
 
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

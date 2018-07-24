@@ -77,7 +77,6 @@
     </Compile>
     <None Include="RawData\AAPL" />
     <None Include="RawData\GOOGL" />
-    <None Include="RawData\MSFT" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
