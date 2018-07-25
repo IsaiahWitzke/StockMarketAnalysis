@@ -12,9 +12,9 @@ C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\bin\Debug\StockMarketAnalysi
 C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\bin\Debug\StockMarketAnalysis.exe
 C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\bin\Debug\StockMarketAnalysis.pdb
 C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.csprojAssemblyReference.cache
-C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.Form1.resources
 C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.Properties.Resources.resources
 C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.csproj.GenerateResource.cache
 C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.csproj.CoreCompileInputs.cache
 C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.exe
 C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.pdb
+C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.aMainForm.resources

@@ -12,9 +12,9 @@ using System.IO;
 
 namespace StockMarketAnalysis
 {
-    public partial class Form1 : Form
+    public partial class aMainForm : Form
     {
-        public Form1()
+        public aMainForm()
         {
             InitializeComponent();
         }
@@ -43,22 +43,32 @@ namespace StockMarketAnalysis
                 }
             }
 
-            chart1.ChartAreas[0].AxisX.ScaleView.Zoom(
-                    chart1.ChartAreas[0].AxisX.Minimum + zoomMultiple * zoomSpeed,
-                    chart1.ChartAreas[0].AxisX.Maximum - zoomMultiple * zoomSpeed);
-        }
+            //zooming in the x axis
+            aMainChart.ChartAreas[0].AxisX.ScaleView.Zoom(
+                    aMainChart.ChartAreas[0].AxisX.Minimum + zoomMultiple * zoomSpeed,
+                    aMainChart.ChartAreas[0].AxisX.Maximum - zoomMultiple * zoomSpeed);
 
+            //recalculates the y axis
+            aMainChart.ChartAreas[0].AxisY.Maximum = Double.NaN;
+            aMainChart.ChartAreas[0].AxisY.Minimum = Double.NaN;
+            aMainChart.ChartAreas[0].RecalculateAxesScale();
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
             //getting the data from online:
             string symbol = textBox1.Text;
+            initChart(symbol);
+        }
+
+        private void initChart(string symbol)
+        {
             string rawDataPath = "../../RawData/";
             string strCmdText;
             strCmdText = "/C alpha-vantage-cli -s " + symbol + " -k TPMQDECWM5ATUR1L -o " + rawDataPath + symbol;
 
             //if the data hasn't already been downloaded, then do the alpha vantage download:
-            if (!File.Exists(rawDataPath+symbol))
+            if (!File.Exists(rawDataPath + symbol))
             {
                 //to execute alpah vantage cli commands in the background
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -92,6 +102,7 @@ namespace StockMarketAnalysis
                         reader.ReadLine();
                         isFirstLine = false;
                     }
+                    
                     var line = reader.ReadLine();
                     var values = line.Split(',');
 
@@ -102,7 +113,7 @@ namespace StockMarketAnalysis
                     dateInfo[1] = Convert.ToInt32(stringDateArr[1]);
                     dateInfo[2] = Convert.ToInt32(stringDateArr[2]);
 
-                    chart1.Series[0].XValueType = ChartValueType.DateTime;
+                    aMainChart.Series[0].XValueType = ChartValueType.DateTime;
                     System.DateTime x = new System.DateTime(dateInfo[0], dateInfo[1], dateInfo[2]);
                     //chart1.Series[0].Points.AddXY(x.ToOADate(), 34);
 
@@ -111,12 +122,12 @@ namespace StockMarketAnalysis
                     double high = Convert.ToDouble(values[2]);
                     double low = Convert.ToDouble(values[3]);
                     double close = Convert.ToDouble(values[4]);
-                    double[] data = { open, high, low, close };
+                    double[] data = { high, low, open, close };
                     DataPoint candleStick = new DataPoint(x.ToOADate(), data);
-                    chart1.Series["Series1"].Points.Add(candleStick);
+                    aMainChart.Series[0].Points.Add(candleStick);
                 }
+                aMainChart.ChartAreas[0].AxisX.IsReversed = true;
             }
-
         }
     }
 }
