@@ -18,3 +18,12 @@ C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysi
 C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.exe
 C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.pdb
 C:\Users\witzk\Documents\GitHub\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.aMainForm.resources
+D:\Media\Documents\Computer Science\Git Projects\StockMarketAnalysis\bin\Debug\StockMarketAnalysis.exe.config
+D:\Media\Documents\Computer Science\Git Projects\StockMarketAnalysis\bin\Debug\StockMarketAnalysis.exe
+D:\Media\Documents\Computer Science\Git Projects\StockMarketAnalysis\bin\Debug\StockMarketAnalysis.pdb
+D:\Media\Documents\Computer Science\Git Projects\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.aMainForm.resources
+D:\Media\Documents\Computer Science\Git Projects\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.Properties.Resources.resources
+D:\Media\Documents\Computer Science\Git Projects\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.csproj.GenerateResource.Cache
+D:\Media\Documents\Computer Science\Git Projects\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.csproj.CoreCompileInputs.cache
+D:\Media\Documents\Computer Science\Git Projects\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.exe
+D:\Media\Documents\Computer Science\Git Projects\StockMarketAnalysis\obj\Debug\StockMarketAnalysis.pdb

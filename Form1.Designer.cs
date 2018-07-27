@@ -52,6 +52,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(178, 20);
             this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "msft";
             // 
             // aMainChart
             // 
@@ -73,6 +74,7 @@
             this.aMainChart.Size = new System.Drawing.Size(1668, 750);
             this.aMainChart.TabIndex = 2;
             this.aMainChart.Text = "Main Chart";
+            this.aMainChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.aMainChart_MouseClick);
             // 
             // aMainForm
             // 
