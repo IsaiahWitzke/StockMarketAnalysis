@@ -61,6 +61,10 @@ namespace StockMarketAnalysis
             initChart(symbol);
         }
 
+        Chart aMainChart;
+        ChartArea aMainChartArea = new ChartArea();
+        Series aMainSeries = new Series();
+
         private void initChart(string symbol)
         {
             string rawDataPath = "../../RawData/";
@@ -90,6 +94,32 @@ namespace StockMarketAnalysis
                 MessageBox.Show("Couldn't find " + symbol);
                 return;
             }
+
+            //make the chart
+
+            this.aMainChartArea.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            this.aMainChartArea.AxisY.IsStartedFromZero = false;
+            this.aMainChartArea.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.aMainChartArea.Name = "aMainChartArea";
+
+            this.aMainChart = new Chart();
+            this.aMainChart.ChartAreas.Add(aMainChartArea);
+            this.aMainChart.Location = new System.Drawing.Point(97, 101);
+            this.aMainChart.Name = "aMainChart";
+            this.aMainChart.Series.Add(aMainSeries);
+            this.aMainChart.Size = new System.Drawing.Size(1668, 750);
+            this.aMainChart.TabIndex = 2;
+
+            
+            this.aMainSeries.ChartArea = "aMainChartArea";
+            this.aMainSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
+            this.aMainSeries.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.aMainSeries.IsXValueIndexed = true;
+            this.aMainSeries.Name = "aCandleSticks";
+            this.aMainSeries.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
+            this.aMainSeries.YValuesPerPoint = 4;
+
+            this.Controls.Add(this.aMainChart);
 
             //reading the output file:
             using (var reader = new StreamReader(rawDataPath + symbol))
@@ -128,6 +158,56 @@ namespace StockMarketAnalysis
                 }
                 aMainChart.ChartAreas[0].AxisX.IsReversed = true;
             }
+
+
         }
+
+        Plot newPlot;
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            newPlot = new Plot("testing", SeriesChartType.Line);
+            newPlot.data.Add(77, 90);
+            newPlot.data.Add(78, 100);
+            newPlot.data.Add(79, 100);
+            newPlot.data.Add(80, 100);
+            newPlot.data.Add(81, 100);
+            newPlot.drawPlot();
+        }
+    }
+}
+
+namespace StockMarketAnalysis
+{
+    partial class Plot : aMainForm
+    {
+        public Series series = new Series();
+        public Dictionary<double, double> data = new Dictionary<double, double>();
+
+
+        public Plot(string name, SeriesChartType seriesChartType)
+        {
+            this.series.ChartType = seriesChartType;
+            this.series.ChartArea = "ChartArea1";
+        }
+
+        public void drawPlot()
+        {
+            this.series.Points.Clear();
+            foreach (var dataPoint in data)
+            {
+                
+                this.series.Points.AddXY((double)dataPoint.Key, dataPoint.Value);
+            }
+
+        }
+    }
+
+    public partial class Plot2 : Form
+    {
+        public Series series = new Series();
+        public Dictionary<double, double> data = new Dictionary<double, double>();
+
+        
     }
 }
