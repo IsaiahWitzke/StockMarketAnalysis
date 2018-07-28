@@ -61,7 +61,7 @@ namespace StockMarketAnalysis
             initChart(symbol);
         }
 
-        Chart aMainChart;
+        static Chart aMainChart;
         ChartArea aMainChartArea = new ChartArea();
         Series aMainSeries = new Series();
 
@@ -102,13 +102,13 @@ namespace StockMarketAnalysis
             this.aMainChartArea.BackColor = System.Drawing.Color.WhiteSmoke;
             this.aMainChartArea.Name = "aMainChartArea";
 
-            this.aMainChart = new Chart();
-            this.aMainChart.ChartAreas.Add(aMainChartArea);
-            this.aMainChart.Location = new System.Drawing.Point(97, 101);
-            this.aMainChart.Name = "aMainChart";
-            this.aMainChart.Series.Add(aMainSeries);
-            this.aMainChart.Size = new System.Drawing.Size(1668, 750);
-            this.aMainChart.TabIndex = 2;
+            aMainChart = new Chart();
+            aMainChart.ChartAreas.Add(aMainChartArea);
+            aMainChart.Location = new System.Drawing.Point(97, 101);
+            aMainChart.Name = "aMainChart";
+            aMainChart.Series.Add(aMainSeries);
+            aMainChart.Size = new System.Drawing.Size(1668, 750);
+            aMainChart.TabIndex = 2;
 
             
             this.aMainSeries.ChartArea = "aMainChartArea";
@@ -119,7 +119,7 @@ namespace StockMarketAnalysis
             this.aMainSeries.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
             this.aMainSeries.YValuesPerPoint = 4;
 
-            this.Controls.Add(this.aMainChart);
+            this.Controls.Add(aMainChart);
 
             //reading the output file:
             using (var reader = new StreamReader(rawDataPath + symbol))
@@ -166,7 +166,7 @@ namespace StockMarketAnalysis
 
         private void button2_Click(object sender, EventArgs e)
         {
-            newPlot = new Plot("testing", SeriesChartType.Line);
+            newPlot = new Plot("testing", SeriesChartType.Line, aMainChart);
             newPlot.data.Add(77, 90);
             newPlot.data.Add(78, 100);
             newPlot.data.Add(79, 100);
@@ -179,16 +179,18 @@ namespace StockMarketAnalysis
 
 namespace StockMarketAnalysis
 {
-    partial class Plot : aMainForm
+    class Plot
     {
         public Series series = new Series();
         public Dictionary<double, double> data = new Dictionary<double, double>();
+        Chart chart;
 
-
-        public Plot(string name, SeriesChartType seriesChartType)
+        public Plot(string name, SeriesChartType seriesChartType, Chart chart)
         {
+            this.chart = chart;
+            this.chart.Series.Add(name);    
             this.series.ChartType = seriesChartType;
-            this.series.ChartArea = "ChartArea1";
+            this.series.ChartArea = "aMainChartArea";
         }
 
         public void drawPlot()
@@ -196,8 +198,7 @@ namespace StockMarketAnalysis
             this.series.Points.Clear();
             foreach (var dataPoint in data)
             {
-                
-                this.series.Points.AddXY((double)dataPoint.Key, dataPoint.Value);
+                this.chart.Series[1].Points.AddXY((double)dataPoint.Key, dataPoint.Value);
             }
 
         }
