@@ -61,6 +61,10 @@ namespace StockMarketAnalysis
             initChart(symbol);
         }
 
+        static Chart aMainChart;
+        ChartArea aMainChartArea = new ChartArea();
+        Series aMainSeries = new Series();
+
         private void initChart(string symbol)
         {
             string rawDataPath = "../../RawData/";
@@ -90,6 +94,33 @@ namespace StockMarketAnalysis
                 MessageBox.Show("Couldn't find " + symbol);
                 return;
             }
+
+            //make the chart
+
+            this.aMainChartArea.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            this.aMainChartArea.AxisY.IsStartedFromZero = false;
+            this.aMainChartArea.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.aMainChartArea.Name = "aMainChartArea";
+
+            aMainChart = new Chart();
+            aMainChart.ChartAreas.Add(aMainChartArea);
+            aMainChart.Location = new System.Drawing.Point(97, 101);
+            aMainChart.Name = "aMainChart";
+            aMainChart.Series.Add(aMainSeries);
+            aMainChart.Size = new System.Drawing.Size(1668, 750);
+            aMainChart.TabIndex = 2;
+
+            
+            this.aMainSeries.ChartArea = "aMainChartArea";
+            this.aMainSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
+            this.aMainSeries.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.aMainSeries.IsXValueIndexed = true;    // this seems to be very important. (removes weekends)
+            aMainChart.ChartAreas[0].AxisX.IsReversed = true;   // when the weekends are removed the chart seems to be revesed, this line fixes it
+            this.aMainSeries.Name = "aCandleSticks";
+            this.aMainSeries.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
+            this.aMainSeries.YValuesPerPoint = 4;
+
+            this.Controls.Add(aMainChart);
 
             //reading the output file:
             using (var reader = new StreamReader(rawDataPath + symbol))
@@ -125,9 +156,34 @@ namespace StockMarketAnalysis
                     double[] data = { high, low, open, close };
                     DataPoint candleStick = new DataPoint(x.ToOADate(), data);
                     aMainChart.Series[0].Points.Add(candleStick);
-                }
-                aMainChart.ChartAreas[0].AxisX.IsReversed = true;
+                }   
             }
+        }
+
+        //testing the plot class
+        Plot highPlot;
+        Plot lowPlot;
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            highPlot = new Plot("highs", aMainChart);
+            for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
+            {
+                highPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[0]);
+            }
+
+            highPlot.drawPlot();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            lowPlot = new Plot("lows", aMainChart);
+            for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
+            {
+                lowPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[1]);
+            }
+
+            lowPlot.drawPlot();
         }
     }
 }
