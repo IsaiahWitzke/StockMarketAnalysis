@@ -114,7 +114,7 @@ namespace StockMarketAnalysis
             this.aMainSeries.ChartArea = "aMainChartArea";
             this.aMainSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
             this.aMainSeries.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.aMainSeries.IsXValueIndexed = true;
+            //this.aMainSeries.IsXValueIndexed = true;
             this.aMainSeries.Name = "aCandleSticks";
             this.aMainSeries.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
             this.aMainSeries.YValuesPerPoint = 4;
@@ -156,7 +156,7 @@ namespace StockMarketAnalysis
                     DataPoint candleStick = new DataPoint(x.ToOADate(), data);
                     aMainChart.Series[0].Points.Add(candleStick);
                 }
-                aMainChart.ChartAreas[0].AxisX.IsReversed = true;
+                
             }
 
 
@@ -166,12 +166,13 @@ namespace StockMarketAnalysis
 
         private void button2_Click(object sender, EventArgs e)
         {
-            newPlot = new Plot("testing", SeriesChartType.Line, aMainChart);
-            newPlot.data.Add(77, 90);
-            newPlot.data.Add(78, 100);
-            newPlot.data.Add(79, 100);
-            newPlot.data.Add(80, 100);
-            newPlot.data.Add(81, 100);
+            newPlot = new Plot("testing", aMainChart);
+            for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
+            {
+                newPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[0]);
+                
+            }
+
             newPlot.drawPlot();
         }
     }
@@ -181,34 +182,27 @@ namespace StockMarketAnalysis
 {
     class Plot
     {
-        public Series series = new Series();
         public Dictionary<double, double> data = new Dictionary<double, double>();
         Chart chart;
+        string seriesName;
 
-        public Plot(string name, SeriesChartType seriesChartType, Chart chart)
+        public Plot(string name, Chart chart)
         {
             this.chart = chart;
-            this.chart.Series.Add(name);    
-            this.series.ChartType = seriesChartType;
-            this.series.ChartArea = "aMainChartArea";
+            this.chart.Series.Add(name);
+            this.chart.Series[name].ChartType = SeriesChartType.Line;
+
+            this.seriesName = name;
         }
 
         public void drawPlot()
         {
-            this.series.Points.Clear();
+            chart.Series[seriesName].Points.Clear();
+            
             foreach (var dataPoint in data)
             {
-                this.chart.Series[1].Points.AddXY((double)dataPoint.Key, dataPoint.Value);
+                this.chart.Series[seriesName].Points.AddXY((double)dataPoint.Key, dataPoint.Value);
             }
-
         }
-    }
-
-    public partial class Plot2 : Form
-    {
-        public Series series = new Series();
-        public Dictionary<double, double> data = new Dictionary<double, double>();
-
-        
     }
 }
