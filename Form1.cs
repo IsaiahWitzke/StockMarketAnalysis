@@ -114,7 +114,8 @@ namespace StockMarketAnalysis
             this.aMainSeries.ChartArea = "aMainChartArea";
             this.aMainSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
             this.aMainSeries.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            //this.aMainSeries.IsXValueIndexed = true;
+            this.aMainSeries.IsXValueIndexed = true;    // this seems to be very important. (removes weekends)
+            aMainChart.ChartAreas[0].AxisX.IsReversed = true;   // when the weekends are removed the chart seems to be revesed, this line fixes it
             this.aMainSeries.Name = "aCandleSticks";
             this.aMainSeries.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
             this.aMainSeries.YValuesPerPoint = 4;
@@ -155,54 +156,34 @@ namespace StockMarketAnalysis
                     double[] data = { high, low, open, close };
                     DataPoint candleStick = new DataPoint(x.ToOADate(), data);
                     aMainChart.Series[0].Points.Add(candleStick);
-                }
-                
+                }   
             }
-
-
         }
 
-        Plot newPlot;
+        //testing the plot class
+        Plot highPlot;
+        Plot lowPlot;
 
         private void button2_Click(object sender, EventArgs e)
         {
-            newPlot = new Plot("testing", aMainChart);
+            highPlot = new Plot("highs", aMainChart);
             for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
             {
-                newPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[0]);
-                
+                highPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[0]);
             }
 
-            newPlot.drawPlot();
-        }
-    }
-}
-
-namespace StockMarketAnalysis
-{
-    class Plot
-    {
-        public Dictionary<double, double> data = new Dictionary<double, double>();
-        Chart chart;
-        string seriesName;
-
-        public Plot(string name, Chart chart)
-        {
-            this.chart = chart;
-            this.chart.Series.Add(name);
-            this.chart.Series[name].ChartType = SeriesChartType.Line;
-
-            this.seriesName = name;
+            highPlot.drawPlot();
         }
 
-        public void drawPlot()
+        private void button3_Click(object sender, EventArgs e)
         {
-            chart.Series[seriesName].Points.Clear();
-            
-            foreach (var dataPoint in data)
+            lowPlot = new Plot("lows", aMainChart);
+            for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
             {
-                this.chart.Series[seriesName].Points.AddXY((double)dataPoint.Key, dataPoint.Value);
+                lowPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[1]);
             }
+
+            lowPlot.drawPlot();
         }
     }
 }
