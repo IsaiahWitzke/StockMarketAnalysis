@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,13 +27,28 @@ namespace StockMarketAnalysis
         }
 
         // goes through all the data and plots the dictionary as if the "key" is the x values and the "values" as the y values
-        public void drawPlot()
+        public void updatePlot()
         {
-            chart.Series[seriesName].Points.Clear();    // don't really know how important this is atm, just know that if we ever want to update the plot, we need to update ALL the points
+            //to refresh all points, they must first be removed
+            chart.Series[seriesName].Points.Clear();
 
-            foreach (var dataPoint in data)
+            //now going through the main x axis. If there is no data point for this plot at that point, 
+            //then we will make it the candle's high (as to not mess with the chart's y axis' zoom) and transparent,
+            //otherwise, plot it as intended
+            int ptIndex = 0;
+            foreach (var chartPoint in chart.Series[0].Points)
             {
-                this.chart.Series[seriesName].Points.AddXY((double)dataPoint.Key, dataPoint.Value);
+                try
+                {
+                    this.chart.Series[seriesName].Points.AddXY(chartPoint.XValue, data[chartPoint.XValue]);
+                    this.chart.Series[seriesName].Points[ptIndex].Color = Color.Red;
+                }
+                catch
+                {
+                    this.chart.Series[seriesName].Points.AddXY(chartPoint.XValue, chartPoint.YValues[0]);
+                    this.chart.Series[seriesName].Points[ptIndex].Color = Color.Transparent;
+                }
+                ptIndex++;
             }
         }
     }

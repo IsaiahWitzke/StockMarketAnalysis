@@ -169,10 +169,13 @@ namespace StockMarketAnalysis
             highPlot = new Plot("highs", aMainChart);
             for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
             {
-                highPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[0]);
+                if (i < 50)
+                {
+                    highPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[0]);
+                }
             }
 
-            highPlot.drawPlot();
+            highPlot.updatePlot();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -183,7 +186,7 @@ namespace StockMarketAnalysis
                 lowPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[1]);
             }
 
-            lowPlot.drawPlot();
+            lowPlot.updatePlot();
         }
     }
 }
