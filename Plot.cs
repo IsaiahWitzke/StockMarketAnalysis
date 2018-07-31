@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,20 @@ namespace StockMarketAnalysis
 
             foreach (var dataPoint in data)
             {
-                this.chart.Series[seriesName].Points.AddXY((double)dataPoint.Key, dataPoint.Value);
+                this.chart.Series[seriesName].Points.AddXY(dataPoint.Key, dataPoint.Value);
+            }
+
+
+            for (int i = 0; i < this.chart.Series[seriesName].Points.Count(); i++)
+            {
+                if (i < 50)
+                {
+                    this.chart.Series[seriesName].Points[i].Color = Color.Transparent;
+                }
+                else
+                {
+                    this.chart.Series[seriesName].Points[i].Color = Color.Red;
+                }
             }
         }
     }
