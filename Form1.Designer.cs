@@ -38,6 +38,7 @@ namespace StockMarketAnalysis
             this.button3 = new System.Windows.Forms.Button();
             this.aYAxisZoomIn = new System.Windows.Forms.Button();
             this.aYAxisZoomOut = new System.Windows.Forms.Button();
+            this.drawMode = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -80,27 +81,6 @@ namespace StockMarketAnalysis
             // 
             // aYAxisZoomIn
             // 
-            
-            chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea1.AxisY.IsStartedFromZero = false;
-            chartArea1.BackColor = System.Drawing.Color.WhiteSmoke;
-            chartArea1.Name = "ChartArea1";
-            this.aMainChart.ChartAreas.Add(chartArea1);
-            this.aMainChart.Location = new System.Drawing.Point(97, 101);
-            this.aMainChart.Name = "aMainChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
-            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            series1.IsXValueIndexed = true;
-            series1.Name = "aCandleSticks";
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
-            series1.YValuesPerPoint = 4;
-            this.aMainChart.Series.Add(series1);
-            this.aMainChart.Size = new System.Drawing.Size(1668, 750);
-            this.aMainChart.TabIndex = 2;
-            this.aMainChart.Text = "Main Chart";
-            this.aMainChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.aMainChart_MouseClick);
-
             this.aYAxisZoomIn.Location = new System.Drawing.Point(13, 62);
             this.aYAxisZoomIn.Name = "aYAxisZoomIn";
             this.aYAxisZoomIn.Size = new System.Drawing.Size(19, 23);
@@ -120,11 +100,22 @@ namespace StockMarketAnalysis
             this.aYAxisZoomOut.UseVisualStyleBackColor = true;
             this.aYAxisZoomOut.Click += new System.EventHandler(this.aYAxisZoomOut_Click);
             // 
+            // drawMode
+            // 
+            this.drawMode.Location = new System.Drawing.Point(678, 12);
+            this.drawMode.Name = "drawMode";
+            this.drawMode.Size = new System.Drawing.Size(75, 23);
+            this.drawMode.TabIndex = 7;
+            this.drawMode.Text = "Draw";
+            this.drawMode.UseVisualStyleBackColor = true;
+            this.drawMode.Click += new System.EventHandler(this.draw_Click);
+            // 
             // aMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1836, 896);
+            this.Controls.Add(this.drawMode);
             this.Controls.Add(this.aYAxisZoomOut);
             this.Controls.Add(this.aYAxisZoomIn);
             this.Controls.Add(this.button3);
@@ -143,11 +134,11 @@ namespace StockMarketAnalysis
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
-        //private System.Windows.Forms.DataVisualization.Charting.Chart aMainChart;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button aYAxisZoomIn;
         private System.Windows.Forms.Button aYAxisZoomOut;
+        private System.Windows.Forms.Button drawMode;
     }
 }
 
