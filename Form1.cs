@@ -83,6 +83,22 @@ namespace StockMarketAnalysis
             initChart(symbol);
         }
 
+        private void aMainChart_MouseClick(object sender, MouseEventArgs e)
+        {   
+            //store location
+            var pos = e.Location;
+            var results = aMainChart.HitTest(pos.X, pos.Y, false, ChartElementType.PlottingArea);
+            foreach (var result in results)
+            {
+                if (result.ChartElementType == ChartElementType.PlottingArea)
+                {
+                    var x = result.ChartArea.AxisX.PixelPositionToValue(pos.X);
+                    var y = result.ChartArea.AxisY.PixelPositionToValue(pos.Y);
+                    Console.WriteLine("x:" + x + " y:" + y);
+                }
+            }
+        }
+
         static Chart aMainChart;
         ChartArea aMainChartArea = new ChartArea();
         Series aMainSeries = new Series();

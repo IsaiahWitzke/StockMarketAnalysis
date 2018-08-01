@@ -56,6 +56,7 @@ namespace StockMarketAnalysis
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(178, 20);
             this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "msft";
             // 
             // button2
             // 
@@ -79,6 +80,27 @@ namespace StockMarketAnalysis
             // 
             // aYAxisZoomIn
             // 
+            
+            chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea1.AxisY.IsStartedFromZero = false;
+            chartArea1.BackColor = System.Drawing.Color.WhiteSmoke;
+            chartArea1.Name = "ChartArea1";
+            this.aMainChart.ChartAreas.Add(chartArea1);
+            this.aMainChart.Location = new System.Drawing.Point(97, 101);
+            this.aMainChart.Name = "aMainChart";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
+            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            series1.IsXValueIndexed = true;
+            series1.Name = "aCandleSticks";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
+            series1.YValuesPerPoint = 4;
+            this.aMainChart.Series.Add(series1);
+            this.aMainChart.Size = new System.Drawing.Size(1668, 750);
+            this.aMainChart.TabIndex = 2;
+            this.aMainChart.Text = "Main Chart";
+            this.aMainChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.aMainChart_MouseClick);
+
             this.aYAxisZoomIn.Location = new System.Drawing.Point(13, 62);
             this.aYAxisZoomIn.Name = "aYAxisZoomIn";
             this.aYAxisZoomIn.Size = new System.Drawing.Size(19, 23);
