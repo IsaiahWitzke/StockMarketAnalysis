@@ -51,7 +51,6 @@ namespace StockMarketAnalysis
             //otherwise, plot it as intended
             for (int i = 0; i < chart.Series[0].Points.Count(); i++)
             {
-                System.Console.WriteLine(chart.Series[0].Points[i].XValue);
                 try
                 {
                     this.chart.Series[seriesName].Points.AddXY(

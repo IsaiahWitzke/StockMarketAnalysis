@@ -19,40 +19,62 @@ namespace StockMarketAnalysis
             InitializeComponent();
         }
 
-        private int zoomSpeed = 10;
-        private int zoomMultiple = 0;
+        #region chart's zooming
+
+        private int xAxisZoomSpeed = 10;
+        private int xAxisZoomMultiple = 0;
+
+        private int yAxisZoomSpeed = 2;
+        private int yAxisZoomMultiple = 0;
+
+        private void aYAxisZoomIn_Click(object sender, EventArgs e)
+        {
+            //this is here to prevent breaking the program before the chart is initialized
+            if (aMainChart == null)
+                return;
+
+            //zooming in
+            if (aMainChart.ChartAreas[0].AxisY.Minimum + (yAxisZoomMultiple +1) * yAxisZoomSpeed <
+                    aMainChart.ChartAreas[0].AxisY.Maximum - (yAxisZoomMultiple + 1) * yAxisZoomSpeed)
+                yAxisZoomMultiple++;
+
+            //zooming in the x axis
+            aMainChart.ChartAreas[0].AxisY.ScaleView.Zoom(
+                    aMainChart.ChartAreas[0].AxisY.Minimum + yAxisZoomMultiple * yAxisZoomSpeed,
+                    aMainChart.ChartAreas[0].AxisY.Maximum - yAxisZoomMultiple * yAxisZoomSpeed);
+        }
+
+        private void aYAxisZoomOut_Click(object sender, EventArgs e)
+        {
+            if (aMainChart == null)
+                return;
+
+            if (yAxisZoomMultiple > 0)
+                yAxisZoomMultiple--;
+
+            aMainChart.ChartAreas[0].AxisY.ScaleView.Zoom(
+                aMainChart.ChartAreas[0].AxisY.Minimum + yAxisZoomMultiple * yAxisZoomSpeed,
+                aMainChart.ChartAreas[0].AxisY.Maximum - yAxisZoomMultiple * yAxisZoomSpeed);
+        }
 
         protected override void OnMouseWheel(MouseEventArgs mouseEvent)
         {
-
             //zooming in
             if (mouseEvent.Delta > 0)
-            {
-                if (zoomMultiple < 100)
-                {
-                    zoomMultiple++;
-                }
-            }
-
+                if (xAxisZoomMultiple < 100)
+                    xAxisZoomMultiple++;
             //zooming out
             if (mouseEvent.Delta < 0)
-            {
-                if (zoomMultiple > 0)
-                {
-                    zoomMultiple--;
-                }
-            }
+                if (xAxisZoomMultiple > 0)
+                    xAxisZoomMultiple--;
 
             //zooming in the x axis
             aMainChart.ChartAreas[0].AxisX.ScaleView.Zoom(
-                    aMainChart.ChartAreas[0].AxisX.Minimum + zoomMultiple * zoomSpeed,
-                    aMainChart.ChartAreas[0].AxisX.Maximum - zoomMultiple * zoomSpeed);
-
-            //recalculates the y axis
-            aMainChart.ChartAreas[0].AxisY.Maximum = Double.NaN;
-            aMainChart.ChartAreas[0].AxisY.Minimum = Double.NaN;
-            aMainChart.ChartAreas[0].RecalculateAxesScale();
+                    aMainChart.ChartAreas[0].AxisX.Minimum + xAxisZoomMultiple * xAxisZoomSpeed,
+                    aMainChart.ChartAreas[0].AxisX.Maximum - xAxisZoomMultiple * xAxisZoomSpeed);
         }
+
+        #endregion
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -188,5 +210,6 @@ namespace StockMarketAnalysis
 
             lowPlot.updatePlot();
         }
+
     }
 }

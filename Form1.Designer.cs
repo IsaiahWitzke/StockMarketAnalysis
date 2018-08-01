@@ -36,6 +36,8 @@ namespace StockMarketAnalysis
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.aYAxisZoomIn = new System.Windows.Forms.Button();
+            this.aYAxisZoomOut = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -75,11 +77,34 @@ namespace StockMarketAnalysis
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // aYAxisZoomIn
+            // 
+            this.aYAxisZoomIn.Location = new System.Drawing.Point(13, 62);
+            this.aYAxisZoomIn.Name = "aYAxisZoomIn";
+            this.aYAxisZoomIn.Size = new System.Drawing.Size(19, 23);
+            this.aYAxisZoomIn.TabIndex = 5;
+            this.aYAxisZoomIn.Text = "+";
+            this.aYAxisZoomIn.UseVisualStyleBackColor = true;
+            this.aYAxisZoomIn.Click += new System.EventHandler(this.aYAxisZoomIn_Click);
+            // 
+            // aYAxisZoomOut
+            // 
+            this.aYAxisZoomOut.Location = new System.Drawing.Point(13, 92);
+            this.aYAxisZoomOut.Name = "aYAxisZoomOut";
+            this.aYAxisZoomOut.Size = new System.Drawing.Size(19, 23);
+            this.aYAxisZoomOut.TabIndex = 6;
+            this.aYAxisZoomOut.Text = "-";
+            this.aYAxisZoomOut.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.aYAxisZoomOut.UseVisualStyleBackColor = true;
+            this.aYAxisZoomOut.Click += new System.EventHandler(this.aYAxisZoomOut_Click);
+            // 
             // aMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1836, 896);
+            this.Controls.Add(this.aYAxisZoomOut);
+            this.Controls.Add(this.aYAxisZoomIn);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
@@ -99,6 +124,8 @@ namespace StockMarketAnalysis
         //private System.Windows.Forms.DataVisualization.Charting.Chart aMainChart;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button aYAxisZoomIn;
+        private System.Windows.Forms.Button aYAxisZoomOut;
     }
 }
 
