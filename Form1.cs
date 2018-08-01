@@ -166,10 +166,10 @@ namespace StockMarketAnalysis
 
         private void button2_Click(object sender, EventArgs e)
         {
-            highPlot = new Plot("highs", aMainChart);
+            highPlot = new Plot("highs", aMainChart, Color.ForestGreen);
             for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
             {
-                if (i < 50)
+                if (i == 4 || i == 3)
                 {
                     highPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[0]);
                 }
