@@ -1,4 +1,8 @@
-﻿namespace StockMarketAnalysis
+﻿using System.Windows.Forms.DataVisualization.Charting;
+
+using System.Collections.Generic;
+
+namespace StockMarketAnalysis
 {
     partial class aMainForm
     {
@@ -28,12 +32,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.aMainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            ((System.ComponentModel.ISupportInitialize)(this.aMainChart)).BeginInit();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.aYAxisZoomIn = new System.Windows.Forms.Button();
+            this.aYAxisZoomOut = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -54,8 +58,29 @@
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "msft";
             // 
-            // aMainChart
+            // button2
             // 
+            this.button2.Location = new System.Drawing.Point(464, 12);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "Highs";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(579, 11);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "Lows";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // aYAxisZoomIn
+            // 
+            
             chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
             chartArea1.AxisY.IsStartedFromZero = false;
             chartArea1.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -75,19 +100,40 @@
             this.aMainChart.TabIndex = 2;
             this.aMainChart.Text = "Main Chart";
             this.aMainChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.aMainChart_MouseClick);
+
+            this.aYAxisZoomIn.Location = new System.Drawing.Point(13, 62);
+            this.aYAxisZoomIn.Name = "aYAxisZoomIn";
+            this.aYAxisZoomIn.Size = new System.Drawing.Size(19, 23);
+            this.aYAxisZoomIn.TabIndex = 5;
+            this.aYAxisZoomIn.Text = "+";
+            this.aYAxisZoomIn.UseVisualStyleBackColor = true;
+            this.aYAxisZoomIn.Click += new System.EventHandler(this.aYAxisZoomIn_Click);
+            // 
+            // aYAxisZoomOut
+            // 
+            this.aYAxisZoomOut.Location = new System.Drawing.Point(13, 92);
+            this.aYAxisZoomOut.Name = "aYAxisZoomOut";
+            this.aYAxisZoomOut.Size = new System.Drawing.Size(19, 23);
+            this.aYAxisZoomOut.TabIndex = 6;
+            this.aYAxisZoomOut.Text = "-";
+            this.aYAxisZoomOut.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.aYAxisZoomOut.UseVisualStyleBackColor = true;
+            this.aYAxisZoomOut.Click += new System.EventHandler(this.aYAxisZoomOut_Click);
             // 
             // aMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1836, 896);
-            this.Controls.Add(this.aMainChart);
+            this.Controls.Add(this.aYAxisZoomOut);
+            this.Controls.Add(this.aYAxisZoomIn);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.Name = "aMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Stock Market Analysis";
-            ((System.ComponentModel.ISupportInitialize)(this.aMainChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -97,7 +143,14 @@
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart aMainChart;
+        //private System.Windows.Forms.DataVisualization.Charting.Chart aMainChart;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button aYAxisZoomIn;
+        private System.Windows.Forms.Button aYAxisZoomOut;
     }
 }
+
+
+
 
