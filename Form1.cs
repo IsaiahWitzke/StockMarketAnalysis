@@ -19,9 +19,9 @@ namespace StockMarketAnalysis
         ChartArea aMainChartArea;
         Series aMainSeries;
 
-        Plot userDrawn;
         bool drawing;
 
+        Plot userDrawn;
         Plot highPlot;
         Plot lowPlot;
         
@@ -32,6 +32,7 @@ namespace StockMarketAnalysis
         private int yAxisZoomSpeed = 2;
         private int yAxisZoomMultiple = 0;
 
+
         public aMainForm()
         {
             InitializeComponent();
@@ -41,7 +42,16 @@ namespace StockMarketAnalysis
             createChart();
 
             drawing = false;
-            userDrawn = new Plot("userDrawn", aMainChart, Color.ForestGreen);
+            userDrawn = new Plot("userDrawn", aMainChart, Color.Violet);
+            highPlot = new Plot("highs", aMainChart, Color.ForestGreen);
+            lowPlot = new Plot("lows", aMainChart, Color.ForestGreen);
+
+            //aMainChart.Series.Add("userDrawn");
+            //aMainChart.Series["userDrawn"].ChartType = SeriesChartType.Line;   // all plots using this constructed will be a line
+            //aMainChart.Series["userDrawn"].IsXValueIndexed = true;
+
+            //for debugging (so we don't have to click button every time)
+            loadStock("MSFT");
         }
 
         //gets stock market data through alpha vantage
@@ -136,8 +146,7 @@ namespace StockMarketAnalysis
                     dateInfo[2] = Convert.ToInt32(stringDateArr[2]);
 
                     aMainChart.Series[0].XValueType = ChartValueType.DateTime;
-                    System.DateTime x = new System.DateTime(dateInfo[0], dateInfo[1], dateInfo[2]);
-                    //chart1.Series[0].Points.AddXY(x.ToOADate(), 34);
+                    DateTime x = new DateTime(dateInfo[0], dateInfo[1], dateInfo[2]);
 
                     //candle stick data
                     double open = Convert.ToDouble(values[1]);
@@ -206,55 +215,61 @@ namespace StockMarketAnalysis
         #region Event Handlers
         private void button1_Click(object sender, EventArgs e)
         {
-            //getting the data from online:
             string symbol = textBox1.Text;
             loadStock(symbol);
         }
 
+
+
+        //testing the plot class
+        private void button2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
+            {
+                    highPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[0]);
+            }
+            highPlot.updatePlot();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
+            {
+                if(i == 3 || i == 4)
+                lowPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[1]);
+                Console.WriteLine(" x:" + aMainChart.Series[0].Points[i].XValue + " y " + aMainChart.Series[0].Points[i].YValues[1]);
+            }
+
+            lowPlot.updatePlot();
+        }
+
+        //draw on chart
         private void aMainChart_MouseClick(object sender, MouseEventArgs e)
         {   
             if(drawing)
             {
                 //store location
                 var pos = e.Location;
-                var results = aMainChart.HitTest(pos.X, pos.Y, false, ChartElementType.PlottingArea);
-                foreach (var result in results)
-                {
-                    if (result.ChartElementType == ChartElementType.PlottingArea)
-                    {
-                        var x = result.ChartArea.AxisX.PixelPositionToValue(pos.X);
-                        var y = result.ChartArea.AxisY.PixelPositionToValue(pos.Y);
-                        Console.WriteLine("x:" + x + " y:" + y);
-                    }
-                }
+
+                var x = aMainChart.ChartAreas[0].AxisX.PixelPositionToValue(pos.X); //x value is number of bars  counting from the right of the graph
+                var y = aMainChart.ChartAreas[0].AxisY.PixelPositionToValue(pos.Y); //y value translates on to graph directly (no changes necessary)
+
+                //get closes data points
+                var upper = Convert.ToInt32(Math.Ceiling(x));
+                //var lower = Convert.ToInt32(Math.Floor(x));
+
+                double upperValue = aMainChart.Series[0].Points[upper].XValue;
+               /// double lowerValue = aMainChart.Series[0].Points[lower].XValue;
+
+
+                Console.WriteLine(" x:" + x + " upper " + upperValue + " lower " + " " + y);
+
+                userDrawn.data.Add(upperValue, y);
+                userDrawn.updatePlot();
+
+                //aMainChart.Series["userDrawn"].Points.AddY(y);
+
             }
-        }
-
-
-        //testing the plot class
-        private void button2_Click(object sender, EventArgs e)
-        {
-            highPlot = new Plot("highs", aMainChart, Color.ForestGreen);
-            for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
-            {
-                if (i == 4 || i == 3)
-                {
-                    highPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[0]);
-                }
-            }
-
-            highPlot.updatePlot();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            lowPlot = new Plot("lows", aMainChart);
-            for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
-            {
-                lowPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[1]);
-            }
-
-            lowPlot.updatePlot();
         }
 
         //going in and out of drawing mode

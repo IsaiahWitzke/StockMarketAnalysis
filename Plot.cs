@@ -49,6 +49,12 @@ namespace StockMarketAnalysis
             //now going through the main x axis. If there is no data point for this plot at that point, 
             //then we will make it the candle's high (as to not mess with the chart's y axis' zoom) and transparent,
             //otherwise, plot it as intended
+
+            if (data.Count == 1)
+            {
+                return;
+            }
+
             for (int i = 0; i < chart.Series[0].Points.Count(); i++)
             {
                 try
@@ -70,7 +76,6 @@ namespace StockMarketAnalysis
                 }
                 catch
                 {
-                    
                     this.chart.Series[seriesName].Points.AddXY(
                         chart.Series[0].Points[i].XValue, 
                         chart.Series[0].Points[i].YValues[0]);
