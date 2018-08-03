@@ -218,10 +218,17 @@ namespace StockMarketAnalysis
             double leftSideOffset = (aMainChart.ChartAreas[0].AxisX.Minimum + mouseX) * 
                 (xAxisZoomSpeed * (double)xAxisZoomMultiple);
 
-            //zooming in the x axis
-            aMainChart.ChartAreas[0].AxisX.ScaleView.Zoom(
+            //zooming in/out the x axis. the if statment limits zoom
+            if (mouseEvent.Delta < 0 || rightSideOffset - 10 > leftSideOffset)
+            {
+                aMainChart.ChartAreas[0].AxisX.ScaleView.Zoom(
                     leftSideOffset,
                     rightSideOffset);
+            }
+            else
+            {
+                xAxisZoomMultiple--;
+            }
         }
 
         #endregion
