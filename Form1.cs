@@ -26,7 +26,7 @@ namespace StockMarketAnalysis
         Plot lowPlot;
         
         //chart zoom variables
-        private int xAxisZoomSpeed = 10;
+        private double xAxisZoomSpeed = 0.1;
         private int xAxisZoomMultiple = 0;
 
         private int yAxisZoomSpeed = 2;
@@ -167,7 +167,7 @@ namespace StockMarketAnalysis
         {
             //this is here to prevent breaking the program before the chart is initialized
             if (aMainChart == null)
-                return;
+                return;            
 
             //zooming in
             if (aMainChart.ChartAreas[0].AxisY.Minimum + (yAxisZoomMultiple + 1) * yAxisZoomSpeed <
@@ -195,19 +195,33 @@ namespace StockMarketAnalysis
 
         protected override void OnMouseWheel(MouseEventArgs mouseEvent)
         {
+            var mouseX = aMainChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseEvent.X);
+
+            Console.WriteLine(mouseEvent.Location.X);
+            Console.WriteLine(mouseX);
+
+            
             //zooming in
-            if (mouseEvent.Delta > 0)
-                if (xAxisZoomMultiple < 100)
-                    xAxisZoomMultiple++;
+            if (mouseEvent.Delta > 0 && xAxisZoomMultiple != 10)
+                xAxisZoomMultiple++;
+
             //zooming out
-            if (mouseEvent.Delta < 0)
-                if (xAxisZoomMultiple > 0)
-                    xAxisZoomMultiple--;
+            if (mouseEvent.Delta < 0 && xAxisZoomMultiple != 0)
+                xAxisZoomMultiple--;
+
+            //the ratio between these need to stay the same as we zoom in:
+            double rightSideOffset = aMainChart.ChartAreas[0].AxisX.Maximum - 
+                (
+                    (aMainChart.ChartAreas[0].AxisX.Maximum - mouseX) * 
+                    xAxisZoomSpeed * (double)xAxisZoomMultiple
+                );
+            double leftSideOffset = (aMainChart.ChartAreas[0].AxisX.Minimum + mouseX) * 
+                (xAxisZoomSpeed * (double)xAxisZoomMultiple);
 
             //zooming in the x axis
             aMainChart.ChartAreas[0].AxisX.ScaleView.Zoom(
-                    aMainChart.ChartAreas[0].AxisX.Minimum + xAxisZoomMultiple * xAxisZoomSpeed,
-                    aMainChart.ChartAreas[0].AxisX.Maximum - xAxisZoomMultiple * xAxisZoomSpeed);
+                    leftSideOffset,
+                    rightSideOffset);
         }
 
         #endregion
