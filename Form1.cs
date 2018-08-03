@@ -24,14 +24,17 @@ namespace StockMarketAnalysis
         Plot userDrawn;
         Plot highPlot;
         Plot lowPlot;
-        
-        //chart zoom variables
-        private double xAxisZoomSpeed = 0.1;
-        private int xAxisZoomMultiple = 0;
 
-        private int yAxisZoomSpeed = 2;
-        private int yAxisZoomMultiple = 0;
 
+        #region Chart's Zooming
+
+        ChartZoom chartZoom;
+
+        protected override void OnMouseWheel(MouseEventArgs mouseEvent) { chartZoom.xAxisZoom(mouseEvent); }
+        private void aYAxisZoomIn_Click(object sender, EventArgs e) { chartZoom.yAxisZoomIn(); }
+        private void aYAxisZoomOut_Click(object sender, EventArgs e) { chartZoom.yAxisZoomOut(); }
+
+        #endregion
 
         public aMainForm()
         {
@@ -45,6 +48,7 @@ namespace StockMarketAnalysis
             userDrawn = new Plot("userDrawn", aMainChart, Color.Violet);
             highPlot = new Plot("highs", aMainChart, Color.ForestGreen);
             lowPlot = new Plot("lows", aMainChart, Color.ForestGreen);
+            chartZoom = new ChartZoom(aMainChart);
 
             //aMainChart.Series.Add("userDrawn");
             //aMainChart.Series["userDrawn"].ChartType = SeriesChartType.Line;   // all plots using this constructed will be a line
@@ -161,77 +165,7 @@ namespace StockMarketAnalysis
         }
 
 
-        #region Chart's Zooming
 
-        private void aYAxisZoomIn_Click(object sender, EventArgs e)
-        {
-            //this is here to prevent breaking the program before the chart is initialized
-            if (aMainChart == null)
-                return;            
-
-            //zooming in
-            if (aMainChart.ChartAreas[0].AxisY.Minimum + (yAxisZoomMultiple + 1) * yAxisZoomSpeed <
-                    aMainChart.ChartAreas[0].AxisY.Maximum - (yAxisZoomMultiple + 1) * yAxisZoomSpeed)
-                yAxisZoomMultiple++;
-
-            //zooming in the x axis
-            aMainChart.ChartAreas[0].AxisY.ScaleView.Zoom(
-                    aMainChart.ChartAreas[0].AxisY.Minimum + yAxisZoomMultiple * yAxisZoomSpeed,
-                    aMainChart.ChartAreas[0].AxisY.Maximum - yAxisZoomMultiple * yAxisZoomSpeed);
-        }
-
-        private void aYAxisZoomOut_Click(object sender, EventArgs e)
-        {
-            if (aMainChart == null)
-                return;
-
-            if (yAxisZoomMultiple > 0)
-                yAxisZoomMultiple--;
-
-            aMainChart.ChartAreas[0].AxisY.ScaleView.Zoom(
-                aMainChart.ChartAreas[0].AxisY.Minimum + yAxisZoomMultiple * yAxisZoomSpeed,
-                aMainChart.ChartAreas[0].AxisY.Maximum - yAxisZoomMultiple * yAxisZoomSpeed);
-        }
-
-        protected override void OnMouseWheel(MouseEventArgs mouseEvent)
-        {
-            var mouseX = aMainChart.ChartAreas[0].AxisX.PixelPositionToValue(mouseEvent.X);
-
-            Console.WriteLine(mouseEvent.Location.X);
-            Console.WriteLine(mouseX);
-
-            
-            //zooming in
-            if (mouseEvent.Delta > 0 && xAxisZoomMultiple != 10)
-                xAxisZoomMultiple++;
-
-            //zooming out
-            if (mouseEvent.Delta < 0 && xAxisZoomMultiple != 0)
-                xAxisZoomMultiple--;
-
-            //the ratio between these need to stay the same as we zoom in:
-            double rightSideOffset = aMainChart.ChartAreas[0].AxisX.Maximum - 
-                (
-                    (aMainChart.ChartAreas[0].AxisX.Maximum - mouseX) * 
-                    xAxisZoomSpeed * (double)xAxisZoomMultiple
-                );
-            double leftSideOffset = (aMainChart.ChartAreas[0].AxisX.Minimum + mouseX) * 
-                (xAxisZoomSpeed * (double)xAxisZoomMultiple);
-
-            //zooming in/out the x axis. the if statment limits zoom
-            if (mouseEvent.Delta < 0 || rightSideOffset - 10 > leftSideOffset)
-            {
-                aMainChart.ChartAreas[0].AxisX.ScaleView.Zoom(
-                    leftSideOffset,
-                    rightSideOffset);
-            }
-            else
-            {
-                xAxisZoomMultiple--;
-            }
-        }
-
-        #endregion
 
         #region Event Handlers
         private void button1_Click(object sender, EventArgs e)
