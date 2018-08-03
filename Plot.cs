@@ -45,22 +45,22 @@ namespace StockMarketAnalysis
         {
             //to refresh all points, they must first be removed
             chart.Series[seriesName].Points.Clear();
+            //then readded
+            initPlot();
+        }
+
+        public void initPlot()
+        {
 
             //now going through the main x axis. If there is no data point for this plot at that point, 
             //then we will make it the candle's high (as to not mess with the chart's y axis' zoom) and transparent,
             //otherwise, plot it as intended
-
-            if (data.Count == 1)
-            {
-                return;
-            }
-
             for (int i = 0; i < chart.Series[0].Points.Count(); i++)
             {
-                try
+                if(data.ContainsKey(chart.Series[0].Points[i].XValue))
                 {
                     this.chart.Series[seriesName].Points.AddXY(
-                        chart.Series[0].Points[i].XValue, 
+                        chart.Series[0].Points[i].XValue,
                         data[chart.Series[0].Points[i].XValue]);
 
                     //this bit needs to be here or else an extra point is rendered to the screen
@@ -74,14 +74,19 @@ namespace StockMarketAnalysis
                     }
                     this.chart.Series[seriesName].Points[i].Color = color;
                 }
-                catch
+                else
                 {
                     this.chart.Series[seriesName].Points.AddXY(
-                        chart.Series[0].Points[i].XValue, 
+                        chart.Series[0].Points[i].XValue,
                         chart.Series[0].Points[i].YValues[0]);
                     this.chart.Series[seriesName].Points[i].Color = Color.Transparent;
                 }
             }
+        }
+
+        public void removePlot()
+        {
+            this.chart.Series.Remove(this.chart.Series[seriesName]);
         }
     }
 }

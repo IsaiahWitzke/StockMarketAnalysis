@@ -18,14 +18,17 @@ namespace StockMarketAnalysis
         static Chart aMainChart;
         ChartArea aMainChartArea;
         Series aMainSeries;
+        LinePlotter linePlotter;
 
         bool drawing;
 
-        Plot userDrawn;
         Plot highPlot;
         Plot lowPlot;
 
-
+        double firstPointX;
+        double firstPointY;
+        bool haveFirstPoint = false;
+        
         #region Chart's Zooming
 
         ChartZoom chartZoom;
@@ -45,14 +48,11 @@ namespace StockMarketAnalysis
             createChart();
 
             drawing = false;
-            userDrawn = new Plot("userDrawn", aMainChart, Color.Violet);
             highPlot = new Plot("highs", aMainChart, Color.ForestGreen);
             lowPlot = new Plot("lows", aMainChart, Color.ForestGreen);
             chartZoom = new ChartZoom(aMainChart);
 
-            //aMainChart.Series.Add("userDrawn");
-            //aMainChart.Series["userDrawn"].ChartType = SeriesChartType.Line;   // all plots using this constructed will be a line
-            //aMainChart.Series["userDrawn"].IsXValueIndexed = true;
+            linePlotter = new LinePlotter(aMainChart);
 
             //for debugging (so we don't have to click button every time)
             loadStock("MSFT");
@@ -162,6 +162,35 @@ namespace StockMarketAnalysis
                     aMainChart.Series[0].Points.Add(candleStick);
                 }   
             }
+
+            //generate non business day list for given stock
+            for (int i = 0; i < aMainChart.Series[0].Points.Count() - 1; i++)
+            {
+                double diff = aMainChart.Series[0].Points[i].XValue - aMainChart.Series[0].Points[i + 1].XValue;
+                //diff represents the type of missing dates
+                // 1 is a regular day
+                // 1 is a non business day within a week (ex Independace day on July 4th)
+                // 3 is a weekend
+                // 4 is a long weekend
+                // 5 is an extra long weekend
+
+                if (diff > 1)
+                {
+                    linePlotter.nonBusinessDays.Add(aMainChart.Series[0].Points[i].XValue - 1);
+                }
+                if (diff > 2)
+                {
+                    linePlotter.nonBusinessDays.Add(aMainChart.Series[0].Points[i].XValue - 2);
+                }
+                if (diff > 3)
+                {
+                    linePlotter.nonBusinessDays.Add(aMainChart.Series[0].Points[i].XValue - 3);
+                }
+                if (diff > 4)
+                {
+                    linePlotter.nonBusinessDays.Add(aMainChart.Series[0].Points[i].XValue - 4);
+                }
+            }
         }
 
 
@@ -173,8 +202,6 @@ namespace StockMarketAnalysis
             string symbol = textBox1.Text;
             loadStock(symbol);
         }
-
-
 
         //testing the plot class
         private void button2_Click(object sender, EventArgs e)
@@ -190,11 +217,8 @@ namespace StockMarketAnalysis
         {
             for (int i = 0; i < aMainChart.Series[0].Points.Count(); i++)
             {
-                if(i == 3 || i == 4)
                 lowPlot.data.Add(aMainChart.Series[0].Points[i].XValue, aMainChart.Series[0].Points[i].YValues[1]);
-                Console.WriteLine(" x:" + aMainChart.Series[0].Points[i].XValue + " y " + aMainChart.Series[0].Points[i].YValues[1]);
             }
-
             lowPlot.updatePlot();
         }
 
@@ -203,27 +227,26 @@ namespace StockMarketAnalysis
         {   
             if(drawing)
             {
-                //store location
+                //get location on chart
                 var pos = e.Location;
-
                 var x = aMainChart.ChartAreas[0].AxisX.PixelPositionToValue(pos.X); //x value is number of bars  counting from the right of the graph
                 var y = aMainChart.ChartAreas[0].AxisY.PixelPositionToValue(pos.Y); //y value translates on to graph directly (no changes necessary)
 
-                //get closes data points
-                var upper = Convert.ToInt32(Math.Ceiling(x));
-                //var lower = Convert.ToInt32(Math.Floor(x));
+                //get closes data point's x value
+                var index = Convert.ToInt32(Math.Round(x));
+                var pointIndex = aMainChart.Series[0].Points[index].XValue;
 
-                double upperValue = aMainChart.Series[0].Points[upper].XValue;
-               /// double lowerValue = aMainChart.Series[0].Points[lower].XValue;
-
-
-                Console.WriteLine(" x:" + x + " upper " + upperValue + " lower " + " " + y);
-
-                userDrawn.data.Add(upperValue, y);
-                userDrawn.updatePlot();
-
-                //aMainChart.Series["userDrawn"].Points.AddY(y);
-
+                if(!haveFirstPoint)
+                {
+                    firstPointX = pointIndex;
+                    firstPointY = y;
+                    haveFirstPoint = true;
+                }
+                else
+                {
+                    linePlotter.addLine(firstPointX + 1, firstPointY, pointIndex + 1, y);
+                    haveFirstPoint = false;
+                }
             }
         }
 
