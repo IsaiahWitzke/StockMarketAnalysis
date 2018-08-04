@@ -126,9 +126,9 @@ namespace StockMarketAnalysis
             plots.Clear();
         }
 
-        public void draw(bool drawing, MouseEventArgs e)
+        public void draw(MouseEventArgs e)
         {
-            if (!drawing) { return; }
+            if (!isDrawing) { return; }
             //get location on chart
             var pos = e.Location;
             var x = ChartHandler.chart.ChartAreas[0].AxisX.PixelPositionToValue(pos.X); //x value is number of bars  counting from the right of the graph
@@ -150,6 +150,5 @@ namespace StockMarketAnalysis
                 haveFirstPoint = false;
             }
         }
-
     }
 }

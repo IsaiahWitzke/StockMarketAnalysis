@@ -17,42 +17,48 @@ namespace StockMarketAnalysis
         ChartHandler chartHandler = new ChartHandler();
 
         LinePlotter linePlotter;
+        GraphicsProcessor graphicsProcessor; //all things to do with zooming in/out
+        ChartZoom chartZoom;
 
         Plot highPlot;
         Plot lowPlot;
         
-        //all things to do with zooming in/out
-        ChartZoom chartZoom;
-
         //when an event happens here, the chartZoom's methods are called
         protected override void OnMouseWheel(MouseEventArgs mouseEvent) { chartZoom.xAxisZoom(mouseEvent); }
         private void aYAxisZoomIn_Click(object sender, EventArgs e) { chartZoom.yAxisZoomIn(); }
         private void aYAxisZoomOut_Click(object sender, EventArgs e) { chartZoom.yAxisZoomOut(); }
+        private void aMainChart_MouseClick(object sender, MouseEventArgs e) { linePlotter.draw(e); }
+        private void button1_Click(object sender, EventArgs e) { chartHandler.loadStock(textBox1.Text); linePlotter.updateGaps(); } //for loading different symbols
 
         public aMainForm()
         {
             InitializeComponent();
 
-            //userDrawn = new Plot("userDrawn", ChartHandler.chart, Color.Violet);
             highPlot = new Plot("highs", ChartHandler.chart, Color.ForestGreen);
             lowPlot = new Plot("lows", ChartHandler.chart, Color.ForestGreen);
+            linePlotter = new LinePlotter(ChartHandler.chart);
+            graphicsProcessor = new GraphicsProcessor(ChartHandler.chart);
             chartZoom = new ChartZoom(ChartHandler.chart);
+
+            //chart events
             this.Controls.Add(ChartHandler.chart);
             ChartHandler.chart.MouseClick += new MouseEventHandler(this.aMainChart_MouseClick);
+            ChartHandler.chart.Paint += new PaintEventHandler(graphicsProcessor.paint);
+            ChartHandler.chart.MouseMove += new MouseEventHandler(graphicsProcessor.mouseMove);
+            ChartHandler.chart.MouseLeave += new EventHandler(graphicsProcessor.exit);
+            ChartHandler.chart.MouseEnter += new EventHandler(graphicsProcessor.enter);
 
-            //chart.MouseClick += new MouseEventHandler(this.aMainChart_MouseClick); //catch mouse clicks on the graph
 
-            linePlotter = new LinePlotter(ChartHandler.chart);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             //for debugging (so we don't have to click button every time)
             chartHandler.loadStock("MSFT");
             linePlotter.updateGaps();
         }
 
-        
 
-        //for loadind different symbols
-        private void button1_Click(object sender, EventArgs e) { chartHandler.loadStock(textBox1.Text); linePlotter.updateGaps(); }
 
         //testing the plot class
         private void button2_Click(object sender, EventArgs e)
@@ -72,9 +78,6 @@ namespace StockMarketAnalysis
             }
             lowPlot.updatePlot();
         }
-
-        //draw on chart
-        private void aMainChart_MouseClick(object sender, MouseEventArgs e) { linePlotter.draw(linePlotter.isDrawing, e); }
 
         //going in and out of drawing mode
         private void draw_Click(object sender, EventArgs e)
