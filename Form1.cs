@@ -46,13 +46,13 @@ namespace StockMarketAnalysis
 
             //for debugging (so we don't have to click button every time)
             chartHandler.loadStock("MSFT");
-
+            linePlotter.updateGaps();
         }
 
         
 
         //for loadind different symbols
-        private void button1_Click(object sender, EventArgs e) { chartHandler.loadStock(textBox1.Text); }
+        private void button1_Click(object sender, EventArgs e) { chartHandler.loadStock(textBox1.Text); linePlotter.updateGaps(); }
 
         //testing the plot class
         private void button2_Click(object sender, EventArgs e)

@@ -29,6 +29,38 @@ namespace StockMarketAnalysis
             nonBusinessDays = new List<double>();
         }
 
+        public void updateGaps()
+        {
+            //generate non business day list for given stock
+            for (int i = 0; i < chart.Series[0].Points.Count() - 1; i++)
+            {
+                double diff = chart.Series[0].Points[i].XValue - chart.Series[0].Points[i + 1].XValue;
+                //diff represents the type of missing dates
+                // 1 is a regular day
+                // 1 is a non business day within a week (ex Independace day on July 4th)
+                // 3 is a weekend
+                // 4 is a long weekend
+                // 5 is an extra long weekend
+
+                if (diff > 1)
+                {
+                    nonBusinessDays.Add(chart.Series[0].Points[i].XValue - 1);
+                }
+                if (diff > 2)
+                {
+                    nonBusinessDays.Add(chart.Series[0].Points[i].XValue - 2);
+                }
+                if (diff > 3)
+                {
+                    nonBusinessDays.Add(chart.Series[0].Points[i].XValue - 3);
+                }
+                if (diff > 4)
+                {
+                    nonBusinessDays.Add(chart.Series[0].Points[i].XValue - 4);
+                }
+            }
+        }
+
         public void addLine(double xin1, double yin1, double xin2, double yin2)
         {
             Plot newLine = new Plot("userPlot#" + count, chart, Color.Indigo);
