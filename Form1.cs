@@ -63,20 +63,26 @@ namespace StockMarketAnalysis
         //testing the plot class
         private void button2_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < ChartHandler.chart.Series[0].Points.Count(); i++)
+            if (highPlot.noData)
             {
-                highPlot.data.Add(ChartHandler.chart.Series[0].Points[i].XValue, ChartHandler.chart.Series[0].Points[i].YValues[0]);
+                for (int i = 0; i < ChartHandler.chart.Series[0].Points.Count(); i++)
+                {
+                    highPlot.addPoint(ChartHandler.chart.Series[0].Points[i].XValue, ChartHandler.chart.Series[0].Points[i].YValues[0]);
+                }
             }
-            highPlot.updatePlot();
+            highPlot.toggleDisplay();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < ChartHandler.chart.Series[0].Points.Count(); i++)
-            {
-                lowPlot.data.Add(ChartHandler.chart.Series[0].Points[i].XValue, ChartHandler.chart.Series[0].Points[i].YValues[1]);
+            if(lowPlot.noData)
+            { 
+                for (int i = 0; i < ChartHandler.chart.Series[0].Points.Count(); i++)
+                {
+                    lowPlot.addPoint(ChartHandler.chart.Series[0].Points[i].XValue, ChartHandler.chart.Series[0].Points[i].YValues[1]);
+                }
             }
-            lowPlot.updatePlot();
+            lowPlot.toggleDisplay();
         }
 
         //going in and out of drawing mode

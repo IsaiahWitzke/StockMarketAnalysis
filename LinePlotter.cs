@@ -104,7 +104,7 @@ namespace StockMarketAnalysis
             for (double x = x1; x <= x2; x++)
             {
                 double y = slope * actualDate + intercept;
-                newLine.data.Add(x, y);
+                newLine.addPoint(x, y);
 
                 //on increment day count if current day is a business day
                 if(!nonBusinessDays.Contains(x))
@@ -113,7 +113,7 @@ namespace StockMarketAnalysis
                 }
             }
 
-            newLine.initPlot();
+            newLine.showPlot();
             count++;
         }
 
@@ -121,21 +121,28 @@ namespace StockMarketAnalysis
         {
             foreach (var plot in plots)
             {
-                plot.removePlot();
+                plot.deletePlot();
             }
             plots.Clear();
         }
 
         public void draw(MouseEventArgs e)
         {
-            if (!isDrawing) { return; }
+            if (!isDrawing) return;
+
             //get location on chart
             var pos = e.Location;
+
+            //if (ChartHandler.chart.HitTest(pos.X, pos.Y).ChartElementType != ChartElementType.PlottingArea) return;
+
             var x = ChartHandler.chart.ChartAreas[0].AxisX.PixelPositionToValue(pos.X); //x value is number of bars  counting from the right of the graph
             var y = ChartHandler.chart.ChartAreas[0].AxisY.PixelPositionToValue(pos.Y); //y value translates on to graph directly (no changes necessary)
 
             //get closes data point's x value
             var index = Convert.ToInt32(Math.Round(x));
+
+            if (index < 0 || index >= ChartHandler.chart.Series[0].Points.Count) return;
+
             var pointIndex = ChartHandler.chart.Series[0].Points[index].XValue;
 
             if (!haveFirstPoint)
