@@ -86,6 +86,12 @@ namespace StockMarketAnalysis
             string rawDataPath = "../../RawData/";
             getData(symbol, rawDataPath);
 
+            //clearing previous data
+            foreach (var series in chart.Series)
+            {
+                series.Points.Clear();
+            }
+
             //reading the output file:
             using (var reader = new StreamReader(rawDataPath + symbol))
             {

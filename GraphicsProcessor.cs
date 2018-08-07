@@ -25,10 +25,8 @@ namespace StockMarketAnalysis
         public void paint(object sender, PaintEventArgs e)
         {
             if (!drawing) return;
-            e.Graphics.DrawLine(pen, x, 0, x, y);
-            e.Graphics.DrawLine(pen, x, y, x, 10000);
-            e.Graphics.DrawLine(pen, 0, y, x, y);
-            e.Graphics.DrawLine(pen, x, y, 10000, y);
+            e.Graphics.DrawLine(pen, x, 0, x, 10000);
+            e.Graphics.DrawLine(pen, 0, y, 10000, y);
         }
 
         public void mouseMove(object sender, MouseEventArgs e)
