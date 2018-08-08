@@ -16,6 +16,8 @@ namespace StockMarketAnalysis
     {
         ChartHandler chartHandler = new ChartHandler();
 
+        SideMenu sideMenu = new SideMenu();
+
         LinePlotter linePlotter;
         GraphicsProcessor graphicsProcessor; //all things to do with zooming in/out
         ChartZoom chartZoom;
@@ -47,6 +49,10 @@ namespace StockMarketAnalysis
             ChartHandler.chart.MouseMove += new MouseEventHandler(graphicsProcessor.mouseMove);
             ChartHandler.chart.MouseLeave += new EventHandler(graphicsProcessor.exit);
             ChartHandler.chart.MouseEnter += new EventHandler(graphicsProcessor.enter);
+
+            //sidebar
+            Controls.Add(sideMenu.flowLayoutPanel);
+            sideMenu.scanForStockData("../../RawData/");
 
 
             this.SetStyle(ControlStyles.UserPaint, true);
@@ -93,5 +99,6 @@ namespace StockMarketAnalysis
                 drawMode.Text = "Draw";
             }
         }
+
     }
 }
