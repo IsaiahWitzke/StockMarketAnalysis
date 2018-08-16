@@ -30,7 +30,7 @@ namespace StockMarketAnalysis
         private void aYAxisZoomIn_Click(object sender, EventArgs e) { chartZoom.yAxisZoomIn(); }
         private void aYAxisZoomOut_Click(object sender, EventArgs e) { chartZoom.yAxisZoomOut(); }
         private void aMainChart_MouseClick(object sender, MouseEventArgs e) { linePlotter.draw(e); }
-        private void button1_Click(object sender, EventArgs e) { chartHandler.loadStock(textBox1.Text); linePlotter.updateGaps(); } //for loading different symbols
+        private void button1_Click(object sender, EventArgs e) { ChartHandler.loadStock(textBox1.Text); linePlotter.updateGaps(); } //for loading different symbols
 
         public aMainForm()
         {
@@ -60,11 +60,9 @@ namespace StockMarketAnalysis
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             //for debugging (so we don't have to click button every time)
-            chartHandler.loadStock("MSFT");
+            ChartHandler.loadStock("MSFT");
             linePlotter.updateGaps();
         }
-
-
 
         //testing the plot class
         private void button2_Click(object sender, EventArgs e)

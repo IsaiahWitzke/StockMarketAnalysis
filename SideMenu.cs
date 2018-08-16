@@ -11,6 +11,7 @@ namespace StockMarketAnalysis
 {
     class SideMenu
     {
+        //ChartHandler chartHandler = aMainForm.
         public FlowLayoutPanel flowLayoutPanel;
 
         List<Button> buttons = new List<Button>();
@@ -37,6 +38,7 @@ namespace StockMarketAnalysis
 
         public void addStock(string ticker)
         {
+            //setting up the button
             Button newButton = new Button();
             this.buttons.Add(newButton);
 
@@ -49,7 +51,18 @@ namespace StockMarketAnalysis
 
             this.flowLayoutPanel.Controls.Add(buttons.Last());
 
-            //this.buttons.Last().Click += new System.EventHandler(this.buttons)
+            //the event when the button is pressed
+            buttons.Last().Click += new System.EventHandler(SidebarButton_Clicked);
+        }
+
+        //when a button to change the stock is actually pressed
+        private void SidebarButton_Clicked(object sender, EventArgs e)
+        {
+            string[] senderText = sender.ToString().Split(' ');
+            string ticker = senderText.Last();
+
+            ChartHandler.loadStock(ticker);
+
         }
 
         public void scanForStockData(string rawDataPath)

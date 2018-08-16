@@ -47,7 +47,7 @@ namespace StockMarketAnalysis
 
         /// <param name = "symbol" > ticker symbol of desired stock (ex. TSLA)</param>
         /// <param name = "rawDataPath" > path for data to be stored</param>
-        private void getData(string symbol, string rawDataPath)
+        private static void getData(string symbol, string rawDataPath)
         {
             string strCmdText;
             strCmdText = "/C alpha-vantage-cli -s " + symbol + " -k TPMQDECWM5ATUR1L -o " + rawDataPath + symbol;
@@ -77,7 +77,7 @@ namespace StockMarketAnalysis
             }
         }
 
-        public void loadStock(string symbol)
+        public static void loadStock(string symbol)
         {
             //get stock market data through alpha vantage
             string rawDataPath = "../../RawData/";
