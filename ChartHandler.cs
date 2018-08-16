@@ -34,15 +34,14 @@ namespace StockMarketAnalysis
             chart.Series.Add(mainSeries);
             chart.Size = new System.Drawing.Size(1600, 750);
             chart.TabIndex = 2;
-            
-
+           
             mainSeries.ChartArea = "aMainChartArea";
-            mainSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
+            mainSeries.ChartType = SeriesChartType.Candlestick;
             mainSeries.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             mainSeries.IsXValueIndexed = true;    // this seems to be very important. (removes weekends)
             chart.ChartAreas[0].AxisX.IsReversed = true;   // when the weekends are removed the chart seems to be revesed, this line fixes it
             mainSeries.Name = "aCandleSticks";
-            mainSeries.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
+            mainSeries.XValueType = ChartValueType.Date;
             mainSeries.YValuesPerPoint = 4;
         }
 
@@ -83,6 +82,9 @@ namespace StockMarketAnalysis
             //get stock market data through alpha vantage
             string rawDataPath = "../../RawData/";
             getData(symbol, rawDataPath);
+
+            //get rid of previous data
+            chart.Series[0].Points.Clear();
 
             //reading the output file:
             using (var reader = new StreamReader(rawDataPath + symbol))
