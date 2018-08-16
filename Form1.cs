@@ -37,7 +37,7 @@ namespace StockMarketAnalysis
             highPlot = new Plot("highs", ChartHandler.chart, Color.ForestGreen);
             lowPlot = new Plot("lows", ChartHandler.chart, Color.ForestGreen);
             linePlotter = new LinePlotter(ChartHandler.chart);
-            graphicsProcessor = new GraphicsProcessor(ChartHandler.chart);
+            graphicsProcessor = new GraphicsProcessor(ChartHandler.chart, linePlotter);
             chartZoom = new ChartZoom(ChartHandler.chart);
 
             //chart events
@@ -96,6 +96,7 @@ namespace StockMarketAnalysis
             }
             else
             {
+                linePlotter.haveFirstPoint = false;
                 drawMode.Text = "Draw";
             }
         }

@@ -18,7 +18,9 @@ namespace StockMarketAnalysis
 
         private double firstPointX;
         private double firstPointY;
-        private bool haveFirstPoint = false;
+        public float firstPointRawX;
+        public float firstPointRawY;
+        public bool haveFirstPoint = false;
 
         public bool isDrawing = false;
 
@@ -132,6 +134,9 @@ namespace StockMarketAnalysis
 
             //get location on chart
             var pos = e.Location;
+
+            firstPointRawX = (float)e.X;
+            firstPointRawY = (float)e.Y;
 
             //if (ChartHandler.chart.HitTest(pos.X, pos.Y).ChartElementType != ChartElementType.PlottingArea) return;
 
