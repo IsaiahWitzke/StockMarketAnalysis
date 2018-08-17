@@ -160,6 +160,10 @@ namespace StockMarketAnalysis
             {
                 addLine(firstPointX + 1, firstPointY, pointIndex + 1, y);
                 haveFirstPoint = false;
+                if (Control.ModifierKeys == Keys.Shift)
+                {
+                    draw(e);
+                }
             }
         }
     }
