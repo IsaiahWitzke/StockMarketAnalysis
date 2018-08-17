@@ -47,7 +47,7 @@ namespace StockMarketAnalysis
 
         /// <param name = "symbol" > ticker symbol of desired stock (ex. TSLA)</param>
         /// <param name = "rawDataPath" > path for data to be stored</param>
-        private static void getData(string symbol, string rawDataPath)
+        private static bool getData(string symbol, string rawDataPath)
         {
             string strCmdText;
             strCmdText = "/C alpha-vantage-cli -s " + symbol + " -k TPMQDECWM5ATUR1L -o " + rawDataPath + symbol;
@@ -73,15 +73,20 @@ namespace StockMarketAnalysis
             if (!File.Exists(rawDataPath + symbol))
             {
                 MessageBox.Show("Couldn't find " + symbol);
-                return;
+                return false;
             }
+
+            return true;
         }
 
         public static void loadStock(string symbol)
         {
             //get stock market data through alpha vantage
             string rawDataPath = "../../RawData/";
-            getData(symbol, rawDataPath);
+            if (!getData(symbol, rawDataPath))
+            {
+                return;
+            }
 
             //get rid of previous data
             chart.Series[0].Points.Clear();

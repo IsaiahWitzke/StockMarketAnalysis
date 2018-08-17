@@ -30,7 +30,12 @@ namespace StockMarketAnalysis
         private void aYAxisZoomIn_Click(object sender, EventArgs e) { chartZoom.yAxisZoomIn(); }
         private void aYAxisZoomOut_Click(object sender, EventArgs e) { chartZoom.yAxisZoomOut(); }
         private void aMainChart_MouseClick(object sender, MouseEventArgs e) { linePlotter.draw(e); }
-        private void button1_Click(object sender, EventArgs e) { ChartHandler.loadStock(textBox1.Text); linePlotter.updateGaps(); } //for loading different symbols
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ChartHandler.loadStock(textBox1.Text);
+            linePlotter.updateGaps();
+            sideMenu.scanForStockData("../../RawData/");
+        } //for loading different stocks
 
         public aMainForm()
         {
