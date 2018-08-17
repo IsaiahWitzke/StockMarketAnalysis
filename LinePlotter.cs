@@ -18,7 +18,9 @@ namespace StockMarketAnalysis
 
         private double firstPointX;
         private double firstPointY;
-        private bool haveFirstPoint = false;
+        public float firstPointRawX;
+        public float firstPointRawY;
+        public bool haveFirstPoint = false;
 
         public bool isDrawing = false;
 
@@ -133,6 +135,9 @@ namespace StockMarketAnalysis
             //get location on chart
             var pos = e.Location;
 
+            firstPointRawX = (float)e.X;
+            firstPointRawY = (float)e.Y;
+
             //if (ChartHandler.chart.HitTest(pos.X, pos.Y).ChartElementType != ChartElementType.PlottingArea) return;
 
             var x = ChartHandler.chart.ChartAreas[0].AxisX.PixelPositionToValue(pos.X); //x value is number of bars  counting from the right of the graph
@@ -155,6 +160,10 @@ namespace StockMarketAnalysis
             {
                 addLine(firstPointX + 1, firstPointY, pointIndex + 1, y);
                 haveFirstPoint = false;
+                if (Control.ModifierKeys == Keys.Shift)
+                {
+                    draw(e);
+                }
             }
         }
     }
