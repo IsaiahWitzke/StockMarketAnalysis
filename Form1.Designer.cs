@@ -39,11 +39,12 @@ namespace StockMarketAnalysis
             this.aYAxisZoomIn = new System.Windows.Forms.Button();
             this.aYAxisZoomOut = new System.Windows.Forms.Button();
             this.drawMode = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(10, 12);
+            this.button1.Location = new System.Drawing.Point(10, 37);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(108, 25);
             this.button1.TabIndex = 0;
@@ -53,7 +54,7 @@ namespace StockMarketAnalysis
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(126, 15);
+            this.textBox1.Location = new System.Drawing.Point(126, 40);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(178, 20);
             this.textBox1.TabIndex = 1;
@@ -61,7 +62,7 @@ namespace StockMarketAnalysis
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(464, 12);
+            this.button2.Location = new System.Drawing.Point(464, 37);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
@@ -71,7 +72,7 @@ namespace StockMarketAnalysis
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(579, 11);
+            this.button3.Location = new System.Drawing.Point(579, 36);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 4;
@@ -81,7 +82,7 @@ namespace StockMarketAnalysis
             // 
             // aYAxisZoomIn
             // 
-            this.aYAxisZoomIn.Location = new System.Drawing.Point(195, 50);
+            this.aYAxisZoomIn.Location = new System.Drawing.Point(195, 75);
             this.aYAxisZoomIn.Name = "aYAxisZoomIn";
             this.aYAxisZoomIn.Size = new System.Drawing.Size(19, 23);
             this.aYAxisZoomIn.TabIndex = 5;
@@ -91,7 +92,7 @@ namespace StockMarketAnalysis
             // 
             // aYAxisZoomOut
             // 
-            this.aYAxisZoomOut.Location = new System.Drawing.Point(195, 80);
+            this.aYAxisZoomOut.Location = new System.Drawing.Point(195, 105);
             this.aYAxisZoomOut.Name = "aYAxisZoomOut";
             this.aYAxisZoomOut.Size = new System.Drawing.Size(19, 23);
             this.aYAxisZoomOut.TabIndex = 6;
@@ -102,13 +103,21 @@ namespace StockMarketAnalysis
             // 
             // drawMode
             // 
-            this.drawMode.Location = new System.Drawing.Point(678, 12);
+            this.drawMode.Location = new System.Drawing.Point(678, 37);
             this.drawMode.Name = "drawMode";
             this.drawMode.Size = new System.Drawing.Size(75, 23);
             this.drawMode.TabIndex = 7;
             this.drawMode.Text = "Draw";
             this.drawMode.UseVisualStyleBackColor = true;
             this.drawMode.Click += new System.EventHandler(this.draw_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1836, 24);
+            this.menuStrip1.TabIndex = 8;
+            this.menuStrip1.Text = "menuStrip1";
             // 
             // aMainForm
             // 
@@ -122,6 +131,8 @@ namespace StockMarketAnalysis
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "aMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Stock Market Analysis";
@@ -139,6 +150,7 @@ namespace StockMarketAnalysis
         private System.Windows.Forms.Button aYAxisZoomIn;
         private System.Windows.Forms.Button aYAxisZoomOut;
         private System.Windows.Forms.Button drawMode;
+        private System.Windows.Forms.MenuStrip menuStrip1;
     }
 }
 

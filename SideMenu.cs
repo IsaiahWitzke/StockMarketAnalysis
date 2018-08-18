@@ -27,7 +27,7 @@ namespace StockMarketAnalysis
             flowLayoutPanel.SuspendLayout();
 
             flowLayoutPanel.AutoScroll = true;
-            flowLayoutPanel.Location = new Point(10, 50);
+            flowLayoutPanel.Location = new Point(10, 75);
             flowLayoutPanel.Name = "flowLayoutPanel1";
             flowLayoutPanel.Size = new Size(175, 500);
             flowLayoutPanel.BackColor = Color.LightGray;

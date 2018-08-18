@@ -29,7 +29,7 @@ namespace StockMarketAnalysis
 
             chart = new Chart();
             chart.ChartAreas.Add(chartArea);
-            chart.Location = new System.Drawing.Point(225, 50);
+            chart.Location = new System.Drawing.Point(225, 75);
             chart.Name = "aMainChart";
             chart.Series.Add(mainSeries);
             chart.Size = new System.Drawing.Size(1600, 750);
