@@ -29,21 +29,22 @@ namespace StockMarketAnalysis
 
             chart = new Chart();
             chart.ChartAreas.Add(chartArea);
-            chart.Location = new System.Drawing.Point(97, 101);
+            //chart.Location = new System.Drawing.Point(97, 101);
             chart.Name = "aMainChart";
             chart.Series.Add(mainSeries);
-            chart.Size = new System.Drawing.Size(1668, 750);
+            chart.Dock = DockStyle.Fill;
+           // chart.Size = new System.Drawing.Size(1668, 750);
             chart.TabIndex = 2;
             
 
-            this.mainSeries.ChartArea = "aMainChartArea";
-            this.mainSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
-            this.mainSeries.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.mainSeries.IsXValueIndexed = true;    // this seems to be very important. (removes weekends)
+            mainSeries.ChartArea = "aMainChartArea";
+            mainSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
+            mainSeries.Color = System.Drawing.Color.FromArgb(0, 0, 64);
+            mainSeries.IsXValueIndexed = true;    // this seems to be very important. (removes weekends)
             chart.ChartAreas[0].AxisX.IsReversed = true;   // when the weekends are removed the chart seems to be revesed, this line fixes it
-            this.mainSeries.Name = "aCandleSticks";
-            this.mainSeries.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
-            this.mainSeries.YValuesPerPoint = 4;
+            mainSeries.Name = "aCandleSticks";
+            mainSeries.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
+            mainSeries.YValuesPerPoint = 4;
 
             
         }

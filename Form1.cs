@@ -41,7 +41,8 @@ namespace StockMarketAnalysis
             chartZoom = new ChartZoom(ChartHandler.chart);
 
             //chart events
-            this.Controls.Add(ChartHandler.chart);
+     
+            chartPanel.Controls.Add(ChartHandler.chart);
             ChartHandler.chart.MouseClick += new MouseEventHandler(this.aMainChart_MouseClick);
             ChartHandler.chart.Paint += new PaintEventHandler(graphicsProcessor.paint);
             ChartHandler.chart.MouseMove += new MouseEventHandler(graphicsProcessor.mouseMove);
