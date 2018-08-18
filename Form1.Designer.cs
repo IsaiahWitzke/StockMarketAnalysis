@@ -48,7 +48,7 @@ namespace StockMarketAnalysis
             // 
             this.button1.Location = new System.Drawing.Point(12, 15);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(108, 23);
+            this.button1.Size = new System.Drawing.Size(108, 25);
             this.button1.TabIndex = 0;
             this.button1.Text = "Get Historical Data";
             this.button1.UseVisualStyleBackColor = true;
@@ -74,7 +74,7 @@ namespace StockMarketAnalysis
             // 
             // aYAxisZoomIn
             // 
-            this.aYAxisZoomIn.Location = new System.Drawing.Point(13, 62);
+            this.aYAxisZoomIn.Location = new System.Drawing.Point(195, 50);
             this.aYAxisZoomIn.Name = "aYAxisZoomIn";
             this.aYAxisZoomIn.Size = new System.Drawing.Size(19, 23);
             this.aYAxisZoomIn.TabIndex = 5;
@@ -84,7 +84,7 @@ namespace StockMarketAnalysis
             // 
             // aYAxisZoomOut
             // 
-            this.aYAxisZoomOut.Location = new System.Drawing.Point(13, 92);
+            this.aYAxisZoomOut.Location = new System.Drawing.Point(195, 80);
             this.aYAxisZoomOut.Name = "aYAxisZoomOut";
             this.aYAxisZoomOut.Size = new System.Drawing.Size(19, 23);
             this.aYAxisZoomOut.TabIndex = 6;

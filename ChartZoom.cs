@@ -57,7 +57,19 @@ namespace StockMarketAnalysis
         public void xAxisZoom(MouseEventArgs mouseEvent)
         {
             var rawMouseX = mouseEvent.X;
-            var mouseX = chart.ChartAreas[0].AxisX.PixelPositionToValue(rawMouseX);
+            double mouseX;
+            //scrolling to the right of the chart sometimes throws an error
+            try { mouseX = chart.ChartAreas[0].AxisX.PixelPositionToValue(rawMouseX); }
+            catch (Exception) { mouseX = 0; }
+            
+
+            //attempting to scroll to the left or right of the graph
+            if (mouseEvent.X < chart.Location.X || mouseEvent.X > chart.Location.X + chart.Size.Width)
+                return;
+
+            //above or below the chart
+            if (mouseEvent.Y < chart.Location.Y || mouseEvent.Y > chart.Location.Y + chart.Size.Height)
+                return;
 
             //zooming in
             if (mouseEvent.Delta > 0 && xAxisZoomMultiple != 10)

@@ -22,36 +22,32 @@ namespace StockMarketAnalysis
             mainSeries = new Series();
 
             //make the chart
-            chartArea.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea.AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             chartArea.AxisY.IsStartedFromZero = false;
             chartArea.BackColor = System.Drawing.Color.WhiteSmoke;
             chartArea.Name = "aMainChartArea";
 
             chart = new Chart();
             chart.ChartAreas.Add(chartArea);
-            //chart.Location = new System.Drawing.Point(97, 101);
             chart.Name = "aMainChart";
             chart.Series.Add(mainSeries);
             chart.Dock = DockStyle.Fill;
-           // chart.Size = new System.Drawing.Size(1668, 750);
             chart.TabIndex = 2;
             
 
             mainSeries.ChartArea = "aMainChartArea";
-            mainSeries.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
+            mainSeries.ChartType = Candlestick;
             mainSeries.Color = System.Drawing.Color.FromArgb(0, 0, 64);
             mainSeries.IsXValueIndexed = true;    // this seems to be very important. (removes weekends)
             chart.ChartAreas[0].AxisX.IsReversed = true;   // when the weekends are removed the chart seems to be revesed, this line fixes it
             mainSeries.Name = "aCandleSticks";
-            mainSeries.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
+            mainSeries.XValueType = ChartValueType.Date;
             mainSeries.YValuesPerPoint = 4;
-
-            
         }
 
         /// <param name = "symbol" > ticker symbol of desired stock (ex. TSLA)</param>
         /// <param name = "rawDataPath" > path for data to be stored</param>
-        private void getData(string symbol, string rawDataPath)
+        private static bool getData(string symbol, string rawDataPath)
         {
             string strCmdText;
             strCmdText = "/C alpha-vantage-cli -s " + symbol + " -k TPMQDECWM5ATUR1L -o " + rawDataPath + symbol;
@@ -77,15 +73,23 @@ namespace StockMarketAnalysis
             if (!File.Exists(rawDataPath + symbol))
             {
                 MessageBox.Show("Couldn't find " + symbol);
-                return;
+                return false;
             }
+
+            return true;
         }
 
-        public void loadStock(string symbol)
+        public static void loadStock(string symbol)
         {
             //get stock market data through alpha vantage
             string rawDataPath = "../../RawData/";
-            getData(symbol, rawDataPath);
+            if (!getData(symbol, rawDataPath))
+            {
+                return;
+            }
+
+            //get rid of previous data
+            chart.Series[0].Points.Clear();
 
             //clearing previous data
             foreach (var series in chart.Series)
