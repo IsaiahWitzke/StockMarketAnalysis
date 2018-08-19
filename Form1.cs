@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-
+using System.IO;
 
 namespace StockMarketAnalysis
 {
@@ -34,11 +34,21 @@ namespace StockMarketAnalysis
         {
             ChartHandler.loadStock(textBox1.Text);
             linePlotter.updateGaps();
-            sideMenu.scanForStockData("../../RawData/");
+            sideMenu.scanForStockData("C:/Users/Public/Documents/RawData");
         } //for loading different stocks
 
         public aMainForm()
         {
+            //setting up files in the public documents if there are no files already there:
+            if (!File.Exists(@"C:\Users\Public\Documents\RawData"))
+            {
+                Directory.CreateDirectory(@"C:\Users\Public\Documents\RawData");
+            }
+            if (!File.Exists(@"C:\Users\Public\Documents\SavedAnnotations"))
+            {
+                Directory.CreateDirectory(@"C:\Users\Public\Documents\SavedAnnotations");
+            }
+
             InitializeComponent();
 
             highPlot = new Plot("highs", ChartHandler.chart, Color.ForestGreen);
@@ -58,7 +68,7 @@ namespace StockMarketAnalysis
 
             //sidebar
             Controls.Add(sideMenu.flowLayoutPanel);
-            sideMenu.scanForStockData("../../RawData/");
+            sideMenu.scanForStockData("C:/Users/Public/Documents/RawData");
 
 
             this.SetStyle(ControlStyles.UserPaint, true);
@@ -111,5 +121,89 @@ namespace StockMarketAnalysis
             }
         }
 
+        // saving the annotations
+        private void saveAnnotationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "annotation files (*.an)|*.an";
+                dialog.FilterIndex = 2;
+                dialog.InitialDirectory = @"C:\Users\Public\Documents\SavedAnnotations";
+                dialog.RestoreDirectory = true;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    using (Stream stream = dialog.OpenFile())
+                    {
+                        stream.Flush();
+                        
+                        StreamWriter sw = new StreamWriter(stream);
+                        sw.WriteLine(ChartHandler.ticker);
+                        linePlotter.savePlotsToFile(sw);    // saving the plot data
+
+                        sw.Close();
+                        stream.Close();
+
+                    }
+                }
+            }
+        }
+
+        private void openAnnotatedGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path = @"C:\Users\Public\Documents\SavedAnnotations";
+            string fileName = null;
+
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.InitialDirectory = Path.GetFullPath(path);
+                dialog.Filter = "annotation files (*.an)|*.an";
+                dialog.FilterIndex = 2;
+                dialog.RestoreDirectory = true;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    fileName = dialog.FileName;
+                }
+            }
+
+            if (fileName != null)
+            {
+                //here is where we read the file data:
+                using (var reader = new StreamReader(fileName))
+                {
+                    bool isFirstLine = true;
+                    while (!reader.EndOfStream)
+                    {
+                        if (isFirstLine)
+                        {
+                            //first line is the ticker of the graph annotated
+                            string firstLine = reader.ReadLine();
+                            ChartHandler.loadStock(firstLine);
+
+                            isFirstLine = false;
+                        }
+
+                        //read the next line, the first word of that next line is the kind of annotation that the line is
+                        string line = reader.ReadLine();
+                        string[] splitLine = line.Split(' ');
+
+                        switch (splitLine[0])
+                        {
+                            case "Plot":
+                                //for a plot line, the next 4 elements in "splitLine" are the 2 start/end points of the line
+                                double startX = Convert.ToDouble(splitLine[1]);
+                                double startY = Convert.ToDouble(splitLine[2]);
+                                double endX = Convert.ToDouble(splitLine[3]);
+                                double endY = Convert.ToDouble(splitLine[4]);
+                                linePlotter.addLine(startX, startY, endX, endY);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

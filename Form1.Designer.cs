@@ -38,6 +38,12 @@ namespace StockMarketAnalysis
             this.aYAxisZoomIn = new System.Windows.Forms.Button();
             this.aYAxisZoomOut = new System.Windows.Forms.Button();
             this.drawMode = new System.Windows.Forms.Button();
+
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAnnotationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openAnnotatedGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.button2 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.chartPanel = new System.Windows.Forms.Panel();
@@ -56,15 +62,26 @@ namespace StockMarketAnalysis
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(126, 15);
+            this.textBox1.Location = new System.Drawing.Point(126, 40);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(178, 20);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "msft";
             // 
+
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(464, 37);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "Highs";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(145, 3);
+            this.button3.Location = new System.Drawing.Point(579, 36);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 4;
@@ -74,7 +91,7 @@ namespace StockMarketAnalysis
             // 
             // aYAxisZoomIn
             // 
-            this.aYAxisZoomIn.Location = new System.Drawing.Point(195, 50);
+            this.aYAxisZoomIn.Location = new System.Drawing.Point(195, 75);
             this.aYAxisZoomIn.Name = "aYAxisZoomIn";
             this.aYAxisZoomIn.Size = new System.Drawing.Size(19, 23);
             this.aYAxisZoomIn.TabIndex = 5;
@@ -84,7 +101,7 @@ namespace StockMarketAnalysis
             // 
             // aYAxisZoomOut
             // 
-            this.aYAxisZoomOut.Location = new System.Drawing.Point(195, 80);
+            this.aYAxisZoomOut.Location = new System.Drawing.Point(195, 105);
             this.aYAxisZoomOut.Name = "aYAxisZoomOut";
             this.aYAxisZoomOut.Size = new System.Drawing.Size(19, 23);
             this.aYAxisZoomOut.TabIndex = 6;
@@ -95,7 +112,7 @@ namespace StockMarketAnalysis
             // 
             // drawMode
             // 
-            this.drawMode.Location = new System.Drawing.Point(287, 3);
+            this.drawMode.Location = new System.Drawing.Point(678, 37);
             this.drawMode.Name = "drawMode";
             this.drawMode.Size = new System.Drawing.Size(75, 23);
             this.drawMode.TabIndex = 7;
@@ -103,6 +120,39 @@ namespace StockMarketAnalysis
             this.drawMode.UseVisualStyleBackColor = true;
             this.drawMode.Click += new System.EventHandler(this.draw_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1836, 24);
+            this.menuStrip1.TabIndex = 8;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveAnnotationsToolStripMenuItem,
+            this.openAnnotatedGraphToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // saveAnnotationsToolStripMenuItem
+            // 
+            this.saveAnnotationsToolStripMenuItem.Name = "saveAnnotationsToolStripMenuItem";
+            this.saveAnnotationsToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.saveAnnotationsToolStripMenuItem.Text = "Save Annotations";
+            this.saveAnnotationsToolStripMenuItem.Click += new System.EventHandler(this.saveAnnotationsToolStripMenuItem_Click);
+            // 
+            // openAnnotatedGraphToolStripMenuItem
+            // 
+            this.openAnnotatedGraphToolStripMenuItem.Name = "openAnnotatedGraphToolStripMenuItem";
+            this.openAnnotatedGraphToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.openAnnotatedGraphToolStripMenuItem.Text = "Open Annotated Graph";
+            this.openAnnotatedGraphToolStripMenuItem.Click += new System.EventHandler(this.openAnnotatedGraphToolStripMenuItem_Click);
+            //
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(3, 3);
@@ -150,9 +200,13 @@ namespace StockMarketAnalysis
             this.Controls.Add(this.aYAxisZoomIn);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "aMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Stock Market Analysis";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -167,6 +221,10 @@ namespace StockMarketAnalysis
         private System.Windows.Forms.Button aYAxisZoomIn;
         private System.Windows.Forms.Button aYAxisZoomOut;
         private System.Windows.Forms.Button drawMode;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAnnotationsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openAnnotatedGraphToolStripMenuItem;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel chartPanel;

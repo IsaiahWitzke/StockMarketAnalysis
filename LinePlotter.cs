@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Forms;
+using System.IO;
 
 namespace StockMarketAnalysis
 {
@@ -179,6 +180,16 @@ namespace StockMarketAnalysis
                 {
                     draw(e);
                 }
+            }
+        }
+
+        //saves all the current plots to whatever stream reader
+        public void savePlotsToFile(StreamWriter sw)
+        {
+            //iterate through every plot and call the plot's save funtion
+            foreach (Plot plot in plots)
+            {
+                plot.savePlotToFile(sw);
             }
         }
     }

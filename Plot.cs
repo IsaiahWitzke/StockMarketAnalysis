@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.IO;
 
 namespace StockMarketAnalysis
 {
@@ -42,7 +43,7 @@ namespace StockMarketAnalysis
             this.color = color;
         }
 
-        //adds a point to the dic
+        //adds a point to the dictionary
         public void addPoint(double x, double y)
         {
             noData = false;
@@ -108,6 +109,42 @@ namespace StockMarketAnalysis
         public void deletePlot()
         {
             chart.Series.Remove(chart.Series[seriesName]);
+        }
+
+        //write's this plot's data to the stream reader
+        public void savePlotToFile(StreamWriter sw)
+        {
+            try
+            {
+                //goes through all of data, and outputs only the first and last points to the file 
+                string lineToSave = "Plot ";
+                bool isFirstPair = true;
+                string lastX = "";
+                string lastY = "";
+                foreach (var dataPoint in data)
+                {
+                    if (isFirstPair)
+                    {
+                        lineToSave += dataPoint.Key.ToString();
+                        lineToSave += " ";
+                        lineToSave += dataPoint.Value.ToString();
+                        lineToSave += " ";
+                        isFirstPair = false;
+                    }
+                    lastX = dataPoint.Key.ToString();
+                    lastY = dataPoint.Value.ToString();
+                }
+
+                lineToSave += lastX;
+                lineToSave += " ";
+                lineToSave += lastY;
+
+                sw.WriteLine(lineToSave);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
         }
     }
 }
