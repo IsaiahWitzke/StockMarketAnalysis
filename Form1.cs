@@ -34,11 +34,21 @@ namespace StockMarketAnalysis
         {
             ChartHandler.loadStock(textBox1.Text);
             linePlotter.updateGaps();
-            sideMenu.scanForStockData("../../RawData/");
+            sideMenu.scanForStockData("C:/Users/Public/Documents/RawData");
         } //for loading different stocks
 
         public aMainForm()
         {
+            //setting up files in the public documents if there are no files already there:
+            if (!File.Exists(@"C:\Users\Public\Documents\RawData"))
+            {
+                Directory.CreateDirectory(@"C:\Users\Public\Documents\RawData");
+            }
+            if (!File.Exists(@"C:\Users\Public\Documents\SavedAnnotations"))
+            {
+                Directory.CreateDirectory(@"C:\Users\Public\Documents\SavedAnnotations");
+            }
+
             InitializeComponent();
 
             highPlot = new Plot("highs", ChartHandler.chart, Color.ForestGreen);
@@ -57,7 +67,7 @@ namespace StockMarketAnalysis
 
             //sidebar
             Controls.Add(sideMenu.flowLayoutPanel);
-            sideMenu.scanForStockData("../../RawData/");
+            sideMenu.scanForStockData("C:/Users/Public/Documents/RawData");
 
 
             this.SetStyle(ControlStyles.UserPaint, true);
@@ -117,7 +127,7 @@ namespace StockMarketAnalysis
             {
                 dialog.Filter = "annotation files (*.an)|*.an";
                 dialog.FilterIndex = 2;
-                dialog.InitialDirectory = Path.GetFullPath("../../SavedAnnotations");
+                dialog.InitialDirectory = @"C:\Users\Public\Documents\SavedAnnotations";
                 dialog.RestoreDirectory = true;
 
                 if (dialog.ShowDialog() == DialogResult.OK)
@@ -140,7 +150,7 @@ namespace StockMarketAnalysis
 
         private void openAnnotatedGraphToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string path = "../../SavedAnnotations";
+            string path = @"C:\Users\Public\Documents\SavedAnnotations";
             string fileName = null;
 
             using (OpenFileDialog dialog = new OpenFileDialog())

@@ -36,7 +36,7 @@ namespace StockMarketAnalysis
             flowLayoutPanel.PerformLayout();
         }
 
-        public void addStock(string ticker)
+        public void addStockButton(string ticker)
         {
             //setting up the button
             buttons.Add(new Button());
@@ -56,22 +56,22 @@ namespace StockMarketAnalysis
             //the bit of data of the last stock to the side of the 
             dataLabels.Add(new Label());
 
-            //geting the last day's data
-            string lastDatData = lastDayData(ticker).ToString();
+            //geting the last day's moving data
+            string lastDayMove = lastDayData(ticker).ToString();
             //colors:
-            if (Convert.ToDouble(lastDatData) < 0)
+            if (Convert.ToDouble(lastDayMove) < 0)
             { dataLabels.Last().ForeColor = Color.Red; }
             else
             {
                 dataLabels.Last().ForeColor = Color.Green;
-                lastDatData = "+" + lastDatData;
+                lastDayMove = "+" + lastDayMove;
             }
 
             dataLabels.Last().Location = new Point(50, 3 * buttons.Count());
             dataLabels.Last().Name = "data";
             dataLabels.Last().Size = new Size(75, 20);
             dataLabels.Last().TabIndex = 0;
-            dataLabels.Last().Text = lastDatData;
+            dataLabels.Last().Text = lastDayMove;
 
             flowLayoutPanel.Controls.Add(dataLabels.Last());
         }
@@ -92,7 +92,7 @@ namespace StockMarketAnalysis
                 //goes through all the files in the raw data directory, gets the names of the files, and turns them into the buttons
                 foreach (string path in Directory.GetFiles(rawDataPath))
                 {
-                    string ticker = path.Replace(rawDataPath, "");
+                    string ticker = path.Replace(rawDataPath+"\\", "");
 
                     //prevents duplicate buttons
                     bool isDuplicate = false;
@@ -102,12 +102,13 @@ namespace StockMarketAnalysis
                     }
                     if (isDuplicate) { continue; }
 
-                    addStock(ticker);
+                    addStockButton(ticker);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                MessageBox.Show("Couldn't find any raw data file w/ path: " + rawDataPath);
+                MessageBox.Show("Couldn't find any raw data file w/ path: " + rawDataPath + e.ToString() 
+                    + " (Or some error of the programmer in the SideMenu.cs class)");
                 return;
             }
         }
@@ -115,7 +116,7 @@ namespace StockMarketAnalysis
         private double lastDayData(string symbol)
         {
             //get stock market data through alpha vantage
-            string rawDataPath = "../../RawData/";
+            string rawDataPath = "C:/Users/Public/Documents/RawData/";
 
             //reading the output file:
             using (var reader = new StreamReader(rawDataPath + symbol))

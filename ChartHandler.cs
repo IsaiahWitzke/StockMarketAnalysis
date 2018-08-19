@@ -84,7 +84,7 @@ namespace StockMarketAnalysis
         {
             ticker = symbol;
             //get stock market data through alpha vantage
-            string rawDataPath = "../../RawData/";
+            string rawDataPath = @"C:\Users\Public\Documents\RawData\";
             if (!getData(symbol, rawDataPath))
             {
                 return;
