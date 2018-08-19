@@ -167,10 +167,28 @@ namespace StockMarketAnalysis
                         if (isFirstLine)
                         {
                             //first line is the ticker of the graph annotated
-                            string line = reader.ReadLine();
-                            ChartHandler.loadStock(line);
+                            string firstLine = reader.ReadLine();
+                            ChartHandler.loadStock(firstLine);
 
                             isFirstLine = false;
+                        }
+
+                        //read the next line, the first word of that next line is the kind of annotation that the line is
+                        string line = reader.ReadLine();
+                        string[] splitLine = line.Split(' ');
+
+                        switch (splitLine[0])
+                        {
+                            case "Plot":
+                                //for a plot line, the next 4 elements in "splitLine" are the 2 start/end points of the line
+                                double startX = Convert.ToDouble(splitLine[1]);
+                                double startY = Convert.ToDouble(splitLine[2]);
+                                double endX = Convert.ToDouble(splitLine[3]);
+                                double endY = Convert.ToDouble(splitLine[4]);
+                                linePlotter.addLine(startX, startY, endX, endY);
+                                break;
+                            default:
+                                break;
                         }
                     }
                 }

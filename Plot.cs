@@ -116,24 +116,34 @@ namespace StockMarketAnalysis
         {
             try
             {
-                //goes through all of data, and outputs it to the file 
-                string lineToSave = "Plot " + seriesName;
+                //goes through all of data, and outputs only the first and last points to the file 
+                string lineToSave = "Plot ";
+                bool isFirstPair = true;
+                string lastX = "";
+                string lastY = "";
                 foreach (var dataPoint in data)
                 {
-                    lineToSave += dataPoint.Key.ToString();
-                    lineToSave += " ";
-                    lineToSave += dataPoint.Value.ToString();
-                    lineToSave += " ";
+                    if (isFirstPair)
+                    {
+                        lineToSave += dataPoint.Key.ToString();
+                        lineToSave += " ";
+                        lineToSave += dataPoint.Value.ToString();
+                        lineToSave += " ";
+                        isFirstPair = false;
+                    }
+                    lastX = dataPoint.Key.ToString();
+                    lastY = dataPoint.Value.ToString();
                 }
+
+                lineToSave += lastX;
+                lineToSave += " ";
+                lineToSave += lastY;
+
                 sw.WriteLine(lineToSave);
             }
             catch (Exception e)
             {
                 Console.WriteLine("Exception: " + e.Message);
-            }
-            finally
-            {
-                Console.WriteLine("Executing finally block.");
             }
         }
     }
