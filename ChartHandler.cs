@@ -15,6 +15,7 @@ namespace StockMarketAnalysis
         public static Chart chart = new Chart();
         ChartArea chartArea;
         Series mainSeries;
+        public static string ticker = "";
 
         public ChartHandler()
         {
@@ -81,6 +82,7 @@ namespace StockMarketAnalysis
 
         public static void loadStock(string symbol)
         {
+            ticker = symbol;
             //get stock market data through alpha vantage
             string rawDataPath = "../../RawData/";
             if (!getData(symbol, rawDataPath))
@@ -103,6 +105,7 @@ namespace StockMarketAnalysis
                 bool isFirstLine = true;
                 while (!reader.EndOfStream)
                 {
+                    //to get rid of the first line of gaff that alpha-vantage gives
                     if (isFirstLine)
                     {
                         reader.ReadLine();

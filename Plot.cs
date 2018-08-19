@@ -111,12 +111,11 @@ namespace StockMarketAnalysis
             chart.Series.Remove(chart.Series[seriesName]);
         }
 
-        public void savePlotToFile(string path, string fileName)
+        //write's this plot's data to the stream reader
+        public void savePlotToFile(StreamWriter sw)
         {
             try
             {
-                StreamWriter sw = new StreamWriter(path + "/" + fileName);
-
                 //goes through all of data, and outputs it to the file 
                 string lineToSave = "Plot " + seriesName;
                 foreach (var dataPoint in data)
@@ -127,7 +126,6 @@ namespace StockMarketAnalysis
                     lineToSave += " ";
                 }
                 sw.WriteLine(lineToSave);
-                sw.Close();
             }
             catch (Exception e)
             {

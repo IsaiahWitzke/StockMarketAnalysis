@@ -41,9 +41,8 @@ namespace StockMarketAnalysis
             this.drawMode = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveGraphAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAnnotationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openAnnotatedGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -129,32 +128,25 @@ namespace StockMarketAnalysis
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveGraphToolStripMenuItem,
-            this.saveGraphAsToolStripMenuItem,
-            this.openGraphToolStripMenuItem});
+            this.saveAnnotationsToolStripMenuItem,
+            this.openAnnotatedGraphToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // saveGraphToolStripMenuItem
+            // saveAnnotationsToolStripMenuItem
             // 
-            this.saveGraphToolStripMenuItem.Name = "saveGraphToolStripMenuItem";
-            this.saveGraphToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveGraphToolStripMenuItem.Text = "Save Graph";
-            this.saveGraphToolStripMenuItem.Click += new System.EventHandler(this.saveGraphToolStripMenuItem_Click);
+            this.saveAnnotationsToolStripMenuItem.Name = "saveAnnotationsToolStripMenuItem";
+            this.saveAnnotationsToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.saveAnnotationsToolStripMenuItem.Text = "Save Annotations";
+            this.saveAnnotationsToolStripMenuItem.Click += new System.EventHandler(this.saveAnnotationsToolStripMenuItem_Click);
             // 
-            // saveGraphAsToolStripMenuItem
+            // openAnnotatedGraphToolStripMenuItem
             // 
-            this.saveGraphAsToolStripMenuItem.Name = "saveGraphAsToolStripMenuItem";
-            this.saveGraphAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveGraphAsToolStripMenuItem.Text = "Save Graph As";
-            // 
-            // openGraphToolStripMenuItem
-            // 
-            this.openGraphToolStripMenuItem.Name = "openGraphToolStripMenuItem";
-            this.openGraphToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openGraphToolStripMenuItem.Text = "Open Graph";
-            this.openGraphToolStripMenuItem.Click += new System.EventHandler(this.openGraphToolStripMenuItem_Click);
+            this.openAnnotatedGraphToolStripMenuItem.Name = "openAnnotatedGraphToolStripMenuItem";
+            this.openAnnotatedGraphToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.openAnnotatedGraphToolStripMenuItem.Text = "Open Annotated Graph";
+            this.openAnnotatedGraphToolStripMenuItem.Click += new System.EventHandler(this.openAnnotatedGraphToolStripMenuItem_Click);
             // 
             // aMainForm
             // 
@@ -191,9 +183,8 @@ namespace StockMarketAnalysis
         private System.Windows.Forms.Button drawMode;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveGraphToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveGraphAsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openGraphToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAnnotationsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openAnnotatedGraphToolStripMenuItem;
     }
 }
 

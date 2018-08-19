@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-
+using System.IO;
 
 namespace StockMarketAnalysis
 {
@@ -110,9 +110,71 @@ namespace StockMarketAnalysis
             }
         }
 
-        private void saveGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        // saving the annotations
+        private void saveAnnotationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            linePlotter.savePlotsToFile("../../SavedAnnotations", "test");
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "annotation files (*.an)|*.an";
+                dialog.FilterIndex = 2;
+                dialog.InitialDirectory = Path.GetFullPath("../../SavedAnnotations");
+                dialog.RestoreDirectory = true;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    using (Stream stream = dialog.OpenFile())
+                    {
+                        stream.Flush();
+                        
+                        StreamWriter sw = new StreamWriter(stream);
+                        sw.WriteLine(ChartHandler.ticker);
+                        linePlotter.savePlotsToFile(sw);    // saving the plot data
+
+                        sw.Close();
+                        stream.Close();
+
+                    }
+                }
+            }
+        }
+
+        private void openAnnotatedGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path = "../../SavedAnnotations";
+            string fileName = null;
+
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.InitialDirectory = Path.GetFullPath(path);
+                dialog.Filter = "annotation files (*.an)|*.an";
+                dialog.FilterIndex = 2;
+                dialog.RestoreDirectory = true;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    fileName = dialog.FileName;
+                }
+            }
+
+            if (fileName != null)
+            {
+                //here is where we read the file data:
+                using (var reader = new StreamReader(fileName))
+                {
+                    bool isFirstLine = true;
+                    while (!reader.EndOfStream)
+                    {
+                        if (isFirstLine)
+                        {
+                            //first line is the ticker of the graph annotated
+                            string line = reader.ReadLine();
+                            ChartHandler.loadStock(line);
+
+                            isFirstLine = false;
+                        }
+                    }
+                }
+            }
         }
     }
 }

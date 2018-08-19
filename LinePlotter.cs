@@ -168,11 +168,13 @@ namespace StockMarketAnalysis
             }
         }
 
-        public void savePlotsToFile(string path, string fileName)
+        //saves all the current plots to whatever stream reader
+        public void savePlotsToFile(StreamWriter sw)
         {
+            //iterate through every plot and call the plot's save funtion
             foreach (Plot plot in plots)
             {
-                plot.savePlotToFile(path, fileName);
+                plot.savePlotToFile(sw);
             }
         }
     }
