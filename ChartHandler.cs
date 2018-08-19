@@ -11,10 +11,10 @@ namespace StockMarketAnalysis
 {
     class ChartHandler
     {
+        // the chart stuff that the user sees
         public static Chart chart = new Chart();
         ChartArea chartArea;
         Series mainSeries;
-
 
         public ChartHandler()
         {
@@ -133,6 +133,5 @@ namespace StockMarketAnalysis
                 }
             }
         }
-
     }
 }

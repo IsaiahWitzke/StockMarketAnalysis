@@ -40,6 +40,11 @@ namespace StockMarketAnalysis
             this.aYAxisZoomOut = new System.Windows.Forms.Button();
             this.drawMode = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveGraphAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -113,11 +118,43 @@ namespace StockMarketAnalysis
             // 
             // menuStrip1
             // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1836, 24);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveGraphToolStripMenuItem,
+            this.saveGraphAsToolStripMenuItem,
+            this.openGraphToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // saveGraphToolStripMenuItem
+            // 
+            this.saveGraphToolStripMenuItem.Name = "saveGraphToolStripMenuItem";
+            this.saveGraphToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveGraphToolStripMenuItem.Text = "Save Graph";
+            this.saveGraphToolStripMenuItem.Click += new System.EventHandler(this.saveGraphToolStripMenuItem_Click);
+            // 
+            // saveGraphAsToolStripMenuItem
+            // 
+            this.saveGraphAsToolStripMenuItem.Name = "saveGraphAsToolStripMenuItem";
+            this.saveGraphAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveGraphAsToolStripMenuItem.Text = "Save Graph As";
+            // 
+            // openGraphToolStripMenuItem
+            // 
+            this.openGraphToolStripMenuItem.Name = "openGraphToolStripMenuItem";
+            this.openGraphToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openGraphToolStripMenuItem.Text = "Open Graph";
+            this.openGraphToolStripMenuItem.Click += new System.EventHandler(this.openGraphToolStripMenuItem_Click);
             // 
             // aMainForm
             // 
@@ -136,6 +173,8 @@ namespace StockMarketAnalysis
             this.Name = "aMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Stock Market Analysis";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,6 +190,10 @@ namespace StockMarketAnalysis
         private System.Windows.Forms.Button aYAxisZoomOut;
         private System.Windows.Forms.Button drawMode;
         private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveGraphToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveGraphAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openGraphToolStripMenuItem;
     }
 }
 

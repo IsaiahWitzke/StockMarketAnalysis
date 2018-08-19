@@ -110,5 +110,9 @@ namespace StockMarketAnalysis
             }
         }
 
+        private void saveGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            linePlotter.savePlotsToFile("../../SavedAnnotations", "test");
+        }
     }
 }
