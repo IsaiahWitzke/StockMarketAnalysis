@@ -72,7 +72,7 @@ namespace StockMarketAnalysis
             //normalize values making x1 and y1 the smaller x value and rightmost point
             //allows proper intercept calculation (I have no idea why)
             double x1, y1, x2, y2;
-            if(xin1 < xin2)
+            if (xin1 < xin2)
             {
                 x1 = xin1;
                 y1 = yin1;
@@ -110,7 +110,7 @@ namespace StockMarketAnalysis
                 newLine.addPoint(x, y);
 
                 //on increment day count if current day is a business day
-                if(!nonBusinessDays.Contains(x))
+                if (!nonBusinessDays.Contains(x))
                 {
                     actualDate++;
                 }
@@ -136,20 +136,33 @@ namespace StockMarketAnalysis
             //get location on chart
             var pos = e.Location;
 
-            firstPointRawX = (float)e.X;
-            firstPointRawY = (float)e.Y;
+            //exit if click is not in chart data area
+            ChartElementType cet = ChartHandler.chart.HitTest(pos.X, pos.Y).ChartElementType;
+            switch (cet)
+            {
+                //valid input areas
+                case ChartElementType.Gridlines:
+                case ChartElementType.DataPoint:
+                case ChartElementType.PlottingArea:
+                    break;
+                default:
+                    return;
+            }
 
-            //if (ChartHandler.chart.HitTest(pos.X, pos.Y).ChartElementType != ChartElementType.PlottingArea) return;
 
             var x = ChartHandler.chart.ChartAreas[0].AxisX.PixelPositionToValue(pos.X); //x value is number of bars  counting from the right of the graph
             var y = ChartHandler.chart.ChartAreas[0].AxisY.PixelPositionToValue(pos.Y); //y value translates on to graph directly (no changes necessary)
 
             //get closes data point's x value
             var index = Convert.ToInt32(Math.Round(x));
-
-            if (index < 0 || index >= ChartHandler.chart.Series[0].Points.Count) return;
-
+            if (index < 0 || index >= ChartHandler.chart.Series[0].Points.Count) return; //pevents clicks just inside chart making invalid indices;
             var pointIndex = ChartHandler.chart.Series[0].Points[index].XValue;
+
+
+            //save raw coordinates used for ghost line before real line is drawn
+            firstPointRawX = (float)e.X;
+            firstPointRawY = (float)e.Y;
+
 
             if (!haveFirstPoint)
             {
@@ -161,6 +174,8 @@ namespace StockMarketAnalysis
             {
                 addLine(firstPointX + 1, firstPointY, pointIndex + 1, y);
                 haveFirstPoint = false;
+
+                //holding shift continues drawing
                 if (Control.ModifierKeys == Keys.Shift)
                 {
                     draw(e);
