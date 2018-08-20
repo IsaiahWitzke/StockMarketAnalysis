@@ -16,6 +16,7 @@ namespace StockMarketAnalysis
 
         List<Button> buttons = new List<Button>();
         List<Label> dataLabels = new List<Label>();
+        List<DateTime> lastTimeUpdated = new List<DateTime>();
 
         public SideMenu()
         {
@@ -29,7 +30,7 @@ namespace StockMarketAnalysis
             flowLayoutPanel.AutoScroll = true;
             flowLayoutPanel.Location = new Point(10, 75);
             flowLayoutPanel.Name = "flowLayoutPanel1";
-            flowLayoutPanel.Size = new Size(175, 500);
+            flowLayoutPanel.Size = new Size(165, 500);
             flowLayoutPanel.BackColor = Color.LightGray;
             flowLayoutPanel.TabIndex = 9;
             flowLayoutPanel.ResumeLayout(true);

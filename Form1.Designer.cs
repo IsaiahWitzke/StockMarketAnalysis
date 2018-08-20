@@ -32,66 +32,42 @@ namespace StockMarketAnalysis
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.aGetHistoricalData = new System.Windows.Forms.Button();
+            this.aTickerTextInput = new System.Windows.Forms.TextBox();
             this.aYAxisZoomIn = new System.Windows.Forms.Button();
             this.aYAxisZoomOut = new System.Windows.Forms.Button();
             this.drawMode = new System.Windows.Forms.Button();
-
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.aMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAnnotationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openAnnotatedGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
-            this.button2 = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.chartPanel = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.aUIChartTable = new System.Windows.Forms.TableLayoutPanel();
+            this.aChartPanel = new System.Windows.Forms.Panel();
+            this.aMenuStrip.SuspendLayout();
+            this.aUIChartTable.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // aGetHistoricalData
             // 
-            this.button1.Location = new System.Drawing.Point(12, 15);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(108, 25);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Get Historical Data";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.aGetHistoricalData.Location = new System.Drawing.Point(12, 37);
+            this.aGetHistoricalData.Name = "aGetHistoricalData";
+            this.aGetHistoricalData.Size = new System.Drawing.Size(108, 25);
+            this.aGetHistoricalData.TabIndex = 0;
+            this.aGetHistoricalData.Text = "Get Historical Data";
+            this.aGetHistoricalData.UseVisualStyleBackColor = true;
+            this.aGetHistoricalData.Click += new System.EventHandler(this.aGetHistoricalData_Click);
             // 
-            // textBox1
+            // aTickerTextInput
             // 
-            this.textBox1.Location = new System.Drawing.Point(126, 40);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(178, 20);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "msft";
-            // 
-
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(464, 37);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Highs";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(579, 36);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "Lows";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.aTickerTextInput.Location = new System.Drawing.Point(126, 40);
+            this.aTickerTextInput.Name = "aTickerTextInput";
+            this.aTickerTextInput.Size = new System.Drawing.Size(54, 20);
+            this.aTickerTextInput.TabIndex = 1;
+            this.aTickerTextInput.Text = "msft";
             // 
             // aYAxisZoomIn
             // 
-            this.aYAxisZoomIn.Location = new System.Drawing.Point(195, 75);
+            this.aYAxisZoomIn.Location = new System.Drawing.Point(186, 39);
             this.aYAxisZoomIn.Name = "aYAxisZoomIn";
             this.aYAxisZoomIn.Size = new System.Drawing.Size(19, 23);
             this.aYAxisZoomIn.TabIndex = 5;
@@ -101,7 +77,7 @@ namespace StockMarketAnalysis
             // 
             // aYAxisZoomOut
             // 
-            this.aYAxisZoomOut.Location = new System.Drawing.Point(195, 105);
+            this.aYAxisZoomOut.Location = new System.Drawing.Point(186, 68);
             this.aYAxisZoomOut.Name = "aYAxisZoomOut";
             this.aYAxisZoomOut.Size = new System.Drawing.Size(19, 23);
             this.aYAxisZoomOut.TabIndex = 6;
@@ -112,7 +88,7 @@ namespace StockMarketAnalysis
             // 
             // drawMode
             // 
-            this.drawMode.Location = new System.Drawing.Point(678, 37);
+            this.drawMode.Location = new System.Drawing.Point(287, 3);
             this.drawMode.Name = "drawMode";
             this.drawMode.Size = new System.Drawing.Size(75, 23);
             this.drawMode.TabIndex = 7;
@@ -120,15 +96,15 @@ namespace StockMarketAnalysis
             this.drawMode.UseVisualStyleBackColor = true;
             this.drawMode.Click += new System.EventHandler(this.draw_Click);
             // 
-            // menuStrip1
+            // aMenuStrip
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1836, 24);
-            this.menuStrip1.TabIndex = 8;
-            this.menuStrip1.Text = "menuStrip1";
+            this.aMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.aMenuStrip.Name = "aMenuStrip";
+            this.aMenuStrip.Size = new System.Drawing.Size(1836, 24);
+            this.aMenuStrip.TabIndex = 8;
+            this.aMenuStrip.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
@@ -152,62 +128,50 @@ namespace StockMarketAnalysis
             this.openAnnotatedGraphToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.openAnnotatedGraphToolStripMenuItem.Text = "Open Annotated Graph";
             this.openAnnotatedGraphToolStripMenuItem.Click += new System.EventHandler(this.openAnnotatedGraphToolStripMenuItem_Click);
-            //
-            // button2
             // 
-            this.button2.Location = new System.Drawing.Point(3, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Highs";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // aUIChartTable
             // 
-            // tableLayoutPanel1
+            this.aUIChartTable.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.aUIChartTable.ColumnCount = 5;
+            this.aUIChartTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.aUIChartTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.aUIChartTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.aUIChartTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.aUIChartTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.aUIChartTable.Controls.Add(this.drawMode, 2, 0);
+            this.aUIChartTable.Location = new System.Drawing.Point(515, 695);
+            this.aUIChartTable.Name = "aUIChartTable";
+            this.aUIChartTable.RowCount = 1;
+            this.aUIChartTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.aUIChartTable.Size = new System.Drawing.Size(711, 51);
+            this.aUIChartTable.TabIndex = 8;
             // 
-            this.tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.tableLayoutPanel1.ColumnCount = 5;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.button2, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button3, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.drawMode, 2, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(515, 695);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(711, 51);
-            this.tableLayoutPanel1.TabIndex = 8;
+            // aChartPanel
             // 
-            // chartPanel
-            // 
-            this.chartPanel.Location = new System.Drawing.Point(174, 98);
-            this.chartPanel.Name = "chartPanel";
-            this.chartPanel.Size = new System.Drawing.Size(954, 434);
-            this.chartPanel.TabIndex = 9;
+            this.aChartPanel.Location = new System.Drawing.Point(211, 37);
+            this.aChartPanel.Name = "aChartPanel";
+            this.aChartPanel.Size = new System.Drawing.Size(954, 434);
+            this.aChartPanel.TabIndex = 9;
             // 
             // aMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1836, 896);
-            this.Controls.Add(this.chartPanel);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.aChartPanel);
+            this.Controls.Add(this.aUIChartTable);
             this.Controls.Add(this.aYAxisZoomOut);
             this.Controls.Add(this.aYAxisZoomIn);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.Controls.Add(this.aTickerTextInput);
+            this.Controls.Add(this.aGetHistoricalData);
+            this.Controls.Add(this.aMenuStrip);
+            this.MainMenuStrip = this.aMenuStrip;
             this.Name = "aMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Stock Market Analysis";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
+            this.aMenuStrip.ResumeLayout(false);
+            this.aMenuStrip.PerformLayout();
+            this.aUIChartTable.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -215,19 +179,17 @@ namespace StockMarketAnalysis
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button aGetHistoricalData;
+        private System.Windows.Forms.TextBox aTickerTextInput;
         private System.Windows.Forms.Button aYAxisZoomIn;
         private System.Windows.Forms.Button aYAxisZoomOut;
         private System.Windows.Forms.Button drawMode;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip aMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAnnotationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openAnnotatedGraphToolStripMenuItem;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel chartPanel;
+        private System.Windows.Forms.TableLayoutPanel aUIChartTable;
+        private System.Windows.Forms.Panel aChartPanel;
     }
 }
 

@@ -30,9 +30,9 @@ namespace StockMarketAnalysis
         private void aYAxisZoomIn_Click(object sender, EventArgs e) { chartZoom.yAxisZoomIn(); }
         private void aYAxisZoomOut_Click(object sender, EventArgs e) { chartZoom.yAxisZoomOut(); }
         private void aMainChart_MouseClick(object sender, MouseEventArgs e) { linePlotter.draw(e); }
-        private void button1_Click(object sender, EventArgs e)
+        private void aGetHistoricalData_Click(object sender, EventArgs e)
         {
-            ChartHandler.loadStock(textBox1.Text);
+            ChartHandler.loadStock(aTickerTextInput.Text);
             linePlotter.updateGaps();
             sideMenu.scanForStockData("C:/Users/Public/Documents/RawData");
         } //for loading different stocks
@@ -59,7 +59,7 @@ namespace StockMarketAnalysis
 
             //chart events
      
-            chartPanel.Controls.Add(ChartHandler.chart);
+            aChartPanel.Controls.Add(ChartHandler.chart);
             ChartHandler.chart.MouseClick += new MouseEventHandler(this.aMainChart_MouseClick);
             ChartHandler.chart.Paint += new PaintEventHandler(graphicsProcessor.paint);
             ChartHandler.chart.MouseMove += new MouseEventHandler(graphicsProcessor.mouseMove);
