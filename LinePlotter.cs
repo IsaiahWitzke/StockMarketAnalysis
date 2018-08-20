@@ -12,10 +12,10 @@ namespace StockMarketAnalysis
 {
     class LinePlotter
     {
-        private Chart chart;
-        private List<Plot> plots;
-        private int count = 0;
-        public List<double> nonBusinessDays;
+        private static Chart chart;
+        private static List<Plot> plots;
+        private static int count = 0;
+        public static List<double> nonBusinessDays;
 
         private double firstPointX;
         private double firstPointY;
@@ -25,9 +25,9 @@ namespace StockMarketAnalysis
 
         public bool isDrawing = false;
 
-        public LinePlotter(Chart chart)
+        public LinePlotter(Chart nChart)
         {
-            this.chart = chart;
+            chart = nChart;
             plots = new List<Plot>();
             nonBusinessDays = new List<double>();
         }
@@ -64,7 +64,7 @@ namespace StockMarketAnalysis
             }
         }
 
-        public void addLine(double xin1, double yin1, double xin2, double yin2)
+        public static void addLine(double xin1, double yin1, double xin2, double yin2)
         {
             Plot newLine = new Plot("userPlot#" + count, chart, Color.Indigo);
             plots.Add(newLine);
@@ -184,7 +184,7 @@ namespace StockMarketAnalysis
         }
 
         //saves all the current plots to whatever stream reader
-        public void savePlotsToFile(StreamWriter sw)
+        public static void savePlotsToFile(StreamWriter sw)
         {
             //iterate through every plot and call the plot's save funtion
             foreach (Plot plot in plots)

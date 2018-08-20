@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.IO;
+using System.Diagnostics;
 
 namespace StockMarketAnalysis
 {
@@ -21,9 +22,6 @@ namespace StockMarketAnalysis
         LinePlotter linePlotter;
         GraphicsProcessor graphicsProcessor; //all things to do with zooming in/out
         ChartZoom chartZoom;
-
-        Plot highPlot;
-        Plot lowPlot;
         
         //when an event happens here, the chartZoom's methods are called
         protected override void OnMouseWheel(MouseEventArgs mouseEvent) { chartZoom.xAxisZoom(mouseEvent); }
@@ -40,19 +38,24 @@ namespace StockMarketAnalysis
         public aMainForm()
         {
             //setting up files in the public documents if there are no files already there:
+            //raw data
             if (!File.Exists(@"C:\Users\Public\Documents\RawData"))
             {
                 Directory.CreateDirectory(@"C:\Users\Public\Documents\RawData");
             }
+            //annotations
             if (!File.Exists(@"C:\Users\Public\Documents\SavedAnnotations"))
             {
                 Directory.CreateDirectory(@"C:\Users\Public\Documents\SavedAnnotations");
             }
+            //strategies
+            if (!File.Exists(@"C:\Users\Public\Documents\Strategies"))
+            {
+                Directory.CreateDirectory(@"C:\Users\Public\Documents\Strategies");
+            }
 
             InitializeComponent();
 
-            highPlot = new Plot("highs", ChartHandler.chart, Color.ForestGreen);
-            lowPlot = new Plot("lows", ChartHandler.chart, Color.ForestGreen);
             linePlotter = new LinePlotter(ChartHandler.chart);
             graphicsProcessor = new GraphicsProcessor(ChartHandler.chart, linePlotter);
             chartZoom = new ChartZoom(ChartHandler.chart);
@@ -80,30 +83,6 @@ namespace StockMarketAnalysis
             linePlotter.updateGaps();
         }
 
-        //testing the plot class
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (highPlot.noData)
-            {
-                for (int i = 0; i < ChartHandler.chart.Series[0].Points.Count(); i++)
-                {
-                    highPlot.addPoint(ChartHandler.chart.Series[0].Points[i].XValue, ChartHandler.chart.Series[0].Points[i].YValues[0]);
-                }
-            }
-            highPlot.toggleDisplay();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if(lowPlot.noData)
-            { 
-                for (int i = 0; i < ChartHandler.chart.Series[0].Points.Count(); i++)
-                {
-                    lowPlot.addPoint(ChartHandler.chart.Series[0].Points[i].XValue, ChartHandler.chart.Series[0].Points[i].YValues[1]);
-                }
-            }
-            lowPlot.toggleDisplay();
-        }
 
         //going in and out of drawing mode
         private void draw_Click(object sender, EventArgs e)
@@ -124,84 +103,95 @@ namespace StockMarketAnalysis
         // saving the annotations
         private void saveAnnotationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            AnnotationFiles.saveAnnotatedGraph();
+        }
+
+        // opening some annotations
+        private void openAnnotatedGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AnnotationFiles.openAnnotatedGraph();
+        }
+
+        //to create a new strategy
+        private void newStrategyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             using (SaveFileDialog dialog = new SaveFileDialog())
             {
-                dialog.Filter = "annotation files (*.an)|*.an";
+                dialog.Filter = "C# Files (*.cs)|*.cs";
                 dialog.FilterIndex = 2;
-                dialog.InitialDirectory = @"C:\Users\Public\Documents\SavedAnnotations";
+                dialog.InitialDirectory = @"C:\Users\Public\Documents\Strategies";
                 dialog.RestoreDirectory = true;
 
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    using (Stream stream = dialog.OpenFile())
+                    using (StreamWriter sw = new StreamWriter(dialog.OpenFile()))
                     {
-                        stream.Flush();
-                        
-                        StreamWriter sw = new StreamWriter(stream);
-                        sw.WriteLine(ChartHandler.ticker);
-                        linePlotter.savePlotsToFile(sw);    // saving the plot data
+                        string className = dialog.FileName.Split('\\').Last();
+                        //some auto generated code
+                        sw.WriteLine("namespace StockMarketAnalysis\n" +
+                            "{\n" +
+                            "    class " + className + "\n" +
+                            "    {\n" +
+                            "    }\n" + 
+                            "}");
 
+
+                        sw.Flush();
                         sw.Close();
-                        stream.Close();
+                    }
 
+                    //then open the file in vs code (preferably)
+                    try
+                    {
+                        Process process = new Process();
+                        ProcessStartInfo startInfo = new ProcessStartInfo("code", "-g " + dialog.FileName);
+                        startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                        process.StartInfo = startInfo;
+                        process.Start();
+                    }
+                    catch (Exception)
+                    {
+                        //if the user doesnt have vs code, then prompt them to download it, then open it with a default program
+                        if (MessageBox.Show("Visual Studio Code is recommened, download?", "Visit", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
+                        {
+                            Process.Start("https://code.visualstudio.com/download");
+                        }
+                        Process.Start(dialog.FileName);
                     }
                 }
             }
         }
 
-        private void openAnnotatedGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        //opens existing strategy in visual studio
+        private void openStrategyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string path = @"C:\Users\Public\Documents\SavedAnnotations";
-            string fileName = null;
-
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
-                dialog.InitialDirectory = Path.GetFullPath(path);
-                dialog.Filter = "annotation files (*.an)|*.an";
+                dialog.Filter = "C# files (*.cs)|*.cs";
                 dialog.FilterIndex = 2;
+                dialog.InitialDirectory = @"C:\Users\Public\Documents\Strategies";
                 dialog.RestoreDirectory = true;
 
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    fileName = dialog.FileName;
-                }
-            }
-
-            if (fileName != null)
-            {
-                //here is where we read the file data:
-                using (var reader = new StreamReader(fileName))
-                {
-                    bool isFirstLine = true;
-                    while (!reader.EndOfStream)
+                    try
                     {
-                        if (isFirstLine)
-                        {
-                            //first line is the ticker of the graph annotated
-                            string firstLine = reader.ReadLine();
-                            ChartHandler.loadStock(firstLine);
-
-                            isFirstLine = false;
-                        }
-
-                        //read the next line, the first word of that next line is the kind of annotation that the line is
-                        string line = reader.ReadLine();
-                        string[] splitLine = line.Split(' ');
-
-                        switch (splitLine[0])
-                        {
-                            case "Plot":
-                                //for a plot line, the next 4 elements in "splitLine" are the 2 start/end points of the line
-                                double startX = Convert.ToDouble(splitLine[1]);
-                                double startY = Convert.ToDouble(splitLine[2]);
-                                double endX = Convert.ToDouble(splitLine[3]);
-                                double endY = Convert.ToDouble(splitLine[4]);
-                                linePlotter.addLine(startX, startY, endX, endY);
-                                break;
-                            default:
-                                break;
-                        }
+                        Process process = new Process();
+                        ProcessStartInfo startInfo = new ProcessStartInfo("code", "-g " + dialog.FileName);
+                        startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                        process.StartInfo = startInfo;
+                        process.Start();
                     }
+                    catch (Exception)
+                    {
+                        //if the user doesnt have vs code, then prompt them to download it, then open it with a default program
+                        if(MessageBox.Show("Visual Studio Code is recommened, download?", "Visit", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
+                        {
+                            Process.Start("https://code.visualstudio.com/download");
+                        }
+                        Process.Start(dialog.FileName);
+                    }
+                    
                 }
             }
         }

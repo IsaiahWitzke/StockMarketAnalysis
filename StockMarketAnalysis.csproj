@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnnotationFiles.cs" />
     <Compile Include="ChartHandler.cs" />
     <Compile Include="ChartZoom.cs" />
     <Compile Include="Form1.cs">
