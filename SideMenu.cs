@@ -15,8 +15,7 @@ namespace StockMarketAnalysis
         public FlowLayoutPanel flowLayoutPanel;
 
         List<Button> buttons = new List<Button>();
-        List<Label> dataLabels = new List<Label>();
-        List<DateTime> lastTimeUpdated = new List<DateTime>();
+        List<Label> movingLabels = new List<Label>();   // moving meaning the moving of the price
 
         public SideMenu()
         {
@@ -55,26 +54,26 @@ namespace StockMarketAnalysis
             buttons.Last().Click += new System.EventHandler(SidebarButton_Clicked);
 
             //the bit of data of the last stock to the side of the 
-            dataLabels.Add(new Label());
+            movingLabels.Add(new Label());
 
             //geting the last day's moving data
             string lastDayMove = lastDayData(ticker).ToString();
             //colors:
             if (Convert.ToDouble(lastDayMove) < 0)
-            { dataLabels.Last().ForeColor = Color.Red; }
+            { movingLabels.Last().ForeColor = Color.Red; }
             else
             {
-                dataLabels.Last().ForeColor = Color.Green;
+                movingLabels.Last().ForeColor = Color.Green;
                 lastDayMove = "+" + lastDayMove;
             }
 
-            dataLabels.Last().Location = new Point(50, 3 * buttons.Count());
-            dataLabels.Last().Name = "data";
-            dataLabels.Last().Size = new Size(75, 20);
-            dataLabels.Last().TabIndex = 0;
-            dataLabels.Last().Text = lastDayMove;
+            movingLabels.Last().Location = new Point(50, 3 * buttons.Count());
+            movingLabels.Last().Name = "data";
+            movingLabels.Last().Size = new Size(75, 20);
+            movingLabels.Last().TabIndex = 0;
+            movingLabels.Last().Text = lastDayMove;
 
-            flowLayoutPanel.Controls.Add(dataLabels.Last());
+            flowLayoutPanel.Controls.Add(movingLabels.Last());
         }
 
         //when a button to change the stock is actually pressed
