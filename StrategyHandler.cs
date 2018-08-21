@@ -35,6 +35,8 @@ namespace StockMarketAnalysis
                         className = className.Replace(".cs", "");
                         //some auto generated code
                         sw.WriteLine(
+                            "using StockMarketAnalysis;\n" +
+                            "\n" +
                             "namespace Strategy\n" +
                             "{\n" +
                             "    class " + className + "\n" +
@@ -138,6 +140,7 @@ namespace StockMarketAnalysis
 
             // Reference to external libraries
             parameters.ReferencedAssemblies.Add("System.Windows.Forms.dll");
+            parameters.ReferencedAssemblies.Add("System.Windows.Forms.DataVisualization.dll");
             parameters.ReferencedAssemblies.Add("StockMarketAnalysis.exe");
 
             // True - memory generation, false - external file generation

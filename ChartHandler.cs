@@ -9,12 +9,12 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace StockMarketAnalysis
 {
-    class ChartHandler
+    public class ChartHandler
     {
         // the chart stuff that the user sees
         public static Chart chart = new Chart();
         ChartArea chartArea;
-        Series mainSeries;
+        public static Series mainSeries;
         public static string ticker = "";
 
         public ChartHandler()

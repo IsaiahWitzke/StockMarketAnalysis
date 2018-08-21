@@ -44,10 +44,10 @@ namespace StockMarketAnalysis
             this.strategiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newStrategyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openStrategyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeStrategyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aUIChartTable = new System.Windows.Forms.TableLayoutPanel();
             this.aChartPanel = new System.Windows.Forms.Panel();
             this.aStrategyDropDown = new System.Windows.Forms.ComboBox();
-            this.executeStrategyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aMenuStrip.SuspendLayout();
             this.aUIChartTable.SuspendLayout();
             this.SuspendLayout();
@@ -148,16 +148,23 @@ namespace StockMarketAnalysis
             // newStrategyToolStripMenuItem
             // 
             this.newStrategyToolStripMenuItem.Name = "newStrategyToolStripMenuItem";
-            this.newStrategyToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.newStrategyToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.newStrategyToolStripMenuItem.Text = "New Strategy";
             this.newStrategyToolStripMenuItem.Click += new System.EventHandler(this.newStrategyToolStripMenuItem_Click);
             // 
             // openStrategyToolStripMenuItem
             // 
             this.openStrategyToolStripMenuItem.Name = "openStrategyToolStripMenuItem";
-            this.openStrategyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openStrategyToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.openStrategyToolStripMenuItem.Text = "Edit Strategy";
             this.openStrategyToolStripMenuItem.Click += new System.EventHandler(this.openStrategyToolStripMenuItem_Click);
+            // 
+            // executeStrategyToolStripMenuItem
+            // 
+            this.executeStrategyToolStripMenuItem.Name = "executeStrategyToolStripMenuItem";
+            this.executeStrategyToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.executeStrategyToolStripMenuItem.Text = "Execute Strategy";
+            this.executeStrategyToolStripMenuItem.Click += new System.EventHandler(this.executeStrategyToolStripMenuItem_Click);
             // 
             // aUIChartTable
             // 
@@ -191,13 +198,6 @@ namespace StockMarketAnalysis
             this.aStrategyDropDown.Size = new System.Drawing.Size(121, 21);
             this.aStrategyDropDown.TabIndex = 10;
             this.aStrategyDropDown.Text = "Active Strategy";
-            // 
-            // executeStrategyToolStripMenuItem
-            // 
-            this.executeStrategyToolStripMenuItem.Name = "executeStrategyToolStripMenuItem";
-            this.executeStrategyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.executeStrategyToolStripMenuItem.Text = "Execute Strategy";
-            this.executeStrategyToolStripMenuItem.Click += new System.EventHandler(this.executeStrategyToolStripMenuItem_Click);
             // 
             // aMainForm
             // 
