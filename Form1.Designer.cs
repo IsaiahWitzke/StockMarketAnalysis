@@ -47,7 +47,6 @@ namespace StockMarketAnalysis
             this.executeStrategyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aUIChartTable = new System.Windows.Forms.TableLayoutPanel();
             this.aChartPanel = new System.Windows.Forms.Panel();
-            this.aStrategyDropDown = new System.Windows.Forms.ComboBox();
             this.aMenuStrip.SuspendLayout();
             this.aUIChartTable.SuspendLayout();
             this.SuspendLayout();
@@ -190,21 +189,11 @@ namespace StockMarketAnalysis
             this.aChartPanel.Size = new System.Drawing.Size(954, 434);
             this.aChartPanel.TabIndex = 9;
             // 
-            // aStrategyDropDown
-            // 
-            this.aStrategyDropDown.FormattingEnabled = true;
-            this.aStrategyDropDown.Location = new System.Drawing.Point(1218, 37);
-            this.aStrategyDropDown.Name = "aStrategyDropDown";
-            this.aStrategyDropDown.Size = new System.Drawing.Size(121, 21);
-            this.aStrategyDropDown.TabIndex = 10;
-            this.aStrategyDropDown.Text = "Active Strategy";
-            // 
             // aMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1836, 896);
-            this.Controls.Add(this.aStrategyDropDown);
             this.Controls.Add(this.aChartPanel);
             this.Controls.Add(this.aUIChartTable);
             this.Controls.Add(this.aYAxisZoomOut);
@@ -240,7 +229,6 @@ namespace StockMarketAnalysis
         private System.Windows.Forms.ToolStripMenuItem strategiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newStrategyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openStrategyToolStripMenuItem;
-        private System.Windows.Forms.ComboBox aStrategyDropDown;
         private System.Windows.Forms.ToolStripMenuItem executeStrategyToolStripMenuItem;
     }
 }
