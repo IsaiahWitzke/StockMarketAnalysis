@@ -113,87 +113,15 @@ namespace StockMarketAnalysis
         }
 
         //to create a new strategy
-        private void newStrategyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (SaveFileDialog dialog = new SaveFileDialog())
-            {
-                dialog.Filter = "C# Files (*.cs)|*.cs";
-                dialog.FilterIndex = 2;
-                dialog.InitialDirectory = @"C:\Users\Public\Documents\Strategies";
-                dialog.RestoreDirectory = true;
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    using (StreamWriter sw = new StreamWriter(dialog.OpenFile()))
-                    {
-                        string className = dialog.FileName.Split('\\').Last();
-                        //some auto generated code
-                        sw.WriteLine("namespace StockMarketAnalysis\n" +
-                            "{\n" +
-                            "    class " + className + "\n" +
-                            "    {\n" +
-                            "    }\n" + 
-                            "}");
-
-
-                        sw.Flush();
-                        sw.Close();
-                    }
-
-                    //then open the file in vs code (preferably)
-                    try
-                    {
-                        Process process = new Process();
-                        ProcessStartInfo startInfo = new ProcessStartInfo("code", "-g " + dialog.FileName);
-                        startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                        process.StartInfo = startInfo;
-                        process.Start();
-                    }
-                    catch (Exception)
-                    {
-                        //if the user doesnt have vs code, then prompt them to download it, then open it with a default program
-                        if (MessageBox.Show("Visual Studio Code is recommened, download?", "Visit", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
-                        {
-                            Process.Start("https://code.visualstudio.com/download");
-                        }
-                        Process.Start(dialog.FileName);
-                    }
-                }
-            }
-        }
+        private void newStrategyToolStripMenuItem_Click(object sender, EventArgs e) { StrategyHandler.newStrategy(); }
 
         //opens existing strategy in visual studio
-        private void openStrategyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog dialog = new OpenFileDialog())
-            {
-                dialog.Filter = "C# files (*.cs)|*.cs";
-                dialog.FilterIndex = 2;
-                dialog.InitialDirectory = @"C:\Users\Public\Documents\Strategies";
-                dialog.RestoreDirectory = true;
+        private void openStrategyToolStripMenuItem_Click(object sender, EventArgs e) { StrategyHandler.openStrategy(); }
 
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        Process process = new Process();
-                        ProcessStartInfo startInfo = new ProcessStartInfo("code", "-g " + dialog.FileName);
-                        startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                        process.StartInfo = startInfo;
-                        process.Start();
-                    }
-                    catch (Exception)
-                    {
-                        //if the user doesnt have vs code, then prompt them to download it, then open it with a default program
-                        if(MessageBox.Show("Visual Studio Code is recommened, download?", "Visit", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
-                        {
-                            Process.Start("https://code.visualstudio.com/download");
-                        }
-                        Process.Start(dialog.FileName);
-                    }
-                    
-                }
-            }
+        private void executeStrategyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StrategyHandler.executeStrategy();
         }
     }
 }
+
