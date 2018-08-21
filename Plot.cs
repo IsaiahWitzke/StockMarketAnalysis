@@ -10,7 +10,7 @@ using System.IO;
 namespace StockMarketAnalysis
 {
     // this class is for ease of use, and allows a user to graph some new data onto the chart without woring about the series and chart areas...
-    class Plot
+    public class Plot
     {
         private Dictionary<double, double> data = new Dictionary<double, double>();  // "key" is the x values and the "values" as the y values
         Chart chart; // will hold the main static chart obj.
@@ -30,6 +30,11 @@ namespace StockMarketAnalysis
             this.chart.Series[name].IsXValueIndexed = true;
 
             seriesName = name;  // for future index use
+        }
+
+        public Plot(string name)
+        {
+            basicInit(name, ChartHandler.chart);
         }
 
         public Plot(string name, Chart chart)
