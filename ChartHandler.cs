@@ -13,29 +13,40 @@ namespace StockMarketAnalysis
     {
         // the chart stuff that the user sees
         public static Chart chart = new Chart();
-        ChartArea chartArea;
+        ChartArea chartArea, annotationArea;
         public static Series mainSeries;
         public static string ticker = "";
 
         public ChartHandler()
         {
             chartArea = new ChartArea();
+            annotationArea = new ChartArea();
             mainSeries = new Series();
 
             //make the chart
             chartArea.AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             chartArea.AxisY.IsStartedFromZero = false;
             chartArea.BackColor = System.Drawing.Color.WhiteSmoke;
+            chartArea.Position = new ElementPosition(0, 0, 100, 100);
             chartArea.Name = "aMainChartArea";
+
+            //set up annotation area
+            annotationArea.AxisX.Minimum = 0;
+            annotationArea.AxisX.Maximum = 100;
+            annotationArea.AxisY.Minimum = 0;
+            annotationArea.AxisY.Maximum = 100;
+            annotationArea.BackColor = System.Drawing.Color.Transparent;
+            annotationArea.Position = chartArea.Position;
+            annotationArea.Name = "annotationArea";
 
             chart = new Chart();
             chart.ChartAreas.Add(chartArea);
+            chart.ChartAreas.Add(annotationArea);
             chart.Name = "aMainChart";
             chart.Series.Add(mainSeries);
             chart.Dock = DockStyle.Fill;
             chart.TabIndex = 2;
             
-
             mainSeries.ChartArea = "aMainChartArea";
             mainSeries.ChartType = SeriesChartType.Candlestick;
             mainSeries.Color = System.Drawing.Color.FromArgb(0, 0, 64);

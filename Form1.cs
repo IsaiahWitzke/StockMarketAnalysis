@@ -16,10 +16,8 @@ namespace StockMarketAnalysis
     public partial class aMainForm : Form
     {
         ChartHandler chartHandler = new ChartHandler();
-
         SideMenu sideMenu = new SideMenu();
-
-        LinePlotter linePlotter;
+        LinePlotter linePlotter = new LinePlotter();
         GraphicsProcessor graphicsProcessor; //all things to do with zooming in/out
         ChartZoom chartZoom;
         
@@ -55,8 +53,6 @@ namespace StockMarketAnalysis
             }
 
             InitializeComponent();
-
-            linePlotter = new LinePlotter(ChartHandler.chart);
             graphicsProcessor = new GraphicsProcessor(ChartHandler.chart, linePlotter);
             chartZoom = new ChartZoom(ChartHandler.chart);
 
