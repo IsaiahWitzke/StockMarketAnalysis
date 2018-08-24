@@ -58,11 +58,21 @@ namespace StockMarketAnalysis
      
             aChartPanel.Controls.Add(ChartHandler.chart);
             ChartHandler.chart.MouseClick += new MouseEventHandler(aMainChart_MouseClick);
+
             ChartHandler.chart.Paint += new PaintEventHandler(graphicsProcessor.paint);
+
             ChartHandler.chart.MouseMove += new MouseEventHandler(graphicsProcessor.mouseMove);
+            ChartHandler.chart.MouseMove += new MouseEventHandler(chartZoom.mouseMove);
+
             ChartHandler.chart.MouseLeave += new EventHandler(graphicsProcessor.exit);
+            ChartHandler.chart.MouseLeave += new EventHandler(chartZoom.mouseLeave);
             ChartHandler.chart.MouseEnter += new EventHandler(graphicsProcessor.enter);
+
             ChartHandler.chart.MouseWheel += new MouseEventHandler(mouseWheel);
+
+            ChartHandler.chart.MouseDown += new MouseEventHandler(chartZoom.mouseDown);
+            ChartHandler.chart.MouseUp += new MouseEventHandler(chartZoom.mouseUp);
+
 
             //sidebar
             Controls.Add(sideMenu.flowLayoutPanel);

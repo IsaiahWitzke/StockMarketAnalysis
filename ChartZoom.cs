@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Forms;
 
@@ -13,12 +9,51 @@ namespace StockMarketAnalysis
         //chart zoom variables
         private double xAxisZoomSpeed = 1.3;
         private double yAxisZoomSpeed = 1.3;
+        private bool middleDrag = false;
+        private double mouseX = 0;
+        private double mouseY = 0;
+        private Axis xAxis = ChartHandler.chart.ChartAreas[0].AxisX;
+        private Axis yAxis = ChartHandler.chart.ChartAreas[0].AxisY;
 
         Chart chart;
 
         public ChartZoom(Chart chart)
         {
             this.chart = chart;
+        }
+
+        public void mouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                middleDrag = true;
+                mouseX = xAxis.PixelPositionToValue(e.Location.X);
+                mouseY = yAxis.PixelPositionToValue(e.Location.Y);
+            }
+        }
+
+        public void mouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                middleDrag = false;
+            }
+        }
+
+        public void mouseLeave(object sender, EventArgs e)
+        {
+                middleDrag = false;
+        }
+
+        public void mouseMove(object sender, MouseEventArgs e)
+        {
+            if (!middleDrag) return;
+
+            double diffX = mouseX - xAxis.PixelPositionToValue(e.Location.X);
+            double diffY = mouseY - yAxis.PixelPositionToValue(e.Location.Y);
+
+            xAxis.ScaleView.Zoom(xAxis.ScaleView.ViewMinimum + diffX, xAxis.ScaleView.ViewMaximum + diffX);
+            yAxis.ScaleView.Zoom(yAxis.ScaleView.ViewMinimum + diffY, yAxis.ScaleView.ViewMaximum + diffY);
         }
 
         public void xAxisZoom(MouseEventArgs e)
@@ -54,7 +89,7 @@ namespace StockMarketAnalysis
 
         public void yAxisZoom(MouseEventArgs e)
         {
-            var yAxis = chart.ChartAreas[0].AxisY;
+
             double initialAxisMousePosition;
 
             try
