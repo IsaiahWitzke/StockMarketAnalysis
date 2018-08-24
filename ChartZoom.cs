@@ -11,11 +11,8 @@ namespace StockMarketAnalysis
     class ChartZoom
     {
         //chart zoom variables
-        private double xAxisZoomSpeed = 0.1;
-        private int xAxisZoomMultiple = 0;
-
-        private int yAxisZoomSpeed = 2;
-        private int yAxisZoomMultiple = 0;
+        private double xAxisZoomSpeed = 1.3;
+        private double yAxisZoomSpeed = 1.3;
 
         Chart chart;
 
@@ -24,82 +21,66 @@ namespace StockMarketAnalysis
             this.chart = chart;
         }
 
-        public void yAxisZoomIn()
+        public void xAxisZoom(MouseEventArgs e)
         {
-            //this is here to prevent breaking the program before the chart is initialized
-            if (chart == null)
-                return;
+            var xAxis = chart.ChartAreas[0].AxisX;
+            double initialAxisMousePosition;
 
-            //zooming in
-            if (chart.ChartAreas[0].AxisY.Minimum + (yAxisZoomMultiple + 1) * yAxisZoomSpeed <
-                    chart.ChartAreas[0].AxisY.Maximum - (yAxisZoomMultiple + 1) * yAxisZoomSpeed)
-                yAxisZoomMultiple++;
-
-            //zooming in the x axis
-            chart.ChartAreas[0].AxisY.ScaleView.Zoom(
-                    chart.ChartAreas[0].AxisY.Minimum + yAxisZoomMultiple * yAxisZoomSpeed,
-                    chart.ChartAreas[0].AxisY.Maximum - yAxisZoomMultiple * yAxisZoomSpeed);
-        }
-
-        public void yAxisZoomOut()
-        {
-            if (chart == null)
-                return;
-
-            if (yAxisZoomMultiple > 0)
-                yAxisZoomMultiple--;
-
-            chart.ChartAreas[0].AxisY.ScaleView.Zoom(
-                chart.ChartAreas[0].AxisY.Minimum + yAxisZoomMultiple * yAxisZoomSpeed,
-                chart.ChartAreas[0].AxisY.Maximum - yAxisZoomMultiple * yAxisZoomSpeed);
-        }
-
-        public void xAxisZoom(MouseEventArgs mouseEvent)
-        {
-            var rawMouseX = mouseEvent.X;
-            double mouseX;
-            //scrolling to the right of the chart sometimes throws an error
-            try { mouseX = chart.ChartAreas[0].AxisX.PixelPositionToValue(rawMouseX); }
-            catch (Exception) { mouseX = 0; }
-            
-
-            //attempting to scroll to the left or right of the graph
-            if (mouseEvent.X < chart.Location.X || mouseEvent.X > chart.Location.X + chart.Size.Width)
-                return;
-
-            //above or below the chart
-            if (mouseEvent.Y < chart.Location.Y || mouseEvent.Y > chart.Location.Y + chart.Size.Height)
-                return;
-
-            //zooming in
-            if (mouseEvent.Delta > 0 && xAxisZoomMultiple != 10)
-                xAxisZoomMultiple++;
-
-            //zooming out
-            if (mouseEvent.Delta < 0 && xAxisZoomMultiple != 0)
-                xAxisZoomMultiple--;
-
-            //the ratio between these need to stay the same as we zoom in:
-            double rightSideOffset = chart.ChartAreas[0].AxisX.Maximum -
-                (
-                    (chart.ChartAreas[0].AxisX.Maximum - mouseX) *
-                    xAxisZoomSpeed * (double)xAxisZoomMultiple
-                );
-            double leftSideOffset = (chart.ChartAreas[0].AxisX.Minimum + mouseX) *
-                (xAxisZoomSpeed * (double)xAxisZoomMultiple);
-
-            //zooming in/out the x axis. the if statment limits zoom
-            if (mouseEvent.Delta < 0 || rightSideOffset - 10 > leftSideOffset)
+            try
             {
-                chart.ChartAreas[0].AxisX.ScaleView.Zoom(
-                    leftSideOffset,
-                    rightSideOffset);
+                initialAxisMousePosition = xAxis.PixelPositionToValue(e.Location.X);
+            }
+            catch (ArgumentException)
+            {
+                initialAxisMousePosition = (xAxis.ScaleView.ViewMinimum + xAxis.ScaleView.ViewMaximum) / 2;
+            }
+
+            if (e.Delta > 0)
+            {
+                double dToLeft = (initialAxisMousePosition - xAxis.ScaleView.ViewMinimum) / xAxisZoomSpeed;
+                double dToRight = (xAxis.ScaleView.ViewMaximum - initialAxisMousePosition) / xAxisZoomSpeed;
+                xAxis.ScaleView.Zoom(initialAxisMousePosition - dToLeft, initialAxisMousePosition + dToRight);
             }
             else
             {
-                xAxisZoomMultiple--;
+                double dToLeft = (initialAxisMousePosition - xAxis.ScaleView.ViewMinimum) * xAxisZoomSpeed;
+                double dToRight = (xAxis.ScaleView.ViewMaximum - initialAxisMousePosition) * xAxisZoomSpeed;
+                if (dToLeft + dToRight >= xAxis.Maximum - xAxis.Minimum)
+                    xAxis.ScaleView.ZoomReset();
+                else
+                    xAxis.ScaleView.Zoom(initialAxisMousePosition - dToLeft, initialAxisMousePosition + dToRight);
             }
         }
 
+        public void yAxisZoom(MouseEventArgs e)
+        {
+            var yAxis = chart.ChartAreas[0].AxisY;
+            double initialAxisMousePosition;
+
+            try
+            {
+                initialAxisMousePosition = yAxis.PixelPositionToValue(e.Location.Y);
+            }
+            catch (ArgumentException)
+            {
+                initialAxisMousePosition = (yAxis.ScaleView.ViewMinimum + yAxis.ScaleView.ViewMaximum) / 2;
+            }
+
+            if (e.Delta > 0)
+            {
+                double dToLeft = (initialAxisMousePosition - yAxis.ScaleView.ViewMinimum) / yAxisZoomSpeed;
+                double dToRight = (yAxis.ScaleView.ViewMaximum - initialAxisMousePosition) / yAxisZoomSpeed;
+                yAxis.ScaleView.Zoom(initialAxisMousePosition - dToLeft, initialAxisMousePosition + dToRight);
+            }
+            else
+            {
+                double dToLeft = (initialAxisMousePosition - yAxis.ScaleView.ViewMinimum) * yAxisZoomSpeed;
+                double dToRight = (yAxis.ScaleView.ViewMaximum - initialAxisMousePosition) * yAxisZoomSpeed;
+                if ((dToLeft + dToRight) * 1.4 >= yAxis.Maximum - yAxis.Minimum)
+                    yAxis.ScaleView.ZoomReset();
+                else
+                    yAxis.ScaleView.Zoom(initialAxisMousePosition - dToLeft, initialAxisMousePosition + dToRight);
+            }
+        }
     }
 }

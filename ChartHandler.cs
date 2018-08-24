@@ -28,7 +28,9 @@ namespace StockMarketAnalysis
             chartArea.AxisY.IsStartedFromZero = false;
             chartArea.BackColor = System.Drawing.Color.WhiteSmoke;
             chartArea.Position = new ElementPosition(0, 0, 100, 100);
+            chartArea.AxisY.LabelStyle.Format = "0.00";
             chartArea.Name = "aMainChartArea";
+
 
             //set up annotation area
             annotationArea.AxisX.Minimum = 0;
@@ -46,7 +48,14 @@ namespace StockMarketAnalysis
             chart.Series.Add(mainSeries);
             chart.Dock = DockStyle.Fill;
             chart.TabIndex = 2;
-            
+
+            chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            chart.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
+            chart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+            chart.ChartAreas[0].AxisY.ScrollBar.Enabled = false;
+            chart.ChartAreas[1].AxisX.ScaleView.Zoomable = true;
+            chart.ChartAreas[1].AxisY.ScaleView.Zoomable = true;
+
             mainSeries.ChartArea = "aMainChartArea";
             mainSeries.ChartType = SeriesChartType.Candlestick;
             mainSeries.Color = System.Drawing.Color.FromArgb(0, 0, 64);

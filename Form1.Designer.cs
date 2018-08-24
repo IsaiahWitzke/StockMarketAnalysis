@@ -34,8 +34,6 @@ namespace StockMarketAnalysis
         {
             this.aGetHistoricalData = new System.Windows.Forms.Button();
             this.aTickerTextInput = new System.Windows.Forms.TextBox();
-            this.aYAxisZoomIn = new System.Windows.Forms.Button();
-            this.aYAxisZoomOut = new System.Windows.Forms.Button();
             this.drawMode = new System.Windows.Forms.Button();
             this.aMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,27 +66,6 @@ namespace StockMarketAnalysis
             this.aTickerTextInput.Size = new System.Drawing.Size(54, 20);
             this.aTickerTextInput.TabIndex = 1;
             this.aTickerTextInput.Text = "msft";
-            // 
-            // aYAxisZoomIn
-            // 
-            this.aYAxisZoomIn.Location = new System.Drawing.Point(186, 39);
-            this.aYAxisZoomIn.Name = "aYAxisZoomIn";
-            this.aYAxisZoomIn.Size = new System.Drawing.Size(19, 23);
-            this.aYAxisZoomIn.TabIndex = 5;
-            this.aYAxisZoomIn.Text = "+";
-            this.aYAxisZoomIn.UseVisualStyleBackColor = true;
-            this.aYAxisZoomIn.Click += new System.EventHandler(this.aYAxisZoomIn_Click);
-            // 
-            // aYAxisZoomOut
-            // 
-            this.aYAxisZoomOut.Location = new System.Drawing.Point(186, 68);
-            this.aYAxisZoomOut.Name = "aYAxisZoomOut";
-            this.aYAxisZoomOut.Size = new System.Drawing.Size(19, 23);
-            this.aYAxisZoomOut.TabIndex = 6;
-            this.aYAxisZoomOut.Text = "-";
-            this.aYAxisZoomOut.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.aYAxisZoomOut.UseVisualStyleBackColor = true;
-            this.aYAxisZoomOut.Click += new System.EventHandler(this.aYAxisZoomOut_Click);
             // 
             // drawMode
             // 
@@ -175,18 +152,18 @@ namespace StockMarketAnalysis
             this.aUIChartTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.aUIChartTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.aUIChartTable.Controls.Add(this.drawMode, 0, 0);
-            this.aUIChartTable.Location = new System.Drawing.Point(515, 695);
+            this.aUIChartTable.Location = new System.Drawing.Point(211, 816);
             this.aUIChartTable.Name = "aUIChartTable";
             this.aUIChartTable.RowCount = 1;
             this.aUIChartTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.aUIChartTable.Size = new System.Drawing.Size(711, 51);
+            this.aUIChartTable.Size = new System.Drawing.Size(1592, 54);
             this.aUIChartTable.TabIndex = 8;
             // 
             // aChartPanel
             // 
             this.aChartPanel.Location = new System.Drawing.Point(211, 37);
             this.aChartPanel.Name = "aChartPanel";
-            this.aChartPanel.Size = new System.Drawing.Size(954, 434);
+            this.aChartPanel.Size = new System.Drawing.Size(1592, 751);
             this.aChartPanel.TabIndex = 9;
             // 
             // aMainForm
@@ -196,8 +173,6 @@ namespace StockMarketAnalysis
             this.ClientSize = new System.Drawing.Size(1836, 896);
             this.Controls.Add(this.aChartPanel);
             this.Controls.Add(this.aUIChartTable);
-            this.Controls.Add(this.aYAxisZoomOut);
-            this.Controls.Add(this.aYAxisZoomIn);
             this.Controls.Add(this.aTickerTextInput);
             this.Controls.Add(this.aGetHistoricalData);
             this.Controls.Add(this.aMenuStrip);
@@ -217,8 +192,6 @@ namespace StockMarketAnalysis
 
         private System.Windows.Forms.Button aGetHistoricalData;
         private System.Windows.Forms.TextBox aTickerTextInput;
-        private System.Windows.Forms.Button aYAxisZoomIn;
-        private System.Windows.Forms.Button aYAxisZoomOut;
         private System.Windows.Forms.Button drawMode;
         private System.Windows.Forms.MenuStrip aMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;

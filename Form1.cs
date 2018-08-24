@@ -20,11 +20,9 @@ namespace StockMarketAnalysis
         LinePlotter linePlotter = new LinePlotter();
         GraphicsProcessor graphicsProcessor; //all things to do with zooming in/out
         ChartZoom chartZoom;
-        
+
         //when an event happens here, the chartZoom's methods are called
-        protected override void OnMouseWheel(MouseEventArgs mouseEvent) { chartZoom.xAxisZoom(mouseEvent); }
-        private void aYAxisZoomIn_Click(object sender, EventArgs e) { chartZoom.yAxisZoomIn(); }
-        private void aYAxisZoomOut_Click(object sender, EventArgs e) { chartZoom.yAxisZoomOut(); }
+        private void mouseWheel(object sender, MouseEventArgs e) { chartZoom.xAxisZoom(e); chartZoom.yAxisZoom(e); }
         private void aMainChart_MouseClick(object sender, MouseEventArgs e) { linePlotter.draw(e); }
         private void aGetHistoricalData_Click(object sender, EventArgs e)
         {
@@ -59,11 +57,12 @@ namespace StockMarketAnalysis
             //chart events
      
             aChartPanel.Controls.Add(ChartHandler.chart);
-            ChartHandler.chart.MouseClick += new MouseEventHandler(this.aMainChart_MouseClick);
+            ChartHandler.chart.MouseClick += new MouseEventHandler(aMainChart_MouseClick);
             ChartHandler.chart.Paint += new PaintEventHandler(graphicsProcessor.paint);
             ChartHandler.chart.MouseMove += new MouseEventHandler(graphicsProcessor.mouseMove);
             ChartHandler.chart.MouseLeave += new EventHandler(graphicsProcessor.exit);
             ChartHandler.chart.MouseEnter += new EventHandler(graphicsProcessor.enter);
+            ChartHandler.chart.MouseWheel += new MouseEventHandler(mouseWheel);
 
             //sidebar
             Controls.Add(sideMenu.flowLayoutPanel);
