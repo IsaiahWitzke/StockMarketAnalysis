@@ -18,8 +18,8 @@ namespace StockMarketAnalysis
         ChartHandler chartHandler = new ChartHandler();
         SideMenu sideMenu = new SideMenu();
         LinePlotter linePlotter = new LinePlotter();
-        GraphicsProcessor graphicsProcessor; //all things to do with zooming in/out
-        ChartZoom chartZoom;
+        ChartZoom chartZoom = new ChartZoom();
+        GraphicsProcessor graphicsProcessor;
 
         //when an event happens here, the chartZoom's methods are called
         private void mouseWheel(object sender, MouseEventArgs e) { chartZoom.xAxisZoom(e); chartZoom.yAxisZoom(e); }
@@ -52,7 +52,6 @@ namespace StockMarketAnalysis
 
             InitializeComponent();
             graphicsProcessor = new GraphicsProcessor(ChartHandler.chart, linePlotter);
-            chartZoom = new ChartZoom(ChartHandler.chart);
 
             //chart events
      
