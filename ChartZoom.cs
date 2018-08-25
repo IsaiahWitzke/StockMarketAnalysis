@@ -9,10 +9,6 @@ namespace StockMarketAnalysis
         private Axis xAxis = ChartHandler.chart.ChartAreas[0].AxisX;
         private Axis yAxis = ChartHandler.chart.ChartAreas[0].AxisY;
 
-        //chart zoom variables
-        private double xAxisZoomSpeed = 1.3;
-        private double yAxisZoomSpeed = 1.3;
-
         private bool dragging = false;
 
         //location of drag start

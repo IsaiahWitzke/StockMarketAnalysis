@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Drawing;
 
 namespace StockMarketAnalysis
 {
@@ -26,7 +27,7 @@ namespace StockMarketAnalysis
             //make the chart
             chartArea.AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             chartArea.AxisY.IsStartedFromZero = false;
-            chartArea.BackColor = System.Drawing.Color.WhiteSmoke;
+            chartArea.BackColor = Color.FromArgb(45, 45, 45);
             chartArea.Position = new ElementPosition(0, 0, 100, 100);
             chartArea.AxisY.LabelStyle.Format = "0.00";
             chartArea.Name = "aMainChartArea";
@@ -48,6 +49,7 @@ namespace StockMarketAnalysis
             chart.Series.Add(mainSeries);
             chart.Dock = DockStyle.Fill;
             chart.TabIndex = 2;
+            chart.BackColor = Color.FromArgb(45, 45, 45);
 
             chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
             chart.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
@@ -58,12 +60,15 @@ namespace StockMarketAnalysis
 
             mainSeries.ChartArea = "aMainChartArea";
             mainSeries.ChartType = SeriesChartType.Candlestick;
-            mainSeries.Color = System.Drawing.Color.FromArgb(0, 0, 64);
             mainSeries.IsXValueIndexed = true;    // this seems to be very important. (removes weekends)
             chart.ChartAreas[0].AxisX.IsReversed = true;   // when the weekends are removed the chart seems to be revesed, this line fixes it
             mainSeries.Name = "aCandleSticks";
             mainSeries.XValueType = ChartValueType.Date;
             mainSeries.YValuesPerPoint = 4;
+            mainSeries.SetCustomProperty("PriceUpColor", "Green");
+            mainSeries.SetCustomProperty("PriceDownColor", "DarkRed");
+            mainSeries.Color = Color.DarkSlateGray;
+            mainSeries.BorderColor = Color.FromArgb(0, 0, 0);
         }
 
         /// <param name = "symbol" > ticker symbol of desired stock (ex. TSLA)</param>

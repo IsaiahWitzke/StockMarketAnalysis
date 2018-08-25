@@ -1,6 +1,5 @@
 ﻿using System.Windows.Forms.DataVisualization.Charting;
-
-using System.Collections.Generic;
+using System.Drawing;
 
 namespace StockMarketAnalysis
 {
@@ -161,6 +160,7 @@ namespace StockMarketAnalysis
             // 
             // aChartPanel
             // 
+            this.aChartPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.aChartPanel.Location = new System.Drawing.Point(211, 37);
             this.aChartPanel.Name = "aChartPanel";
             this.aChartPanel.Size = new System.Drawing.Size(1592, 751);
@@ -170,6 +170,7 @@ namespace StockMarketAnalysis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1836, 896);
             this.Controls.Add(this.aChartPanel);
             this.Controls.Add(this.aUIChartTable);
