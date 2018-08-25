@@ -70,7 +70,40 @@ namespace StockMarketAnalysis
                 yAxis.ScaleView.Zoom(originalMinY - diffY, originalMaxY - diffY);
         }
 
-        public void xAxisZoom(MouseEventArgs e)
+        public void mouseScroll(object sender, MouseEventArgs e)
+        {
+            if (Control.ModifierKeys == Keys.Shift)
+            {
+                yAxisZoom(e, 1.5);
+            }
+            else if (Control.ModifierKeys == Keys.Control)
+            {
+                scrollXAxis(e);
+            }
+            else
+            {
+                xAxisZoom(e, 1.3);
+                yAxisZoom(e, 1.3);
+            }
+        }
+
+        public void scrollXAxis(MouseEventArgs e)
+        {
+            double scrollFactor = 3.0;
+
+            if (e.Delta > 0)
+            {
+                if (xAxis.ScaleView.ViewMinimum + scrollFactor >= xAxis.Minimum && xAxis.ScaleView.ViewMaximum + scrollFactor <= xAxis.Maximum)
+                    xAxis.ScaleView.Zoom(xAxis.ScaleView.ViewMinimum + scrollFactor, xAxis.ScaleView.ViewMaximum + scrollFactor);
+            }
+            else
+            {
+                if (xAxis.ScaleView.ViewMinimum - scrollFactor >= xAxis.Minimum && xAxis.ScaleView.ViewMaximum - scrollFactor <= xAxis.Maximum)
+                    xAxis.ScaleView.Zoom(xAxis.ScaleView.ViewMinimum - scrollFactor, xAxis.ScaleView.ViewMaximum - scrollFactor);
+            }
+        }
+
+        public void xAxisZoom(MouseEventArgs e, double xAxisZoomSpeed)
         {
             double initialAxisMousePosition;
 
@@ -100,7 +133,7 @@ namespace StockMarketAnalysis
             }
         }
 
-        public void yAxisZoom(MouseEventArgs e)
+        public void yAxisZoom(MouseEventArgs e, double yAxisZoomSpeed)
         {
 
             double initialAxisMousePosition;

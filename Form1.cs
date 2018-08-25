@@ -21,15 +21,13 @@ namespace StockMarketAnalysis
         ChartZoom chartZoom = new ChartZoom();
         GraphicsProcessor graphicsProcessor;
 
-        //when an event happens here, the chartZoom's methods are called
-        private void mouseWheel(object sender, MouseEventArgs e) { chartZoom.xAxisZoom(e); chartZoom.yAxisZoom(e); }
         private void aMainChart_MouseClick(object sender, MouseEventArgs e) { linePlotter.draw(e); }
         private void aGetHistoricalData_Click(object sender, EventArgs e)
         {
             ChartHandler.loadStock(aTickerTextInput.Text);
             linePlotter.updateGaps();
             sideMenu.scanForStockData("C:/Users/Public/Documents/RawData");
-        } //for loading different stocks
+        }
 
         public aMainForm()
         {
@@ -51,6 +49,7 @@ namespace StockMarketAnalysis
             }
 
             InitializeComponent();
+
             graphicsProcessor = new GraphicsProcessor(ChartHandler.chart, linePlotter);
 
             //chart events
@@ -67,7 +66,7 @@ namespace StockMarketAnalysis
             ChartHandler.chart.MouseLeave += new EventHandler(chartZoom.mouseLeave);
             ChartHandler.chart.MouseEnter += new EventHandler(graphicsProcessor.enter);
 
-            ChartHandler.chart.MouseWheel += new MouseEventHandler(mouseWheel);
+            ChartHandler.chart.MouseWheel += new MouseEventHandler(chartZoom.mouseScroll);
 
             ChartHandler.chart.MouseDown += new MouseEventHandler(chartZoom.mouseDown);
             ChartHandler.chart.MouseUp += new MouseEventHandler(chartZoom.mouseUp);
