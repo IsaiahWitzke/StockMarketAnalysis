@@ -13,28 +13,48 @@ namespace StockMarketAnalysis
     {
         // the chart stuff that the user sees
         public static Chart chart = new Chart();
-        ChartArea chartArea;
+        ChartArea chartArea, annotationArea;
         public static Series mainSeries;
         public static string ticker = "";
 
         public ChartHandler()
         {
             chartArea = new ChartArea();
+            annotationArea = new ChartArea();
             mainSeries = new Series();
 
             //make the chart
             chartArea.AxisX.IntervalAutoMode = IntervalAutoMode.VariableCount;
             chartArea.AxisY.IsStartedFromZero = false;
             chartArea.BackColor = System.Drawing.Color.WhiteSmoke;
+            chartArea.Position = new ElementPosition(0, 0, 100, 100);
+            chartArea.AxisY.LabelStyle.Format = "0.00";
             chartArea.Name = "aMainChartArea";
+
+
+            //set up annotation area
+            annotationArea.AxisX.Minimum = 0;
+            annotationArea.AxisX.Maximum = 100;
+            annotationArea.AxisY.Minimum = 0;
+            annotationArea.AxisY.Maximum = 100;
+            annotationArea.BackColor = System.Drawing.Color.Transparent;
+            annotationArea.Position = chartArea.Position;
+            annotationArea.Name = "annotationArea";
 
             chart = new Chart();
             chart.ChartAreas.Add(chartArea);
+            chart.ChartAreas.Add(annotationArea);
             chart.Name = "aMainChart";
             chart.Series.Add(mainSeries);
             chart.Dock = DockStyle.Fill;
             chart.TabIndex = 2;
-            
+
+            chart.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            chart.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
+            chart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+            chart.ChartAreas[0].AxisY.ScrollBar.Enabled = false;
+            chart.ChartAreas[1].AxisX.ScaleView.Zoomable = true;
+            chart.ChartAreas[1].AxisY.ScaleView.Zoomable = true;
 
             mainSeries.ChartArea = "aMainChartArea";
             mainSeries.ChartType = SeriesChartType.Candlestick;
