@@ -14,7 +14,7 @@ namespace StockMarketAnalysis
         // the chart stuff that the user sees
         public static Chart chart = new Chart();
         ChartArea chartArea;
-        Series mainSeries;
+        public static Series mainSeries;
         public static string ticker = "";
 
         public ChartHandler()
@@ -135,6 +135,8 @@ namespace StockMarketAnalysis
                     chart.Series[0].Points.Add(candleStick);
                 }
             }
+
+            Strategies.updateData();
         }
     }
 }
