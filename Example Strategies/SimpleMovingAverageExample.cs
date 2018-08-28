@@ -1,6 +1,5 @@
 using StockMarketAnalysis;
 using System.Collections.Generic;
-using System.Drawing;
 using System;
 
 namespace Strategy
@@ -13,7 +12,7 @@ namespace Strategy
             //its a good idea to update the data so that the Strategies.Data is reflecting what is being shown on the graph
             Strategies.updateData();
 
-            Plot SMA = new Plot("sma", Color.Red());
+            Plot SMA = new Plot("sma";
             
             List<double> averages = new List<double>();
 
