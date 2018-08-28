@@ -34,8 +34,6 @@ namespace StockMarketAnalysis
         {
             this.aGetHistoricalData = new System.Windows.Forms.Button();
             this.aTickerTextInput = new System.Windows.Forms.TextBox();
-            this.aYAxisZoomIn = new System.Windows.Forms.Button();
-            this.aYAxisZoomOut = new System.Windows.Forms.Button();
             this.drawMode = new System.Windows.Forms.Button();
             this.aMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,10 +42,9 @@ namespace StockMarketAnalysis
             this.strategiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newStrategyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openStrategyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeStrategyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aUIChartTable = new System.Windows.Forms.TableLayoutPanel();
             this.aChartPanel = new System.Windows.Forms.Panel();
-            this.aStrategyDropDown = new System.Windows.Forms.ComboBox();
-            this.executeStrategyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aMenuStrip.SuspendLayout();
             this.aUIChartTable.SuspendLayout();
             this.SuspendLayout();
@@ -69,27 +66,6 @@ namespace StockMarketAnalysis
             this.aTickerTextInput.Size = new System.Drawing.Size(54, 20);
             this.aTickerTextInput.TabIndex = 1;
             this.aTickerTextInput.Text = "msft";
-            // 
-            // aYAxisZoomIn
-            // 
-            this.aYAxisZoomIn.Location = new System.Drawing.Point(186, 39);
-            this.aYAxisZoomIn.Name = "aYAxisZoomIn";
-            this.aYAxisZoomIn.Size = new System.Drawing.Size(19, 23);
-            this.aYAxisZoomIn.TabIndex = 5;
-            this.aYAxisZoomIn.Text = "+";
-            this.aYAxisZoomIn.UseVisualStyleBackColor = true;
-            this.aYAxisZoomIn.Click += new System.EventHandler(this.aYAxisZoomIn_Click);
-            // 
-            // aYAxisZoomOut
-            // 
-            this.aYAxisZoomOut.Location = new System.Drawing.Point(186, 68);
-            this.aYAxisZoomOut.Name = "aYAxisZoomOut";
-            this.aYAxisZoomOut.Size = new System.Drawing.Size(19, 23);
-            this.aYAxisZoomOut.TabIndex = 6;
-            this.aYAxisZoomOut.Text = "-";
-            this.aYAxisZoomOut.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            this.aYAxisZoomOut.UseVisualStyleBackColor = true;
-            this.aYAxisZoomOut.Click += new System.EventHandler(this.aYAxisZoomOut_Click);
             // 
             // drawMode
             // 
@@ -148,16 +124,23 @@ namespace StockMarketAnalysis
             // newStrategyToolStripMenuItem
             // 
             this.newStrategyToolStripMenuItem.Name = "newStrategyToolStripMenuItem";
-            this.newStrategyToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.newStrategyToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.newStrategyToolStripMenuItem.Text = "New Strategy";
             this.newStrategyToolStripMenuItem.Click += new System.EventHandler(this.newStrategyToolStripMenuItem_Click);
             // 
             // openStrategyToolStripMenuItem
             // 
             this.openStrategyToolStripMenuItem.Name = "openStrategyToolStripMenuItem";
-            this.openStrategyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openStrategyToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.openStrategyToolStripMenuItem.Text = "Edit Strategy";
             this.openStrategyToolStripMenuItem.Click += new System.EventHandler(this.openStrategyToolStripMenuItem_Click);
+            // 
+            // executeStrategyToolStripMenuItem
+            // 
+            this.executeStrategyToolStripMenuItem.Name = "executeStrategyToolStripMenuItem";
+            this.executeStrategyToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.executeStrategyToolStripMenuItem.Text = "Execute Strategy";
+            this.executeStrategyToolStripMenuItem.Click += new System.EventHandler(this.executeStrategyToolStripMenuItem_Click);
             // 
             // aUIChartTable
             // 
@@ -169,46 +152,27 @@ namespace StockMarketAnalysis
             this.aUIChartTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.aUIChartTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.aUIChartTable.Controls.Add(this.drawMode, 0, 0);
-            this.aUIChartTable.Location = new System.Drawing.Point(515, 695);
+            this.aUIChartTable.Location = new System.Drawing.Point(211, 816);
             this.aUIChartTable.Name = "aUIChartTable";
             this.aUIChartTable.RowCount = 1;
             this.aUIChartTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.aUIChartTable.Size = new System.Drawing.Size(711, 51);
+            this.aUIChartTable.Size = new System.Drawing.Size(1592, 54);
             this.aUIChartTable.TabIndex = 8;
             // 
             // aChartPanel
             // 
             this.aChartPanel.Location = new System.Drawing.Point(211, 37);
             this.aChartPanel.Name = "aChartPanel";
-            this.aChartPanel.Size = new System.Drawing.Size(954, 434);
+            this.aChartPanel.Size = new System.Drawing.Size(1592, 751);
             this.aChartPanel.TabIndex = 9;
-            // 
-            // aStrategyDropDown
-            // 
-            this.aStrategyDropDown.FormattingEnabled = true;
-            this.aStrategyDropDown.Location = new System.Drawing.Point(1218, 37);
-            this.aStrategyDropDown.Name = "aStrategyDropDown";
-            this.aStrategyDropDown.Size = new System.Drawing.Size(121, 21);
-            this.aStrategyDropDown.TabIndex = 10;
-            this.aStrategyDropDown.Text = "Active Strategy";
-            // 
-            // executeStrategyToolStripMenuItem
-            // 
-            this.executeStrategyToolStripMenuItem.Name = "executeStrategyToolStripMenuItem";
-            this.executeStrategyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.executeStrategyToolStripMenuItem.Text = "Execute Strategy";
-            this.executeStrategyToolStripMenuItem.Click += new System.EventHandler(this.executeStrategyToolStripMenuItem_Click);
             // 
             // aMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1836, 896);
-            this.Controls.Add(this.aStrategyDropDown);
             this.Controls.Add(this.aChartPanel);
             this.Controls.Add(this.aUIChartTable);
-            this.Controls.Add(this.aYAxisZoomOut);
-            this.Controls.Add(this.aYAxisZoomIn);
             this.Controls.Add(this.aTickerTextInput);
             this.Controls.Add(this.aGetHistoricalData);
             this.Controls.Add(this.aMenuStrip);
@@ -228,8 +192,6 @@ namespace StockMarketAnalysis
 
         private System.Windows.Forms.Button aGetHistoricalData;
         private System.Windows.Forms.TextBox aTickerTextInput;
-        private System.Windows.Forms.Button aYAxisZoomIn;
-        private System.Windows.Forms.Button aYAxisZoomOut;
         private System.Windows.Forms.Button drawMode;
         private System.Windows.Forms.MenuStrip aMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -240,7 +202,6 @@ namespace StockMarketAnalysis
         private System.Windows.Forms.ToolStripMenuItem strategiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newStrategyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openStrategyToolStripMenuItem;
-        private System.Windows.Forms.ComboBox aStrategyDropDown;
         private System.Windows.Forms.ToolStripMenuItem executeStrategyToolStripMenuItem;
     }
 }

@@ -145,6 +145,7 @@ namespace StockMarketAnalysis
 
             // Reference to external libraries
             parameters.ReferencedAssemblies.Add("System.Windows.Forms.dll");
+            parameters.ReferencedAssemblies.Add("System.Windows.Forms.DataVisualization.dll");
             parameters.ReferencedAssemblies.Add("StockMarketAnalysis.exe");
 
             // True - memory generation, false - external file generation

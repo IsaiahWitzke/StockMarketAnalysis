@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Forms;
 using System.IO;
 
 namespace StockMarketAnalysis
 {
-    class LinePlotter
+    public class LinePlotter
     {
-        private static Chart chart;
         private static List<Plot> plots;
         private static int count = 0;
         public static List<double> nonBusinessDays;
@@ -25,9 +22,8 @@ namespace StockMarketAnalysis
 
         public bool isDrawing = false;
 
-        public LinePlotter(Chart nChart)
+        public LinePlotter()
         {
-            chart = nChart;
             plots = new List<Plot>();
             nonBusinessDays = new List<double>();
         }
@@ -35,9 +31,9 @@ namespace StockMarketAnalysis
         public void updateGaps()
         {
             //generate non business day list for given stock
-            for (int i = 0; i < chart.Series[0].Points.Count() - 1; i++)
+            for (int i = 0; i < ChartHandler.chart.Series[0].Points.Count() - 1; i++)
             {
-                double diff = chart.Series[0].Points[i].XValue - chart.Series[0].Points[i + 1].XValue;
+                double diff = ChartHandler.chart.Series[0].Points[i].XValue - ChartHandler.chart.Series[0].Points[i + 1].XValue;
                 //diff represents the type of missing dates
                 // 1 is a regular day
                 // 1 is a non business day within a week (ex Independace day on July 4th)
@@ -47,26 +43,39 @@ namespace StockMarketAnalysis
 
                 if (diff > 1)
                 {
-                    nonBusinessDays.Add(chart.Series[0].Points[i].XValue - 1);
+                    nonBusinessDays.Add(ChartHandler.chart.Series[0].Points[i].XValue - 1);
                 }
                 if (diff > 2)
                 {
-                    nonBusinessDays.Add(chart.Series[0].Points[i].XValue - 2);
+                    nonBusinessDays.Add(ChartHandler.chart.Series[0].Points[i].XValue - 2);
                 }
                 if (diff > 3)
                 {
-                    nonBusinessDays.Add(chart.Series[0].Points[i].XValue - 3);
+                    nonBusinessDays.Add(ChartHandler.chart.Series[0].Points[i].XValue - 3);
                 }
                 if (diff > 4)
                 {
-                    nonBusinessDays.Add(chart.Series[0].Points[i].XValue - 4);
+                    nonBusinessDays.Add(ChartHandler.chart.Series[0].Points[i].XValue - 4);
                 }
             }
         }
 
         public static void addLine(double xin1, double yin1, double xin2, double yin2)
         {
-            Plot newLine = new Plot("userPlot#" + count, chart, Color.Indigo);
+            LineAnnotation annotation = new LineAnnotation();
+            annotation.IsSizeAlwaysRelative = false;
+            annotation.AxisX = ChartHandler.chart.ChartAreas[0].AxisX;
+            annotation.AxisY = ChartHandler.chart.ChartAreas[0].AxisY;
+            annotation.AnchorX = 5;
+            annotation.AnchorY = 100;
+            annotation.Height = 2.5;
+            annotation.Width = 3;
+            annotation.LineWidth = 2;
+            annotation.StartCap = LineAnchorCapStyle.None;
+            annotation.EndCap = LineAnchorCapStyle.None;
+            ChartHandler.chart.Annotations.Add(annotation);
+
+            Plot newLine = new Plot("userPlot#" + count, ChartHandler.chart, Color.Indigo);
             plots.Add(newLine);
 
             //normalize values making x1 and y1 the smaller x value and rightmost point
@@ -150,8 +159,12 @@ namespace StockMarketAnalysis
             }
 
 
-            var x = ChartHandler.chart.ChartAreas[0].AxisX.PixelPositionToValue(pos.X); //x value is number of bars  counting from the right of the graph
-            var y = ChartHandler.chart.ChartAreas[0].AxisY.PixelPositionToValue(pos.Y); //y value translates on to graph directly (no changes necessary)
+            var x = ChartHandler.chart.ChartAreas[1].AxisX.PixelPositionToValue(pos.X); //x value is number of bars  counting from the right of the graph
+            var y = ChartHandler.chart.ChartAreas[1].AxisY.PixelPositionToValue(pos.Y); //y value translates on to graph directly (no changes necessary)
+
+            Console.WriteLine(x.ToString() + ' ' + y.ToString());
+            return;
+
 
             //get closes data point's x value
             var index = Convert.ToInt32(Math.Round(x));
