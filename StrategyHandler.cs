@@ -138,6 +138,10 @@ namespace StockMarketAnalysis
                         codeToExecute = sr.ReadToEnd();
                     }
                 }
+                else
+                {
+                    return;
+                }
             }
 
             //actually trying to execute the code
