@@ -40,6 +40,12 @@ namespace StockMarketAnalysis
             basicInit(name, ChartHandler.chart);
         }
 
+        public Plot(string name, Color color)
+        {
+            basicInit(name, ChartHandler.chart);
+            this.color = color;
+        }
+        
         public Plot(string name, Chart chart)
         {
             basicInit(name, chart);

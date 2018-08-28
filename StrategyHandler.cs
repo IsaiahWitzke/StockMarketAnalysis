@@ -37,6 +37,7 @@ namespace StockMarketAnalysis
                         sw.WriteLine(
                             "using StockMarketAnalysis;\n" +
                             "using System.Collections.Generic;\n" +
+                            "using System.Drawing;" +
                             "using System;\n" +
                             "\n" +
                             "namespace Strategy\n" +
@@ -144,6 +145,7 @@ namespace StockMarketAnalysis
             CompilerParameters parameters = new CompilerParameters();
 
             // Reference to external libraries
+            parameters.ReferencedAssemblies.Add("System.Drawing.dll");
             parameters.ReferencedAssemblies.Add("System.Windows.Forms.dll");
             parameters.ReferencedAssemblies.Add("System.Windows.Forms.DataVisualization.dll");
             parameters.ReferencedAssemblies.Add("StockMarketAnalysis.exe");
@@ -159,14 +161,20 @@ namespace StockMarketAnalysis
             {
                 StringBuilder sb = new StringBuilder();
 
+                String lastError = "";   // to prevent the same error being displayed multiple times
+
                 foreach (CompilerError error in results.Errors)
                 {
+
+                    // prevents repeats
+                    if (error.Line.ToString() == lastError) { continue; }
+
                     sb.Append("Line " + error.Line + ": ");
                     sb.AppendLine(String.Format("Error ({0}): {1}", error.ErrorNumber, error.ErrorText));
-                    
+                    lastError = error.Line.ToString();
                 }
 
-                MessageBox.Show("Errors found:\n" + sb.ToString());
+                MessageBox.Show("Error(s) found:\n" + sb.ToString());
                 return;
             }
 
