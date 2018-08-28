@@ -35,14 +35,20 @@ namespace StockMarketAnalysis
                         className = className.Replace(".cs", "");
                         //some auto generated code
                         sw.WriteLine(
-                        "using StockMarketAnalysis;\n\n" +
-                        "namespace Strategy\n" +
+                            "using StockMarketAnalysis;\n" +
+                            "using System.Collections.Generic;\n" +
+                            "using System;\n" +
+                            "\n" +
+                            "namespace Strategy\n" +
                             "{\n" +
                             "    class " + className + "\n" +
                             "    {\n" +
                             "        //this function will excecuted when the \"Execute Strategy\" button is pressed \n" +
                             "        public static void Main()\n" +
                             "        {\n" +
+                            "            //its a good idea to update the data so that the Strategies.Data is reflecting what is being shown on the graph\n" +
+                            "            Strategies.updateData();\n" +
+                            "        \n" +
                             "        \n" +
                             "        }\n" +
                             "    }\n" +

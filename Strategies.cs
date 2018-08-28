@@ -17,6 +17,7 @@ namespace StockMarketAnalysis
             public static Dictionary<double, double> closes = new Dictionary<double, double>();
         }
 
+
         public static void updateData()
         {
             Data.highs = new Dictionary<double, double>();
@@ -32,6 +33,7 @@ namespace StockMarketAnalysis
                 Data.closes.Add(dataPoint.XValue, dataPoint.YValues[3]);
                 Data.dates.Add(dataPoint.XValue);
             }
+            
         }
         
 
