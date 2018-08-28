@@ -36,6 +36,8 @@ namespace StockMarketAnalysis
                         //some auto generated code
                         sw.WriteLine(
                             "using StockMarketAnalysis;\n" +
+                            "using System.Collections.Generic;\n" +
+                            "using System;\n" +
                             "\n" +
                             "namespace Strategy\n" +
                             "{\n" +
@@ -44,6 +46,9 @@ namespace StockMarketAnalysis
                             "        //this function will excecuted when the \"Execute Strategy\" button is pressed \n" +
                             "        public static void Main()\n" +
                             "        {\n" +
+                            "            //its a good idea to update the data so that the Strategies.Data is reflecting what is being shown on the graph\n" +
+                            "            Strategies.updateData();\n" +
+                            "        \n" +
                             "        \n" +
                             "        }\n" +
                             "    }\n" +
@@ -66,7 +71,7 @@ namespace StockMarketAnalysis
                     catch (Exception)
                     {
                         //if the user doesnt have vs code, then prompt them to download it, then open it with a default program
-                        if (MessageBox.Show("Visual Studio Code is recommened, download?", "Visit", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
+                        if (MessageBox.Show("Visual Studio Code is recommened... visit download site?", "Visit", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
                         {
                             Process.Start("https://code.visualstudio.com/download");
                         }

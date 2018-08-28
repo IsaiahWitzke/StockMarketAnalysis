@@ -155,6 +155,9 @@ namespace StockMarketAnalysis
                     chart.Series[0].Points.Add(candleStick);
                 }
             }
+
+            //so that the user can use the actual data that is being shown on the graph in the strategies scriping
+            Strategies.updateData();
         }
     }
 }
