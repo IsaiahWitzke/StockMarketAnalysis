@@ -159,12 +159,8 @@ namespace StockMarketAnalysis
             }
 
 
-            var x = ChartHandler.chart.ChartAreas[1].AxisX.PixelPositionToValue(pos.X); //x value is number of bars  counting from the right of the graph
-            var y = ChartHandler.chart.ChartAreas[1].AxisY.PixelPositionToValue(pos.Y); //y value translates on to graph directly (no changes necessary)
-
-            Console.WriteLine(x.ToString() + ' ' + y.ToString());
-            return;
-
+            var x = ChartHandler.chart.ChartAreas[0].AxisX.PixelPositionToValue(pos.X); //x value is number of bars  counting from the right of the graph
+            var y = ChartHandler.chart.ChartAreas[0].AxisY.PixelPositionToValue(pos.Y); //y value translates on to graph directly (no changes necessary)
 
             //get closes data point's x value
             var index = Convert.ToInt32(Math.Round(x));
