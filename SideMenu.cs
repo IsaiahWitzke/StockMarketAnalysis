@@ -51,27 +51,27 @@ namespace StockMarketAnalysis
             flowLayoutPanel.Controls.Add(buttons.Last());
 
             //the event when the button is pressed
-            buttons.Last().Click += new System.EventHandler(SidebarButton_Clicked);
+            buttons.Last().Click += new EventHandler(SidebarButton_Clicked);
 
             //the bit of data of the last stock to the side of the 
             movingLabels.Add(new Label());
 
             //geting the last day's moving data
-            string lastDayMove = lastDayData(ticker).ToString();
-            //colors:
-            if (Convert.ToDouble(lastDayMove) < 0)
-            { movingLabels.Last().ForeColor = Color.Red; }
-            else
-            {
-                movingLabels.Last().ForeColor = Color.Green;
-                lastDayMove = "+" + lastDayMove;
-            }
+            //string lastDayMove = lastDayData(ticker).ToString();
+            ////colors:
+            //if (Convert.ToDouble(lastDayMove) < 0)
+            //{ movingLabels.Last().ForeColor = Color.Red; }
+            //else
+            //{
+            //    movingLabels.Last().ForeColor = Color.Green;
+            //    lastDayMove = "+" + lastDayMove;
+            //}
 
             movingLabels.Last().Location = new Point(50, 3 * buttons.Count());
             movingLabels.Last().Name = "data";
             movingLabels.Last().Size = new Size(75, 20);
             movingLabels.Last().TabIndex = 0;
-            movingLabels.Last().Text = lastDayMove;
+            //movingLabels.Last().Text = lastDayMove;
 
             flowLayoutPanel.Controls.Add(movingLabels.Last());
         }
@@ -93,7 +93,7 @@ namespace StockMarketAnalysis
                 foreach (string path in Directory.GetFiles(rawDataPath))
                 {
                     string ticker = path.Replace(rawDataPath+"\\", "");
-
+                    ticker = ticker.Replace(".csv", "");
                     //prevents duplicate buttons
                     bool isDuplicate = false;
                     foreach (Button iButton in buttons) 
@@ -119,7 +119,7 @@ namespace StockMarketAnalysis
             string rawDataPath = "C:/Users/Public/Documents/RawData/";
 
             //reading the output file:
-            using (var reader = new StreamReader(rawDataPath + symbol))
+            using (var reader = new StreamReader(rawDataPath + symbol + ".csv"))
             {
                 string lastLine = "";
                 while (!reader.EndOfStream)

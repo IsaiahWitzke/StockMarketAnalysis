@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace StockMarketAnalysis
 {
@@ -68,59 +70,92 @@ namespace StockMarketAnalysis
 
         /// <param name = "symbol" > ticker symbol of desired stock (ex. TSLA)</param>
         /// <param name = "rawDataPath" > path for data to be stored</param>
-        private static bool getData(string symbol, string rawDataPath)
+        //private static bool getData(string symbol, string rawDataPath)
+        //{
+        //    string strCmdText;
+        //    strCmdText = "/C alpha-vantage-cli -s " + symbol + " -k TPMQDECWM5ATUR1L -o " + rawDataPath + symbol;
+
+        //    //if the data hasn't already been downloaded, then do the alpha vantage download:
+        //    if (!File.Exists(rawDataPath + symbol))
+        //    {
+        //        //to execute alpah vantage cli commands in the background
+        //        System.Diagnostics.Process process = new System.Diagnostics.Process();
+        //        System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+        //        startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+        //        startInfo.FileName = "cmd.exe";
+        //        startInfo.Arguments = strCmdText;
+        //        process.StartInfo = startInfo;
+        //        process.Start();
+
+        //        //wait for output file to download
+        //        while (!process.HasExited)
+        //        { }
+        //    }
+
+        //    //at this point the file should be made, if not, then it was an invalid symbol
+        //    if (!File.Exists(rawDataPath + symbol))
+        //    {
+        //        MessageBox.Show("Couldn't find " + symbol);
+        //        return false;
+        //    }
+
+        //    return true;
+        //}
+        // api key: xG3hqCgeWDpLIVXE5GsP8VrUUE2DZtfFgczxuDqwSsV8OcPqeeLgxiOh5iYU
+        private static async Task<bool> getDataAsync(string symbol, string rawDataPath)
         {
-            string strCmdText;
-            strCmdText = "/C alpha-vantage-cli -s " + symbol + " -k TPMQDECWM5ATUR1L -o " + rawDataPath + symbol;
-
-            //if the data hasn't already been downloaded, then do the alpha vantage download:
-            if (!File.Exists(rawDataPath + symbol))
+            // Since worldtradingdata api downloads are "expensive", we want to check if we already have the data
+            // if the data hasn't already been downloaded, then do the download
+            string path = rawDataPath + symbol + ".csv";
+            if (File.Exists(path)) { return true; }
+            string apiKey = "xG3hqCgeWDpLIVXE5GsP8VrUUE2DZtfFgczxuDqwSsV8OcPqeeLgxiOh5iYU";
+            string requestUri = "https://api.worldtradingdata.com/api/v1/history?symbol="
+                + symbol + "&sort=newest&api_token=" + apiKey;
+            var client = new HttpClient();
+            string retData = await client.GetStringAsync(requestUri);
+            // JObject retDataJSON = JObject.Parse( await client.GetStringAsync(requestUri) );
+            if(retData == "{\"Message\":\"Error! The requested stock(s) could not be found.\"}")
             {
-                //to execute alpah vantage cli commands in the background
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                startInfo.FileName = "cmd.exe";
-                startInfo.Arguments = strCmdText;
-                process.StartInfo = startInfo;
-                process.Start();
-
-                //wait for output file to download
-                while (!process.HasExited)
-                { }
-            }
-
-            //at this point the file should be made, if not, then it was an invalid symbol
-            if (!File.Exists(rawDataPath + symbol))
-            {
-                MessageBox.Show("Couldn't find " + symbol);
+                MessageBox.Show(retData + "Couldn't find " + symbol);
                 return false;
             }
-
+            File.WriteAllText(path, retData);
             return true;
         }
 
-        public static void loadStock(string symbol)
+        public static async void loadStock(string symbol)
         {
+            //MessageBox.Show(symbol);
             ticker = symbol;
-            //get stock market data through alpha vantage
+            //get stock market data through worldtradingdata api
             string rawDataPath = @"C:\Users\Public\Documents\RawData\";
-            if (!getData(symbol, rawDataPath))
-            {
-                return;
-            }
+            if (!await getDataAsync(symbol, rawDataPath))
+            { return; }
 
             //get rid of previous data
             chart.Series[0].Points.Clear();
-
-            //clearing previous data
             foreach (var series in chart.Series)
+            { series.Points.Clear(); }
+
+            JObject jsonData = JObject.Parse(File.ReadAllText(rawDataPath + symbol + ".csv"));
+
+            foreach (JProperty intraday in jsonData["history"])
             {
-                series.Points.Clear();
+                DateTime date = DateTime.Parse(intraday.Name);
+                double[] data = {
+                    (double)intraday.Value["high"],
+                    (double)intraday.Value["low"],
+                    (double)intraday.Value["open"],
+                    (double)intraday.Value["close"] };
+                DataPoint candleStick = new DataPoint(date.ToOADate(), data);
+                chart.Series[0].XValueType = ChartValueType.DateTime;
+                chart.Series[0].Points.Add(candleStick);
             }
 
+            return;
+
             //reading the output file:
-            using (var reader = new StreamReader(rawDataPath + symbol))
+            using (var reader = new StreamReader(rawDataPath + symbol + ".csv"))
             {
                 bool isFirstLine = true;
                 while (!reader.EndOfStream)
