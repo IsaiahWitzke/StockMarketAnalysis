@@ -154,6 +154,7 @@ namespace StockMarketAnalysis
 
             return;
 
+            // old stuff here...:
             //reading the output file:
             using (var reader = new StreamReader(rawDataPath + symbol + ".csv"))
             {

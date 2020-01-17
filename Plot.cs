@@ -26,13 +26,18 @@ namespace StockMarketAnalysis
             //update the static chart so that it has a new series
             this.chart = chart;
             // sometimes the user will try to make the same plot twice, this will just allow us to overwrite it
+            seriesName = name;  // for future index use
             try { this.chart.Series.Add(name); }
-            catch (Exception) {}
+            catch (Exception)
+            {
+                this.deletePlot();
+                this.chart.Series.Add(name);
+            }
             
             this.chart.Series[name].ChartType = SeriesChartType.Line;   // all plots using this constructed will be a line
             this.chart.Series[name].IsXValueIndexed = true;
 
-            seriesName = name;  // for future index use
+
         }
 
         public Plot(string name)
