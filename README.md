@@ -1,12 +1,12 @@
 # StockMarketAnalysis
-C# tool which allows live stock market data to be fetched via an API and explored. Contains a C# scripting environment which enables the use of user written scripts which can preform deeper analysis
-on stock data as desired. 
+Tool that allows user to analyze and fetch stock market data (via worldtradingdata.com API). Contains C# scripting capabilities which enables the user to write scripts and preform deeper analysis on stock data. 
 
 ## Features
- - C# Scripting enviroment with access to stock data and graph to plot on
+ - C# Scripting capabilities with full access to stock data and graph to plot on
+ - Annotations and user-drawn lines can be saved in a .an file for later use 
  - Candle Stick data display with a full range of zoom and pan movement options
- - One click live stock market data fetcher
- - Button interface for switching between different stocks
+ - Live stock market data fetcher
+ - Easy-to-use button interface for switching between stocks
  - Line mark up tool
  
  ![](demo/line_markup.png)
