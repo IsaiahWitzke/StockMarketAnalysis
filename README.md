@@ -11,6 +11,6 @@ on stock data as desired.
  
  ![](demo/line_markup.png)
  
-### A sample script and it's result
+### A sample script and it's output on the graph
 ![](demo/5_day_example.png)
 ![](demo/5_day_graph.png)
